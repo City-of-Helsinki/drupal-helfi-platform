@@ -40,7 +40,6 @@
         "enable-patching": true,
         "installer-paths": {
             "public/core": ["type:drupal-core"],
-            "tools/{$name}": ["type:tools"],
             "public/libraries/{$name}": ["type:drupal-library"],
             "public/modules/contrib/{$name}": ["type:drupal-module"],
             "public/modules/custom/{$name}": ["type:drupal-module-custom"],
