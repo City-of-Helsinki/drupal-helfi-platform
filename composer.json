@@ -62,7 +62,9 @@
     ],
     "scripts": {
         "post-create-project-cmd": [
-            "make cast-spell"
+            "rm README.md && mv README.project.md README.md",
+            "composer config --unset scripts.post-create-project-cmd",
+            "git init && git add ."
         ]
     }
 }
