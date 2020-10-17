@@ -1,0 +1,35 @@
+on: [push]
+name: CI
+env:
+  SIMPLETEST_DB: "mysql://drupal:drupal@db:3306/drupal"
+  SIMPLETEST_BASE_URL: "http://127.0.0.1:8080"
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/city-of-helsinki/drupal-php-docker:7.4
+
+    services:
+      db:
+        image: druidfi/db:mysql5.7-drupal
+        ports:
+          - 3306:3306
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Build composer project
+        run: composer create-project City-of-Helsinki/drupal-base:dev-master $HOME/drupal --no-interaction --repository https://city-of-helsinki.github.io/drupal-repository/
+
+      - name: Install Drupal
+        run: php -d sendmail_path=$(which true); drush --yes -v site-install --db-url="$SIMPLETEST_DB" --root $HOME/drupal
+
+      - name: Make sure Drupal is installed properly
+        run: |
+          drush runserver $SIMPLETEST_BASE_URL --root $HOME/drupal > /dev/null 2>&1 &
+          chromedriver --port=4444 > /dev/null 2>&1 &
+          # Make sure Drupal is installed
+          drush status bootstrap --root $HOME/drupal | grep -q Successful
+          curl -s -o /dev/null -I -w "%{http_code}" $SIMPLETEST_BASE_URL | grep -q 200
