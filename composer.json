@@ -1,0 +1,68 @@
+{
+    "name": "City-of-Helsinki/drupal-base",
+    "description": "Drupal 9 started project",
+    "type": "project",
+    "license": "MIT",
+    "homepage": "https://github.com/City-of-Helsinki/drupal-base",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "composer/installers": "^1.9",
+        "cweagans/composer-patches": "^1.6.7",
+        "druidfi/omen": "^0.2.0",
+        "drupal/core-composer-scaffold": "^9.0",
+        "drupal/core-recommended": "^9.0",
+        "drush/drush": "^10.3"
+    },
+    "require-dev": {
+        "drupal/core-dev": "^9.0"
+    },
+    "conflict": {
+        "drupal/drupal": "*"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "extra": {
+        "composer-exit-on-patch-failure": true,
+        "drupal-scaffold": {
+            "allowed-packages": [
+                "drupal/core"
+            ],
+            "locations": {
+                "web-root": "./public"
+            },
+            "file-mapping": {
+                "[project-root]/.editorconfig": false
+            }
+        },
+        "enable-patching": true,
+        "installer-paths": {
+            "public/core": ["type:drupal-core"],
+            "tools/{$name}": ["type:tools"],
+            "public/libraries/{$name}": ["type:drupal-library"],
+            "public/modules/contrib/{$name}": ["type:drupal-module"],
+            "public/modules/custom/{$name}": ["type:drupal-module-custom"],
+            "public/profiles/{$name}": ["type:drupal-profile"],
+            "public/themes/contrib/{$name}": ["type:drupal-theme"],
+            "public/themes/custom/{$name}": ["type:drupal-theme-custom"],
+            "drush/{$name}": ["type:drupal-drush"]
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://city-of-helsinki.github.io/drupal-repository/"
+        },
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }
+    ],
+    "scripts": {
+        "post-create-project-cmd": [
+            "make cast-spell"
+        ]
+    }
+}

@@ -1,0 +1,68 @@
+version: '3.7'
+
+services:
+
+  app:
+    hostname: "${DRUPAL_HOSTNAME}"
+    container_name: "${COMPOSE_PROJECT_NAME}-app"
+    image: "${DRUPAL_IMAGE}"
+    volumes:
+      - .:/app:delegated
+      - ssh:/tmp/druid_ssh-agent:ro
+    environment:
+      APP_ENV: "${APP_ENV:-dev}"
+      DRUPAL_ROUTES: "https://varnish-${DRUPAL_HOSTNAME}"
+      DRUSH_OPTIONS_URI: "https://${DRUPAL_HOSTNAME}"
+      #XDEBUG_ENABLE: "true"
+      SIMPLETEST_BASE_URL: "http://app:8080"
+      SIMPLETEST_DB: "mysql://drupal:drupal@db:3306/drupal"
+    networks:
+      - internal
+      - stonehenge-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.entrypoints=https"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.rule=Host(`${DRUPAL_HOSTNAME}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true"
+      - "traefik.http.services.${COMPOSE_PROJECT_NAME}-app.loadbalancer.server.port=8080"
+      - "traefik.docker.network=stonehenge-network"
+
+  db:
+    container_name: "${COMPOSE_PROJECT_NAME}-db"
+    image: druidfi/db:mysql5.7-drupal
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - 3306
+    networks:
+      - internal
+
+  varnish:
+    container_name: "${COMPOSE_PROJECT_NAME}-varnish"
+    image: druidfi/varnish:6-drupal
+    environment:
+      VARNISH_BACKEND_HOST: "${COMPOSE_PROJECT_NAME}-app"
+    depends_on:
+      - app
+    networks:
+      - internal
+      - stonehenge-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-varnish.entrypoints=https"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-varnish.rule=Host(`varnish-${DRUPAL_HOSTNAME}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-varnish.tls=true"
+      - "traefik.http.services.${COMPOSE_PROJECT_NAME}-varnish.loadbalancer.server.port=6081"
+      - "traefik.docker.network=stonehenge-network"
+
+networks:
+  internal:
+    external: false
+  stonehenge-network:
+    external: true
+
+volumes:
+  db_data:
+  ssh:
+    name: stonehenge-ssh
+    external: true
