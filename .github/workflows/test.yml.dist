@@ -1,0 +1,36 @@
+on: [push]
+name: CI
+env:
+  SIMPLETEST_DB: "mysql://drupal:drupal@db:3306/drupal"
+  SIMPLETEST_BASE_URL: "http://127.0.0.1:8080"
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/city-of-helsinki/drupal-php-docker:7.4
+
+    services:
+      db:
+        image: druidfi/db:mysql5.7-drupal
+        ports:
+          - 3306:3306
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Build project
+        run: composer install
+
+      - name: Run PHPCS
+        run: vendor/bin/phpcs public/modules/custom/ --standard=Drupal
+
+      - name: Install Drupal
+        run: php -d sendmail_path=$(which true); drush --yes -v site-install --existing-config --db-url="$SIMPLETEST_DB"
+
+      - name: Run PHPUnit tests
+        run: |
+          drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
+          chromedriver --port=4444 > /dev/null 2>&1 &
+          vendor/bin/phpunit -c phpunit.xml.dist --verbose

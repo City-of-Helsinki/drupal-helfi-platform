@@ -53,4 +53,6 @@ Now your site can can be accessed from https://yoursite.docker.sh
 
 ## Next steps
 
+Rename `.github/workflows/test.yml.dist` to `.github/workflows/test.yml` to enable code checks.
+
 You can run `make help` to list all available commands for you.
