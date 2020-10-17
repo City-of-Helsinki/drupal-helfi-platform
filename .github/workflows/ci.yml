@@ -31,7 +31,6 @@ jobs:
       - name: Make sure Drupal is installed properly
         run: |
           drush runserver $SIMPLETEST_BASE_URL --root $HOME/drupal > /dev/null 2>&1 &
-          chromedriver --port=4444 > /dev/null 2>&1 &
+          sleep 5
           # Make sure Drupal is installed
-          drush status bootstrap --root $HOME/drupal | grep -q Successful
           curl -s -o /dev/null -I -w "%{http_code}" $SIMPLETEST_BASE_URL | grep -q 200
