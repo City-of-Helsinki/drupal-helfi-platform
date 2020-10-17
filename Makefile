@@ -9,7 +9,7 @@ PROJECT_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 include $(PROJECT_DIR)/vendor/druid/tools/make/Makefile
 
 # Include project specific make files (if they exist)
--include $(PROJECT_DIR)/vendor/druid/tools/make/project/*.mk
+-include $(PROJECT_DIR)/tools/make/project/*.mk
 
 # Project specific overrides for variables (if they exist)
 -include $(PROJECT_DIR)/tools/make/override.mk
