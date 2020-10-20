@@ -13,7 +13,8 @@
         "drupal/core-composer-scaffold": "^9.0",
         "drupal/core-recommended": "^9.0",
         "drush/drush": "^10.3",
-        "druid/tools": "^1.0"
+        "druid/tools": "^1.0",
+        "drupal/hdbt": "~1.0"
     },
     "require-dev": {
         "drupal/core-dev": "^9.0"
