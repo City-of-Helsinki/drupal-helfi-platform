@@ -23,7 +23,7 @@ jobs:
           fetch-depth: 1
 
       - name: Build composer project
-        run: composer create-project City-of-Helsinki/drupal-base:dev-main $HOME/drupal --no-interaction --repository https://city-of-helsinki.github.io/drupal-repository/
+        run: composer create-project City-of-Helsinki/drupal-helfi-platform:dev-main $HOME/drupal --no-interaction --repository https://city-of-helsinki.github.io/drupal-repository/
 
       - name: Install Drupal
         run: php -d sendmail_path=$(which true); drush --yes -v site-install --db-url="$SIMPLETEST_DB" --root $HOME/drupal

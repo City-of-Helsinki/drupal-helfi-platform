@@ -1,9 +1,9 @@
 {
-    "name": "city-of-helsinki/drupal-base",
+    "name": "city-of-helsinki/drupal-helfi-platform",
     "description": "Drupal 9 started project",
     "type": "project",
     "license": "MIT",
-    "homepage": "https://github.com/City-of-Helsinki/drupal-base",
+    "homepage": "https://github.com/City-of-Helsinki/drupal-helfi-platform",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
