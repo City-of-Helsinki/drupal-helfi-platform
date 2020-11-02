@@ -1,4 +1,4 @@
-# City-of-Helsinki/drupal-base
+# City-of-Helsinki/drupal-helfi-platform
 
 This is a skeleton repository which will create a new Drupal 9 project for you and setup Docker based development
 environment with Stonehenge.
