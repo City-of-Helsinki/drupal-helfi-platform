@@ -65,7 +65,7 @@
     ],
     "scripts": {
         "post-create-project-cmd": [
-            "rm README.md .github/workflows/ci.yml",
+            "rm README.md .github/workflows/ci.yml .github/workflows/update-repository.yml",
             "mv README.project.md README.md",
             "composer config --unset scripts.post-create-project-cmd",
             "git init && git add ."
