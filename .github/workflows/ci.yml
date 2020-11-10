@@ -34,3 +34,6 @@ jobs:
           sleep 5
           # Make sure Drupal is installed
           curl -s -o /dev/null -I -w "%{http_code}" $SIMPLETEST_BASE_URL | grep -q 200
+
+      - name: Make sure git is initialized
+        run: [ -d "$HOME/drupal/.git" ]

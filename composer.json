@@ -66,6 +66,12 @@
         "post-create-project-cmd": [
             "rm .github/workflows/ci.yml .github/workflows/update-repository.yml",
             "make cast-spell"
+        ],
+        "post-install-cmd": [
+          "make copy-commit-message-script"
+        ],
+        "post-update-cmd": [
+          "make copy-commit-message-script"
         ]
     }
 }
