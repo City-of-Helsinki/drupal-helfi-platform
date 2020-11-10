@@ -1,7 +1,12 @@
 pipeline:
+  - name: Clean old environment
+    type: command
+    command: rm -rf vendor/
+    directory: $APP_ROOT
+
   - name: Re-install platform
     type: command
-    command: rm -rf helfi-platform/ && composer create-project City-of-Helsinki/drupal-helfi-platform:dev-main helfi-platform --no-interaction --repository https://city-of-helsinki.github.io/drupal-repository/
+    command: composer install
     directory: $APP_ROOT
 
   - name: Drush site-install
