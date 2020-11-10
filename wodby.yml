@@ -1,0 +1,15 @@
+pipeline:
+  - name: Re-install platform
+    type: command
+    command: rm -rf helfi-platform/ && composer create-project City-of-Helsinki/drupal-helfi-platform:dev-main helfi-platform --no-interaction --repository https://city-of-helsinki.github.io/drupal-repository/
+    directory: $APP_ROOT
+
+  - name: Drush site-install
+    type: command
+    command: drush -y site-install
+    directory: $HTTP_ROOT
+
+  - name: Drush clear cache
+    type: command
+    command: drush -y cr
+    directory: $HTTP_ROOT
