@@ -13,7 +13,6 @@
         "drupal/core-composer-scaffold": "^9.0",
         "drupal/core-recommended": "^9.0",
         "drush/drush": "^10.3",
-        "druid/tools": "^1.0",
         "drupal/hdbt": "~1.0"
     },
     "require-dev": {
@@ -65,10 +64,8 @@
     ],
     "scripts": {
         "post-create-project-cmd": [
-            "rm README.md .github/workflows/ci.yml .github/workflows/update-repository.yml",
-            "mv README.project.md README.md",
-            "composer config --unset scripts.post-create-project-cmd",
-            "git init && git add ."
+            "rm .github/workflows/ci.yml .github/workflows/update-repository.yml",
+            "make cast-spell"
         ]
     }
 }
