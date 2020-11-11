@@ -63,15 +63,17 @@
         }
     ],
     "scripts": {
+        "copy-commit-message-script": "make copy-commit-message-script",
         "post-create-project-cmd": [
             "rm .github/workflows/ci.yml .github/workflows/update-repository.yml",
-            "make cast-spell"
+            "make cast-spell",
+            "@copy-commit-message-script"
         ],
         "post-install-cmd": [
-          "make copy-commit-message-script"
+          "@copy-commit-message-script"
         ],
         "post-update-cmd": [
-          "make copy-commit-message-script"
+          "@copy-commit-message-script"
         ]
     }
 }
