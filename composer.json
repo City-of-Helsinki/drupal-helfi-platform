@@ -66,7 +66,7 @@
     "scripts": {
         "copy-commit-message-script": "make copy-commit-message-script",
         "post-create-project-cmd": [
-            "rm .github/workflows/ci.yml .github/workflows/update-repository.yml",
+            "rm .github/workflows/ci.yml",
             "make cast-spell",
             "@copy-commit-message-script"
         ],
