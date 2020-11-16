@@ -26,7 +26,7 @@ If you have PHP and Composer installed on your host (recommended):
 
 ```
 $ composer create-project City-of-Helsinki/drupal-helfi-platform:dev-main yoursite --no-interaction \
-    --repository https://city-of-helsinki.github.io/drupal-repository/
+    --repository https://repository.drupal.hel.ninja/
 ```
 
 Or using Docker image:
@@ -36,7 +36,7 @@ mkdir yoursite && cd yoursite && \
 docker run --rm -it -v $PWD:/app --env COMPOSER_MEMORY_LIMIT=-1 \
     druidfi/drupal:7.4-web \
     composer create-project City-of-Helsinki/drupal-helfi-platform:dev-main . --no-interaction \
-    --repository https://city-of-helsinki.github.io/drupal-repository/
+    --repository https://repository.drupal.hel.ninja/
 ```
 
 ## Get started
