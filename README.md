@@ -56,3 +56,9 @@ Now your site can can be accessed from https://yoursite.docker.sh
 Rename `.github/workflows/test.yml.dist` to `.github/workflows/test.yml` to enable code checks.
 
 You can run `make help` to list all available commands for you.
+
+## Contact
+
+Slack: #helfi-drupal (http://helsinkicity.slack.com/)
+
+Mail: helfi-drupal-aaaactuootjhcono73gc34rj2u@druid.slack.com
