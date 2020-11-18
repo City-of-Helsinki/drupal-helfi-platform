@@ -14,14 +14,14 @@ pipeline:
     command: drush -y site-install
     directory: $HTTP_ROOT
 
-  - name: Drush clear cache
-    type: command
-    command: drush -y cr
-    directory: $HTTP_ROOT
-
   - name: Enable all modules
     type: command
-    command: drush -y pm:enable hdbt hdbt_admin helfi_tpr helfi_tunnistamo
+    command: drush -y pm:enable helfi_tpr helfi_tunnistamo
+    directory: $HTTP_ROOT
+
+  - name: Enable all themes
+    type: command
+    command: drush -y theme:enable hdbt hdbt_admin
     directory: $HTTP_ROOT
 
   - name: Set default theme
@@ -37,4 +37,9 @@ pipeline:
   - name: Create new test user
     type: command
     command: drush user:create $DRUPAL_USER_NAME --password $DRUPAL_USER_PASS --mail $DRUPAL_USER_MAIL
+    directory: $HTTP_ROOT
+
+  - name: Drush clear cache
+    type: command
+    command: drush -y cr
     directory: $HTTP_ROOT
