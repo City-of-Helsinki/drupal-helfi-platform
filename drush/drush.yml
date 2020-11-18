@@ -8,8 +8,7 @@ command:
     install:
       options:
         # Set a predetermined username and password when using site-install.
-        account-name: 'druidfi'
-        account-pass: 'KissatOfInstagram'
+        account-name: 'helfi-admin'
 
 sql:
   # List of tables whose *data* is skipped by the 'sql-dump' and 'sql-sync'

@@ -12,8 +12,9 @@
         "druidfi/omen": "^0.2.0",
         "drupal/core-composer-scaffold": "^9.0",
         "drupal/core-recommended": "^9.0",
-        "drupal/hdbt": "~1.0",
-        "drupal/hdbt_admin": "~1.0",
+        "drupal/hdbt": "^1.0",
+        "drupal/hdbt_admin": "^1.0",
+        "drupal/helfi_platform_config": "^1.0.0",
         "drupal/helfi_tpr": "^1.0",
         "drupal/helfi_tunnistamo": "^1.0",
         "drush/drush": "^10.3"
@@ -69,6 +70,7 @@
         "copy-commit-message-script": "make copy-commit-message-script",
         "post-create-project-cmd": [
             "rm .github/workflows/ci.yml",
+            "rm wodby.yml",
             "make cast-spell",
             "@copy-commit-message-script"
         ],

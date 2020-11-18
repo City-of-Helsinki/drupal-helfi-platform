@@ -1,0 +1,45 @@
+pipeline:
+  - name: Clean old environment
+    type: command
+    command: rm -rf vendor/ && rm composer.lock || true
+    directory: $APP_ROOT
+
+  - name: Re-install platform
+    type: command
+    command: composer install
+    directory: $APP_ROOT
+
+  - name: Drush site-install
+    type: command
+    command: drush -y site-install standard
+    directory: $HTTP_ROOT
+
+  - name: Enable all modules
+    type: command
+    command: drush -y pm:enable helfi_tpr helfi_tunnistamo
+    directory: $HTTP_ROOT
+
+  - name: Enable all themes
+    type: command
+    command: drush -y theme:enable hdbt hdbt_admin
+    directory: $HTTP_ROOT
+
+  - name: Set default theme
+    type: command
+    command: drush -y config-set system.theme default hdbt
+    directory: $HTTP_ROOT
+
+  - name: Set default admin theme
+    type: command
+    command: drush -y config-set system.theme admin hdbt_admin
+    directory: $HTTP_ROOT
+
+  - name: Reset admin user password
+    type: command
+    command: drush user:password $DRUPAL_USER_NAME $DRUPAL_USER_PASS
+    directory: $HTTP_ROOT
+
+  - name: Drush clear cache
+    type: command
+    command: drush -y cr
+    directory: $HTTP_ROOT
