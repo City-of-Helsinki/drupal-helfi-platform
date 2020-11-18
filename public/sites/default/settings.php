@@ -13,7 +13,12 @@
 extract((new Druidfi\Omen\DrupalEnvDetector(__DIR__))->getConfiguration());
 
 // Hash salt.
-$settings['hash_salt'] = 'oNbAEGiCIhNhXU-hNBmZMLSSR11HUqnXVUdG9IwMDFBft67IXRV4xjao1W20AQ_O5pRQ07PNMg';
+$settings['hash_salt'] = getenv('DRUPAL_HASH_SALT') ?: 'oNbAEGiCIhNhXU-hNBmZMLSSR11HUqnXVUdG9IwMDFBft67IXRV4xjao1W20AQ_O5pRQ07PNMg';
+
+if ($tunnistamo_client_id = getenv('TUNNISTAMO_CLIENT_ID')) {
+  $config['openid_connect.settings.tunnistamo']['settings']['client_id'] = $tunnistamo_client_id;
+  $config['openid_connect.settings.tunnistamo']['settings']['client_secret'] = getenv('TUNNISTAMO_CLIENT_SECRET');
+}
 
 /**
  * Only in Wodby environment. @see https://wodby.com/docs/stacks/drupal/#overriding-settings-from-wodbysettingsphp
