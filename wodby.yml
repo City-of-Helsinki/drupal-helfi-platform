@@ -1,7 +1,7 @@
 pipeline:
   - name: Clean old environment
     type: command
-    command: rm -rf vendor/
+    command: rm -rf vendor/ && rm composer.lock || true
     directory: $APP_ROOT
 
   - name: Re-install platform
