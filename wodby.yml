@@ -11,7 +11,7 @@ pipeline:
 
   - name: Drush site-install
     type: command
-    command: drush -y site-install
+    command: drush -y site-install standard
     directory: $HTTP_ROOT
 
   - name: Enable all modules
@@ -34,9 +34,9 @@ pipeline:
     command: drush -y config-set system.theme admin hdbt_admin
     directory: $HTTP_ROOT
 
-  - name: Create new test user
+  - name: Reset admin user password
     type: command
-    command: drush user:create $DRUPAL_USER_NAME --password $DRUPAL_USER_PASS --mail $DRUPAL_USER_MAIL
+    command: drush user:password $DRUPAL_USER_NAME $DRUPAL_USER_PASS
     directory: $HTTP_ROOT
 
   - name: Drush clear cache
