@@ -14,7 +14,7 @@
         "drupal/core-recommended": "^9.0",
         "drupal/hdbt": "^1.0",
         "drupal/hdbt_admin": "^1.0",
-        "drupal/helfi_ahjo": "1.x-dev",
+        "drupal/helfi_ahjo": "^1.0",
         "drupal/helfi_platform_config": "^1.0.0",
         "drupal/helfi_tpr": "^1.0",
         "drupal/helfi_tunnistamo": "^1.0",
