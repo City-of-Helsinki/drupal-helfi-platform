@@ -16,7 +16,7 @@ pipeline:
 
   - name: Enable all modules
     type: command
-    command: drush -y pm:enable features helfi_platform_config helfi_tpr helfi_tunnistamo
+    command: drush -y pm:enable helfi_platform_config helfi_tpr helfi_tunnistamo
     directory: $HTTP_ROOT
 
   - name: Reset admin user password
