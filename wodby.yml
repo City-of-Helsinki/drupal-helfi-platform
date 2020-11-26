@@ -16,22 +16,7 @@ pipeline:
 
   - name: Enable all modules
     type: command
-    command: drush -y pm:enable helfi_tpr helfi_tunnistamo
-    directory: $HTTP_ROOT
-
-  - name: Enable all themes
-    type: command
-    command: drush -y theme:enable hdbt hdbt_admin
-    directory: $HTTP_ROOT
-
-  - name: Set default theme
-    type: command
-    command: drush -y config-set system.theme default hdbt
-    directory: $HTTP_ROOT
-
-  - name: Set default admin theme
-    type: command
-    command: drush -y config-set system.theme admin hdbt_admin
+    command: drush -y pm:enable helfi_platform_config helfi_tpr helfi_tunnistamo
     directory: $HTTP_ROOT
 
   - name: Reset admin user password
