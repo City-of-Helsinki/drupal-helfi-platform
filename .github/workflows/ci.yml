@@ -22,15 +22,22 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Set variables
+        run: echo "DRUPAL_ROOT=$HOME/drupal" >> $GITHUB_ENV
+
       - name: Build composer project
-        run: composer create-project City-of-Helsinki/drupal-helfi-platform:dev-main $HOME/drupal --no-interaction --repository https://repository.drupal.hel.ninja/
+        run: composer create-project City-of-Helsinki/drupal-helfi-platform:dev-main $DRUPAL_ROOT --no-interaction --repository https://repository.drupal.hel.ninja/
 
       - name: Install Drupal
-        run: php -d sendmail_path=$(which true); drush --yes -v site-install --db-url="$SIMPLETEST_DB" --root $HOME/drupal
+        run: |
+          cd $DRUPAL_ROOT
+          php -d sendmail_path=$(which true); drush --yes -v site-install --db-url="$SIMPLETEST_DB"
+          drush en helfi_platform_config
 
       - name: Make sure Drupal is installed properly
         run: |
-          drush runserver $SIMPLETEST_BASE_URL --root $HOME/drupal > /dev/null 2>&1 &
+          cd $DRUPAL_ROOT
+          drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
           sleep 5
           # Make sure Drupal is installed
           curl -s -o /dev/null -I -w "%{http_code}" $SIMPLETEST_BASE_URL | grep -q 200
