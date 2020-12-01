@@ -5,6 +5,11 @@
 if (isset($_SERVER['WODBY_APP_NAME'])) {
   // The include won't be added automatically if it's already there.
   include '/var/www/conf/wodby.settings.php';
+
+  putenv(sprintf('DRUPAL_DB_NAME=%s', getenv('DB_NAME')));
+  putenv(sprintf('DRUPAL_DB_USER=%s', getenv('DB_USER')));
+  putenv(sprintf('DRUPAL_DB_PASS=%s', getenv('DB_PASSWORD')));
+  putenv(sprintf('DRUPAL_DB_HOST=%s', getenv('DB_HOST')));
 }
 
 if ($simpletest_db = getenv('SIMPLETEST_DB')) {
