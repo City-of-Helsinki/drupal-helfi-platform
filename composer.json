@@ -61,10 +61,6 @@
     },
     "repositories": [
         {
-            "type": "path",
-            "url": "/srv/http/helfi/drupal-helfi/public/modules/custom/helfi_tpr"
-        },
-        {
             "type": "composer",
             "url": "https://repository.drupal.hel.ninja"
         },
