@@ -11,7 +11,7 @@ pipeline:
 
   - name: Drush site-install
     type: command
-    command: drush -y site-install standard
+    command: drush -y site-install minimal
     directory: $HTTP_ROOT
 
   - name: Enable all modules

@@ -18,7 +18,8 @@
         "drupal/helfi_platform_config": "^1.0.0",
         "drupal/helfi_tpr": "^1.0",
         "drupal/helfi_tunnistamo": "^1.0",
-        "drush/drush": "^10.3"
+        "drush/drush": "^10.3",
+        "phpunit/phpunit": "~9.4.0"
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
@@ -59,6 +60,10 @@
         }
     },
     "repositories": [
+        {
+            "type": "path",
+            "url": "/srv/http/helfi/drupal-helfi/public/modules/custom/helfi_tpr"
+        },
         {
             "type": "composer",
             "url": "https://repository.drupal.hel.ninja"
