@@ -18,14 +18,14 @@
         "drupal/helfi_platform_config": "^1.0.0",
         "drupal/helfi_tpr": "^1.0",
         "drupal/helfi_tunnistamo": "^1.0",
-        "drush/drush": "^10.3",
-        "phpunit/phpunit": "~9.4.0"
+        "drush/drush": "^10.3"
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
         "drupal/coder": "^8.3",
         "drupal/core-dev": "^9.1",
-        "phpspec/prophecy-phpunit": "^2"
+        "phpspec/prophecy-phpunit": "^2",
+        "phpunit/phpunit": "~9.4.0"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -49,14 +49,30 @@
         },
         "enable-patching": true,
         "installer-paths": {
-            "public/core": ["type:drupal-core"],
-            "public/libraries/{$name}": ["type:drupal-library"],
-            "public/modules/contrib/{$name}": ["type:drupal-module"],
-            "public/modules/custom/{$name}": ["type:drupal-custom-module"],
-            "public/profiles/{$name}": ["type:drupal-profile"],
-            "public/themes/contrib/{$name}": ["type:drupal-theme"],
-            "public/themes/custom/{$name}": ["type:drupal-custom-theme"],
-            "drush/{$name}": ["type:drupal-drush"]
+            "public/core": [
+                "type:drupal-core"
+            ],
+            "public/libraries/{$name}": [
+                "type:drupal-library"
+            ],
+            "public/modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "public/modules/custom/{$name}": [
+                "type:drupal-custom-module"
+            ],
+            "public/profiles/{$name}": [
+                "type:drupal-profile"
+            ],
+            "public/themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ],
+            "public/themes/custom/{$name}": [
+                "type:drupal-custom-theme"
+            ],
+            "drush/{$name}": [
+                "type:drupal-drush"
+            ]
         }
     },
     "repositories": [
@@ -78,10 +94,10 @@
             "@copy-commit-message-script"
         ],
         "post-install-cmd": [
-          "@copy-commit-message-script"
+            "@copy-commit-message-script"
         ],
         "post-update-cmd": [
-          "@copy-commit-message-script"
+            "@copy-commit-message-script"
         ]
     }
 }
