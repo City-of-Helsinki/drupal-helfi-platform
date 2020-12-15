@@ -33,6 +33,10 @@ if (isset($_SERVER['WODBY_APP_NAME'])) {
   include '/var/www/conf/wodby.settings.php';
 }
 
+if ($elasticsearch_url = getenv('ELASTICSEARCH_URL')) {
+  $config['elasticsearch_connector.cluster.helfi_cluster']['url'] = $elasticsearch_url;
+}
+
 $settings['hash_salt'] = getenv('DRUPAL_HASH_SALT') ?: '000';
 
 $config['openid_connect.settings.tunnistamo']['settings']['client_id'] = getenv('TUNNISTAMO_CLIENT_ID');
