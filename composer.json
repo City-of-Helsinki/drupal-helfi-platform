@@ -18,7 +18,7 @@
         "drupal/helfi_platform_config": "^1.0.0",
         "drupal/helfi_tpr": "^1.0",
         "drupal/helfi_tunnistamo": "^1.0",
-        "drush/drush": "^10.3"
+        "drush/drush": "^10.4"
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
