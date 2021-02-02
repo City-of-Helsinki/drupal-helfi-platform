@@ -37,7 +37,7 @@ jobs:
       - name: Make sure Drupal is installed properly
         run: |
           cd $DRUPAL_ROOT
-          drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
+          drush runserver $SIMPLETEST_BASE_URL &
           sleep 5
           # Make sure Drupal is installed
           curl -s -o /dev/null -I -w "%{http_code}" $SIMPLETEST_BASE_URL | grep -q 200
