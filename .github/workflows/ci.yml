@@ -28,13 +28,11 @@ jobs:
 
       - name: Install Drupal
         run: |
-          cd $DRUPAL_ROOT
           php -d sendmail_path=$(which true); drush --yes -v site-install --db-url="$SIMPLETEST_DB"
           drush en helfi_platform_config
 
       - name: Make sure Drupal is installed properly
         run: |
-          cd $DRUPAL_ROOT
           drush runserver $SIMPLETEST_BASE_URL &
           sleep 5
           # Make sure Drupal is installed
