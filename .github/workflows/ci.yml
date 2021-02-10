@@ -22,11 +22,9 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Set variables
-        run: echo "DRUPAL_ROOT=$HOME/drupal" >> $GITHUB_ENV
-
-      - name: Build composer project
-        run: composer create-project City-of-Helsinki/drupal-helfi-platform:dev-main $DRUPAL_ROOT --no-interaction --repository https://repository.drupal.hel.ninja/
+      - name: Build project
+        run: |
+          composer install
 
       - name: Install Drupal
         run: |
