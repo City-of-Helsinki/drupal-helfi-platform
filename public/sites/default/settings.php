@@ -76,3 +76,8 @@ if ($env = getenv('APP_ENV')) {
   }
 }
 
+if ($reverse_proxy_address = getenv('DRUPAL_REVERSE_PROXY_ADDRESS')) {
+  $conf['reverse_proxy'] = TRUE;
+  $conf['reverse_proxy_addresses'] = explode(',', $reverse_proxy_address);
+}
+
