@@ -58,6 +58,11 @@ $settings['file_public_path'] = getenv('DRUPAL_FILES_PUBLIC') ?: 'sites/default/
 $settings['file_private_path'] = getenv('DRUPAL_FILES_PRIVATE');
 $settings['file_temp_path'] = getenv('DRUPAL_TMP_PATH') ?: '/tmp';
 
+if ($reverse_proxy_address = getenv('DRUPAL_REVERSE_PROXY_ADDRESS')) {
+  $conf['reverse_proxy'] = TRUE;
+  $conf['reverse_proxy_addresses'] = explode(',', $reverse_proxy_address);
+}
+
 if ($env = getenv('APP_ENV')) {
   if (file_exists(__DIR__ . '/' . $env . '.settings.php')) {
     include __DIR__ . '/' . $env . '.settings.php';
@@ -75,9 +80,3 @@ if ($env = getenv('APP_ENV')) {
     include __DIR__ . '/local.settings.php';
   }
 }
-
-if ($reverse_proxy_address = getenv('DRUPAL_REVERSE_PROXY_ADDRESS')) {
-  $conf['reverse_proxy'] = TRUE;
-  $conf['reverse_proxy_addresses'] = explode(',', $reverse_proxy_address);
-}
-
