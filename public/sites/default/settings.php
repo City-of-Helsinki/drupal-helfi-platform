@@ -63,8 +63,14 @@ $settings['file_private_path'] = getenv('DRUPAL_FILES_PRIVATE');
 $settings['file_temp_path'] = getenv('DRUPAL_TMP_PATH') ?: '/tmp';
 
 if ($reverse_proxy_address = getenv('DRUPAL_REVERSE_PROXY_ADDRESS')) {
+  $reverse_proxy_address = explode(',', $reverse_proxy_address);
+
+  if (isset($_SERVER['REMOTE_ADDR'])) {
+    $reverse_proxy_address[] = $_SERVER['REMOTE_ADDR'];
+  }
   $settings['reverse_proxy'] = TRUE;
-  $settings['reverse_proxy_addresses'] = explode(',', $reverse_proxy_address);
+  $settings['reverse_proxy_addresses'] = $reverse_proxy_address;
+  $settings['reverse_proxy_trusted_headers'] = \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_ALL;
 }
 
 if ($env = getenv('APP_ENV')) {
