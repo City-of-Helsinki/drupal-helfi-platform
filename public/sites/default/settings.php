@@ -1,5 +1,9 @@
 <?php
 
+if (PHP_SAPI === 'cli') {
+  ini_set('memory_limit', '512M');
+}
+
 if ($simpletest_db = getenv('SIMPLETEST_DB')) {
   $parts = parse_url($simpletest_db);
   putenv(sprintf('DRUPAL_DB_NAME=%s', substr($parts['path'], 1)));
