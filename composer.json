@@ -16,7 +16,7 @@
         "drupal/hdbt_admin": "^1.0",
         "drupal/helfi_ahjo": "^1.0",
         "drupal/helfi_hauki": "^1.0",
-        "drupal/helfi_platform_config": "^1.0.0",
+        "drupal/helfi_platform_config": "^1.0",
         "drupal/helfi_tpr": "^1.0",
         "drupal/helfi_tunnistamo": "^1.0",
         "drush/drush": "^10.4"
