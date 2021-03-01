@@ -57,6 +57,14 @@ Rename `.github/workflows/test.yml.dist` to `.github/workflows/test.yml` to enab
 
 You can run `make help` to list all available commands for you.
 
+## Additional information
+### Issues with Paragraph module and admin theme
+The platform does not have patches on the drupal core but there is a bug in the Claro-theme that causes paragraphs that
+are placed inside paragraphs to have multiple drag handles and this then causes the admin UI to clutter. This issue is
+listed in here: https://www.drupal.org/project/drupal/issues/3092181 and can be fixed by adding a patch to Drupal core.
+We have also added piece of css to hide the redundant drag handles in hdbt_admin theme (https://github.com/City-of-Helsinki/drupal-hdbt-admin/pull/20/files#diff-721036acbbdc5d086b22422e09f5e86a878db3b416827e83cfd91d8a395ca801R53-R57), but if you still run into the
+issue please patch your project using the code found from drupal.org.
+
 ## Contact
 
 Slack: #helfi-drupal (http://helsinkicity.slack.com/)
