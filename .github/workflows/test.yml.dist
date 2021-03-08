@@ -3,6 +3,7 @@ name: CI
 env:
   SIMPLETEST_DB: "mysql://drupal:drupal@db:3306/drupal"
   SIMPLETEST_BASE_URL: "http://127.0.0.1:8080"
+  SYMFONY_DEPRECATIONS_HELPER: max[direct]=0
 jobs:
   tests:
     runs-on: ubuntu-latest
