@@ -23,11 +23,18 @@ $databases['default']['default'] = [
   'driver' => 'mysql',
 ];
 
+$settings['hash_salt'] = getenv('DRUPAL_HASH_SALT') ?: '000';
+
 if ($ssl_ca_path = getenv('AZURE_SQL_SSL_CA_PATH')) {
   $databases['default']['default']['pdo'] = [
     \PDO::MYSQL_ATTR_SSL_CA => $ssl_ca_path,
     \PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => FALSE,
   ];
+  // Azure specific filesystem fixes.
+  $settings['php_storage']['twig']['directory'] = '/tmp';
+  $settings['php_storage']['twig']['secret'] = $settings['hash_salt'];
+  $settings['file_chmod_directory'] = 16895;
+  $settings['file_chmod_file'] = 16895;
 }
 
 // Only in Wodby environment.
@@ -36,8 +43,6 @@ if (isset($_SERVER['WODBY_APP_NAME'])) {
   // The include won't be added automatically if it's already there.
   include '/var/www/conf/wodby.settings.php';
 }
-
-$settings['hash_salt'] = getenv('DRUPAL_HASH_SALT') ?: '000';
 
 $config['openid_connect.settings.tunnistamo']['settings']['client_id'] = getenv('TUNNISTAMO_CLIENT_ID');
 $config['openid_connect.settings.tunnistamo']['settings']['client_secret'] = getenv('TUNNISTAMO_CLIENT_SECRET');
@@ -90,3 +95,4 @@ if ($env = getenv('APP_ENV')) {
     include __DIR__ . '/local.settings.php';
   }
 }
+
