@@ -16,7 +16,7 @@ pipeline:
 
   - name: Enable all modules
     type: command
-    command: drush -y pm:enable helfi_platform_config helfi_base_config helfi_tpr helfi_tunnistamo
+    command: drush -y pm:enable helfi_platform_config helfi_base_config helfi_tpr helfi_tunnistamo && drush -y cr
     directory: $HTTP_ROOT
 
   - name: Update translations
