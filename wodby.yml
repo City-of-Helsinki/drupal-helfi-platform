@@ -19,6 +19,11 @@ pipeline:
     command: drush -y pm:enable helfi_platform_config helfi_base_config helfi_tpr helfi_tunnistamo
     directory: $HTTP_ROOT
 
+  - name: Update translations
+    type: command
+    command: drush -y locale:update
+    directory: $HTTP_ROOT
+
   - name: Reset admin user password
     type: command
     command: drush user:password $DRUPAL_USER_NAME $DRUPAL_USER_PASS
