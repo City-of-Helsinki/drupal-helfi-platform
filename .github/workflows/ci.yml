@@ -55,6 +55,7 @@ jobs:
 
       - name: Build with Maven
         run: |
+          ls -la
           cd helfi-test-automation/
           ls -la
           mvn -Drobot.tag=CRITICAL -Drobot.browser=chromeheadless -Pplatform -B clean install
