@@ -31,7 +31,7 @@ jobs:
 
       - name: Install Drupal
         run: |
-          php -d sendmail_path=$(which true); vendor/bin/drush --yes -v site-install --db-url="$SIMPLETEST_DB"
+          php -d sendmail_path=$(which true); vendor/bin/drush --yes -v site-install --db-url="mysql://drupal:drupal@127.0.0.1:${{ job.services.db.ports[3306] }}/drupal"
           vendor/bin/drush en helfi_platform_config
 
       - name: Make sure Drupal is installed properly
