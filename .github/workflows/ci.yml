@@ -8,9 +8,6 @@ env:
 jobs:
   tests:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/city-of-helsinki/drupal-php-docker:7.4
-
     services:
       db:
         image: druidfi/db:mysql5.7-drupal
@@ -21,6 +18,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: mbstring, mysql, dom, gd, xml
 
       - name: Build project
         run: |
@@ -38,7 +41,7 @@ jobs:
           # Make sure Drupal is installed
           curl -s -o /dev/null -I -w "%{http_code}" $SIMPLETEST_BASE_URL/user/login | grep -q 200
 
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
         with:
           name: City-of-Helsinki/helfi-test-automation
 
