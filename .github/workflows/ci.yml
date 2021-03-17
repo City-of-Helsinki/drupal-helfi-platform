@@ -46,6 +46,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           name: City-of-Helsinki/helfi-test-automation
+          path: helfi-test-automation
 
       - name: Set up JDK 15
         uses: actions/setup-java@v1
