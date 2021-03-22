@@ -40,8 +40,6 @@ jobs:
         run: |
           vendor/bin/drush runserver $SIMPLETEST_BASE_URL &
           sleep 5
-          # Make sure Drupal is installed
-          curl -s -o /dev/null -I -w "%{http_code}" $SIMPLETEST_BASE_URL/user/login | grep -q 200
 
       - uses: actions/checkout@v2
         with:
