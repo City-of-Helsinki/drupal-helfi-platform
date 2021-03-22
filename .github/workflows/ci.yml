@@ -57,3 +57,7 @@ jobs:
         run: |
           cd helfi-test-automation/
           mvn -Drobot.tag=CRITICAL -Drobot.browser=chromeheadless -Pci_platform -B clean install
+
+      - uses: actions/download-artifact@v2
+        with:
+          path: helfi-test-automation/target/robotframework-reports/
