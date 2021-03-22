@@ -61,4 +61,5 @@ jobs:
       - uses: actions/upload-artifact@v2
         if: ${{ failure() }}
         with:
+          name: Test result
           path: helfi-test-automation/target/robotframework-reports/
