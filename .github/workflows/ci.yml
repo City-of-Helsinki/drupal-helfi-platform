@@ -54,7 +54,7 @@ jobs:
       - name: Build with Maven
         run: |
           cd helfi-test-automation/
-          mvn -Drobot.tag=CRITICAL -Drobot.browser=chromeheadless -Pci_platform -B clean install
+          mvn -Drobot.tag=TODO -Drobot.browser=chromeheadless -Pci_platform -B clean install
 
       - uses: actions/upload-artifact@v2
         if: ${{ failure() }}
