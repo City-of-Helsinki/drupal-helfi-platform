@@ -35,6 +35,10 @@ jobs:
         run: |
           php -d sendmail_path=$(which true); vendor/bin/drush --yes -v site-install --db-url="$SIMPLETEST_DB"
           vendor/bin/drush en helfi_platform_config helfi_base_config
+          for d in public/modules/custom/helfi_platform_config/features/*; do vendor/bin/drush en $d | cut -d/ -f2; done
+          vendor/bin/drush state:set locale.translation_last_checked 0
+          vendor/bin/drush -y locale:update
+          vendor/bin/drush cr
 
       - name: Make sure Drupal is installed properly
         run: |
