@@ -21,7 +21,7 @@ pipeline:
 
   - name: Update translations
     type: command
-    command: drush state:set locale.translation_last_checked 0 && drush -y locale:update
+    command: drush helfi:locale-import helfi_platform_config
     directory: $HTTP_ROOT
 
   - name: Reset admin user password
