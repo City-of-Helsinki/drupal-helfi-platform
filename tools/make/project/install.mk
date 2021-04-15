@@ -1,5 +1,5 @@
 ifeq ($(DRUPAL_CONF_EXISTS)$(DRUPAL_VERSION),no8)
-    DRUPAL_NEW_TARGETS := up build drush-si drush-enable-modules drush-uli
+    DRUPAL_NEW_TARGETS := up build drush-si drush-enable-modules drush-locale-update drush-uli
 endif
 ifeq ($(DRUPAL_VERSION),8)
     DRUPAL_POST_INSTALL_TARGETS := drush-updb drush-cim drush-locale-update drush-uli
@@ -12,6 +12,6 @@ drush-enable-modules: ## Enable modules and base configurations.
 
 PHONY += drush-locale-update
 drush-locale-update: ## Update translations.
-	$(call step,Install base configurations...)
+	$(call step,Update translations...)
 	$(call drush_on_docker,state:set locale.translation_last_checked 0)
 	$(call drush_on_docker,locale:update)
