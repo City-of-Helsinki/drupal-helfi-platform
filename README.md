@@ -61,7 +61,7 @@ Rename `.github/workflows/test.yml.dist` to `.github/workflows/test.yml` to enab
 
 ## Automatic deploy on Azure
 
-Rename all `azure-pipelines-*.yml.dist` files to `azure-pipelines-*.yml` and replace `REPLACEME` values to match your own project.
+Rename all `azure-pipelines-*.yml.dist` files to `azure-pipelines-*.yml` and replace `drupal-REPLACEME` values to match your own project.
 
 ## Contact
 
