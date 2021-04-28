@@ -12,7 +12,9 @@ vendor
 .idea/*
 
 # Ignore themes with own git repositories
-public/themes/custom/hdbt*
+public/themes/custom/hdbt
+public/themes/custom/hdbt_admin
+
 # Ignore modules with own repositories
 public/modules/custom/helfi_*
 
