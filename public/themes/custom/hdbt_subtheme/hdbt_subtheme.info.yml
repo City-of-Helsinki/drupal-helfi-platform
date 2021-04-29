@@ -1,0 +1,28 @@
+name: HDBT - Subtheme
+description: Subtheme for Helsinki Drupal instances.
+type: theme
+base theme: hdbt
+tags: sub-theme
+core_version_requirement: ^8 || ^9
+screenshot: hdbt_subtheme.png
+
+# Regions
+regions:
+  header_top: Header - Top
+  header_bottom: Header - Bottom
+  messages: Messages
+  tools: Tools
+  breadcrumb: Breadcrumb
+  sidebar_first: First sidebar
+  sidebar_second: Second sidebar
+  before_content: Before content
+  content: Content
+  after_content: After content
+  before_footer: Before footer
+  footer_top: Footer - Top
+  footer_bottom: Footer - Bottom
+
+# Libraries
+libraries:
+  - hdbt_subtheme/global-styling
+  - hdbt_subtheme/global-scripting
