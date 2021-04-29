@@ -1,17 +1,27 @@
+const isDev = (process.env.NODE_ENV !== "production");
+
 const path = require("path");
-const isDev = process.env.NODE_ENV !== "production";
+const glob = require("glob");
+const globImporter = require("node-sass-glob-importer");
 
 const CleanWebpackPlugin = require("clean-webpack-plugin");
+const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const SVGSpritemapPlugin = require("svg-spritemap-webpack-plugin");
-const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
-const globImporter = require("node-sass-glob-importer");
 const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
 
 module.exports = {
   entry: {
     styles: ["./src/scss/styles.scss"],
-    bundle: ["./src/js/common.js"],
+    bundle: glob.sync("./src/js/**/*.js",{
+      ignore: [
+        // './src/js/some-example-component.js',
+      ]
+    }),
+    // "some-example-component": [
+    //   "./src/js/some-example-component.js",
+    //   "./src/scss/some-example-component.scss"
+    // ],
   },
   output: {
     devtoolLineToLine: true,
@@ -30,32 +40,19 @@ module.exports = {
             loader: "file-loader",
             options: {
               name: "[path][name].[ext]",
-              outputPath: "./",
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
-        use: [
-          {
-            loader: "file-loader",
-            options: {
-              name: "[name].[ext]",
-              outputPath: "fonts/",
-            },
-          },
-        ],
+              outputPath: "./"
+            }
+          }
+        ]
       },
       {
         test: /\.(png|jpe?g|gif)$/,
-        use: [
-          {
-            loader: "file-loader",
-            options: {
-              name: "media/[name].[ext]?[hash]",
-            },
+        use: [{
+          loader: "file-loader",
+          options: {
+            name: "media/[name].[ext]?[hash]",
           },
+        },
         ],
       },
       {
@@ -91,7 +88,7 @@ module.exports = {
             loader: MiniCssExtractPlugin.loader,
             options: {
               name: "[name].[ext]?[hash]",
-            },
+            }
           },
           {
             loader: "css-loader",
@@ -114,7 +111,7 @@ module.exports = {
             options: {
               sourceMap: isDev,
               sassOptions: {
-                importer: globImporter(),
+                importer: globImporter()
               },
             },
           },
