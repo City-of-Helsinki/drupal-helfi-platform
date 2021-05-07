@@ -15,6 +15,7 @@
         "drupal/hdbt": "^1.0",
         "drupal/hdbt_admin": "^1.0",
         "drupal/helfi_ahjo": "^1.0",
+        "drupal/helfi_azure_fs": "^1.0",
         "drupal/helfi_hauki": "^1.0",
         "drupal/helfi_linkedevents": "^1.0",
         "drupal/helfi_platform_config": "^1.1",
