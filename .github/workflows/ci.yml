@@ -28,12 +28,12 @@ jobs:
 
       - name: Install Drupal
         run: |
-          php -d sendmail_path=$(which true); drush --yes -v site-install --db-url="$SIMPLETEST_DB"
-          drush en helfi_platform_config
+          php -d sendmail_path=$(which true); vendor/bin/drush --yes -v site-install --db-url="$SIMPLETEST_DB"
+          vendor/bin/drush en helfi_platform_config
 
       - name: Make sure Drupal is installed properly
         run: |
-          drush runserver $SIMPLETEST_BASE_URL &
+          vendor/bin/drush runserver $SIMPLETEST_BASE_URL &
           sleep 5
           # Make sure Drupal is installed
           curl -s -o /dev/null -I -w "%{http_code}" $SIMPLETEST_BASE_URL/user/login | grep -q 200
