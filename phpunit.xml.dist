@@ -19,21 +19,25 @@
     <directory>./public/modules/custom/*/tests/src/Unit</directory>
     <directory>./public/themes/custom/*/tests/src/Unit</directory>
     <directory>./public/profiles/custom/*/tests/src/Unit</directory>
+    <exclude>./public/modules/custom/helfi_*/tests/src/Unit</exclude>
   </testsuite>
   <testsuite name="kernel">
     <directory>./public/modules/custom/*/tests/src/Kernel</directory>
     <directory>./public/themes/custom/*/tests/src/Kernel</directory>
     <directory>./public/profiles/custom/*/tests/src/Kernel</directory>
+    <exclude>./public/modules/custom/helfi_*/tests/src/Kernel</exclude>
   </testsuite>
   <testsuite name="functional">
     <directory>./public/modules/custom/*/tests/src/Functional</directory>
     <directory>./public/themes/custom/*/tests/src/Functional</directory>
     <directory>./public/profiles/custom/*/tests/src/Functional</directory>
+    <exclude>./public/modules/custom/helfi_*/tests/src/Functional</exclude>
   </testsuite>
   <testsuite name="functional-javascript">
     <directory>./public/modules/custom/*/tests/src/FunctionalJavascript</directory>
     <directory>./public/themes/custom/*/tests/src/FunctionalJavascript</directory>
     <directory>./public/profiles/custom/*/tests/src/FunctionalJavascript</directory>
+    <exclude>./public/modules/custom/helfi_*/tests/src/FunctionalJavascript</exclude>
   </testsuite>
 </testsuites>
 <listeners>
