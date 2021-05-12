@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./public/core/tests/bootstrap.php" colors="true"
+  beStrictAboutTestsThatDoNotTestAnything="true"
+  beStrictAboutOutputDuringTests="true"
+  beStrictAboutChangesToGlobalState="true"
+  beStrictAboutCoversAnnotation="false"
+  printerClass="\Drupal\Tests\Listeners\HtmlOutputPrinter"
+  >
+<php>
+  <!-- Set error reporting to E_ALL. -->
+  <ini name="error_reporting" value="32767"/>
+    <!-- Do not limit the amount of memory tests take to run. -->
+  <ini name="memory_limit" value="-1"/>
+  <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="public/sites/simpletest"/>
+  <env name="MINK_DRIVER_ARGS_WEBDRIVER" value='["chrome", {"browserName":"chrome","chromeOptions":{"w3c": false, "args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:4444"]' />
+</php>
+<testsuites>
+  <testsuite name="unit">
+    <directory>./public/modules/custom/*/tests/src/Unit</directory>
+    <directory>./public/themes/custom/*/tests/src/Unit</directory>
+    <directory>./public/profiles/custom/*/tests/src/Unit</directory>
+  </testsuite>
+  <testsuite name="kernel">
+    <directory>./public/modules/custom/*/tests/src/Kernel</directory>
+    <directory>./public/themes/custom/*/tests/src/Kernel</directory>
+    <directory>./public/profiles/custom/*/tests/src/Kernel</directory>
+  </testsuite>
+  <testsuite name="functional">
+    <directory>./public/modules/custom/*/tests/src/Functional</directory>
+    <directory>./public/themes/custom/*/tests/src/Functional</directory>
+    <directory>./public/profiles/custom/*/tests/src/Functional</directory>
+  </testsuite>
+  <testsuite name="functional-javascript">
+    <directory>./public/modules/custom/*/tests/src/FunctionalJavascript</directory>
+    <directory>./public/themes/custom/*/tests/src/FunctionalJavascript</directory>
+    <directory>./public/profiles/custom/*/tests/src/FunctionalJavascript</directory>
+  </testsuite>
+</testsuites>
+<listeners>
+  <listener class="\Drupal\Tests\Listeners\DrupalListener">
+  </listener>
+</listeners>
+<coverage processUncoveredFiles="true">
+  <include>
+    <directory suffix=".php">./public/modules/custom/*/src</directory>
+    <directory suffix=".php">./public/themes/custom/*/src</directory>
+    <directory suffix=".php">./public/profiles/custom/*/src</directory>
+    <file>./public/modules/custom/*/*.module</file>
+    <file>./public/themes/custom/*/*.theme</file>
+    <file>./public/profiles/custom/*/*.profile</file>
+  </include>
+  <exclude>
+    <directory>./public/modules/custom/*/src/Tests</directory>
+    <directory>./public/themes/custom/*/src/Tests</directory>
+    <directory>./public/profiles/custom/*/src/Tests</directory>
+  </exclude>
+</coverage>
+</phpunit>
