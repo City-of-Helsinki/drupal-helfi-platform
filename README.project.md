@@ -25,10 +25,10 @@ For the first time (new project):
 $ make new
 ``
 
-And following times to create and start the environment:
+And following times to start the environment:
 
 ``
-$ make fresh
+$ make up
 ``
 
 NOTE: Change these according of the state of your project.
