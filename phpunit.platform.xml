@@ -16,24 +16,24 @@
 </php>
 <testsuites>
   <testsuite name="unit">
-    <directory>./public/modules/custom/*/tests/src/Unit</directory>
-    <directory>./public/themes/custom/*/tests/src/Unit</directory>
-    <directory>./public/profiles/custom/*/tests/src/Unit</directory>
+    <directory>./public/modules/contrib/*/tests/src/Unit</directory>
+    <directory>./public/themes/contrib/*/tests/src/Unit</directory>
+    <directory>./public/profiles/contrib/*/tests/src/Unit</directory>
   </testsuite>
   <testsuite name="kernel">
-    <directory>./public/modules/custom/*/tests/src/Kernel</directory>
-    <directory>./public/themes/custom/*/tests/src/Kernel</directory>
-    <directory>./public/profiles/custom/*/tests/src/Kernel</directory>
+    <directory>./public/modules/contrib/*/tests/src/Kernel</directory>
+    <directory>./public/themes/contrib/*/tests/src/Kernel</directory>
+    <directory>./public/profiles/contrib/*/tests/src/Kernel</directory>
   </testsuite>
   <testsuite name="functional">
-    <directory>./public/modules/custom/*/tests/src/Functional</directory>
-    <directory>./public/themes/custom/*/tests/src/Functional</directory>
-    <directory>./public/profiles/custom/*/tests/src/Functional</directory>
+    <directory>./public/modules/contrib/*/tests/src/Functional</directory>
+    <directory>./public/themes/contrib/*/tests/src/Functional</directory>
+    <directory>./public/profiles/contrib/*/tests/src/Functional</directory>
   </testsuite>
   <testsuite name="functional-javascript">
-    <directory>./public/modules/custom/*/tests/src/FunctionalJavascript</directory>
-    <directory>./public/themes/custom/*/tests/src/FunctionalJavascript</directory>
-    <directory>./public/profiles/custom/*/tests/src/FunctionalJavascript</directory>
+    <directory>./public/modules/contrib/*/tests/src/FunctionalJavascript</directory>
+    <directory>./public/themes/contrib/*/tests/src/FunctionalJavascript</directory>
+    <directory>./public/profiles/contrib/*/tests/src/FunctionalJavascript</directory>
   </testsuite>
 </testsuites>
 <listeners>
@@ -42,17 +42,17 @@
 </listeners>
 <coverage processUncoveredFiles="true">
   <include>
-    <directory suffix=".php">./public/modules/custom/*/src</directory>
-    <directory suffix=".php">./public/themes/custom/*/src</directory>
-    <directory suffix=".php">./public/profiles/custom/*/src</directory>
-    <file>./public/modules/custom/*/*.module</file>
-    <file>./public/themes/custom/*/*.theme</file>
-    <file>./public/profiles/custom/*/*.profile</file>
+    <directory suffix=".php">./public/modules/contrib/*/src</directory>
+    <directory suffix=".php">./public/themes/contrib/*/src</directory>
+    <directory suffix=".php">./public/profiles/contrib/*/src</directory>
+    <file>./public/modules/contrib/*/*.module</file>
+    <file>./public/themes/contrib/*/*.theme</file>
+    <file>./public/profiles/contrib/*/*.profile</file>
   </include>
   <exclude>
-    <directory>./public/modules/custom/*/src/Tests</directory>
-    <directory>./public/themes/custom/*/src/Tests</directory>
-    <directory>./public/profiles/custom/*/src/Tests</directory>
+    <directory>./public/modules/contrib/*/src/Tests</directory>
+    <directory>./public/themes/contrib/*/src/Tests</directory>
+    <directory>./public/profiles/contrib/*/src/Tests</directory>
   </exclude>
 </coverage>
 </phpunit>
