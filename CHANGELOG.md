@@ -1,5 +1,13 @@
 # Changelog
 
+## 2021-05-28.1
+
+Added Admin toolbar (admin_toolbar) as a dependency for the helfi-platform-config.
+
+### Required actions
+- In case of an error `"Unable to install HELfi Base config module since it requires the Admin Toolbar Extra Tools, Configuration replace, Field group modules."`
+    - Enable the modules manually, export the configuration and commit the changes to your repository. `drush en -y admin_toolbar_tools config_replace field_group && drush cex -y`
+
 ## 2021-05-25.1
 
 Converted `hdbt` and `hdbt_admin` to be `drupal-themes`s instead of `drupal-custom-themes`s, meaning that they will be installed inside `themes/contrib` folder from now on.
