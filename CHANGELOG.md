@@ -9,8 +9,9 @@ Available PHP versions: 8.0 and 7.4 (8.0 is used by default).
 ### Required actions
 - Copy contents from platform's [docker/](docker/) directory to your repository's `docker/` folder
 - Run `docker-compose build` and `make stop && make stop` inside your project to update your local environment to use PHP 8.0.
+- Update your repository's [.github/workflows/test.yml])(.github/workflows/test.yml) to run tests with PHP 8: https://github.com/City-of-Helsinki/drupal-helfi-platform/commit/b85f16d7b8880dd4d2fe550bd7958308d408edfe
 
-PHP version can be changed by modifying [docker/openshift/Dockerfile](docker/openshift/Dockerfile) and [docker/local/Dockerfile](docker/local/Dockerfile) and changing the version tag from 8.0 to 7.4.
+PHP version can be changed by modifying [docker/openshift/Dockerfile](docker/openshift/Dockerfile) and [docker/local/Dockerfile](docker/local/Dockerfile) and changing the version tag from 8.0 to 7.4 (not recommended).
 
 ## 2021-05-28.1
 
