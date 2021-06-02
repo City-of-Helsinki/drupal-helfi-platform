@@ -1,8 +1,20 @@
 # Changelog
 
+## 2021-06-02.1
+
+Added new Docker base images. NOTE: This change needs to be coordinated with IBM. Use [helsinkisolutionoffice](https://helsinkisolutionoffice.atlassian.net/secure/RapidBoard.jspa?rapidView=167) JIRA to create a ticket where you coordinate this change.
+
+Available PHP versions: 8.0 and 7.4 (8.0 is used by default).
+
+### Required actions
+- Copy contents from platform's [docker/](docker/) directory to your repository's `docker/` folder
+- Run `docker-compose build` and `make stop && make stop` inside your project to update your local environment to use PHP 8.0.
+
+PHP version can be changed by modifying [docker/openshift/Dockerfile](docker/openshift/Dockerfile) and [docker/local/Dockerfile](docker/local/Dockerfile) and changing the version tag from 8.0 to 7.4.
+
 ## 2021-05-28.1
 
-Added Admin toolbar (admin_toolbar) as a dependency for the helfi-platform-config.
+Added Admin toolbar (`admin_toolbar`) as a dependency for the helfi-platform-config.
 
 ### Required actions
 - In case of an error `"Unable to install HELfi Base config module since it requires the Admin Toolbar Extra Tools, Configuration replace, Field group modules."`
