@@ -2,7 +2,7 @@
 
 ## 2021-06-02.1
 
-Added new Docker base images. NOTE: This change needs to be coordinated with IBM. Use [helsinkisolutionoffice](https://helsinkisolutionoffice.atlassian.net/secure/RapidBoard.jspa?rapidView=167) JIRA to create a ticket where you coordinate this change.
+Added new Docker base images. NOTE: This change needs to be coordinated with IBM. Use [helsinkisolutionoffice](https://helsinkisolutionoffice.atlassian.net/secure/RapidBoard.jspa?rapidView=167) JIRA to create a ticket where you coordinate this change. For example: https://helsinkisolutionoffice.atlassian.net/browse/PLATTA-749
 
 Available PHP versions: 8.0 and 7.4 (8.0 is used by default).
 
