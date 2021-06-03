@@ -6,7 +6,7 @@ Description of your project.
 
 Env | Branch | Drush alias | URL
 --- | ------ | ----------- | ---
-development | * | - | http://yoursite.docker.sh/
+development | * | - | http://yoursite.docker.so/
 production | main | @main | TBD
 
 ## Requirements

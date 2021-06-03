@@ -49,7 +49,7 @@ Start the development environment, build development codebase and install empty 
 $ make new
 ```
 
-Now your site can can be accessed from https://yoursite.docker.sh
+Now your site can can be accessed from https://yoursite.docker.so
 
 ## Next steps
 

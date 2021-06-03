@@ -1,5 +1,18 @@
 # Changelog
 
+## 2021-06-03.1
+
+Updated Stonehenge to 3.x version. *IMPORTANT*: This contains backward incompatible changes and requires manual actions.
+
+Stonehenge 3.x changed default domain from `*.docker.sh` to `*.docker.so`.
+
+To update any existing project to use Stonehenge 3.x:
+
+- Go to your stonehenge installation folder and run `git pull && git checkout 3.x`
+- Run `make down && make up`
+- Update your project's `.env` and `README.md` with new `*.docker.so` domain
+- Restart project's docker containers (`make stop && make up`)
+
 ## 2021-06-02.1
 
 Added new Docker base images. NOTE: This change needs to be coordinated with IBM. Use [helsinkisolutionoffice](https://helsinkisolutionoffice.atlassian.net/secure/RapidBoard.jspa?rapidView=167) JIRA to create a ticket where you coordinate this change. For example: https://helsinkisolutionoffice.atlassian.net/browse/PLATTA-749
