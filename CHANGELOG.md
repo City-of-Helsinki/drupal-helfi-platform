@@ -4,7 +4,7 @@
 
 Updated Stonehenge to 3.x version. *IMPORTANT*: This contains backward incompatible changes and requires manual actions.
 
-Stonehenge 3.x changed default domain from `*.docker.sh` to `*.docker.so`.
+Stonehenge 3.x changed the default domain from `*.docker.sh` to `*.docker.so`.
 
 To update any existing project to use Stonehenge 3.x:
 
