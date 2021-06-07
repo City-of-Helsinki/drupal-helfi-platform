@@ -1,5 +1,19 @@
 # Changelog
 
+## 2021-06-07.1
+
+Update/install instructions for:
+* drupal-hdbt 1.3.4
+* drupal-helfi-platform-config 1.2.5
+
+1. `composer update` // Update dependencies.
+2. `make shell` // Log in to shell
+3. `drush features:import helfi_base_config -y` // Revert the Helfi base configuration feature.
+4. Exit shell.
+5. `make drush-updb drush-cr drush-cex` // Run updates; Update theme blocks. ( hdbt_content 9001 ), Rebuild caches, Export configurations.
+6. Check that the configuration changes hasn't overridden any of your custom modifications.
+7. Commit the configurations changes to your repository.
+
 ## 2021-06-03.1
 
 Updated Stonehenge to 3.x version. *IMPORTANT*: This contains backward incompatible changes and requires manual actions.
