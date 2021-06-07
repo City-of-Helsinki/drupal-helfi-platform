@@ -1,6 +1,23 @@
 # Changelog
 
-## 2021-06-07.1
+## 2021-06-07.2 
+### Remote video paragraph
+
+Update/install instructions for:
+* drupal-hdbt 1.3.5
+* drupal-helfi-platform-config 1.2.6
+
+1. `composer update` // Update dependencies.
+2. `make shell` // Log in to shell
+3. `drush features:import helfi_content -y` // Revert the Helfi content configuration feature.
+4. Exit shell.
+5. `make drush-cr drush-cex` // Rebuild caches, Export configurations.
+6. Check that the configuration changes hasn’t overridden any of your custom modifications.
+7. Commit the configurations changes to your repository.
+
+
+## 2021-06-07.1 
+### Branding navigation
 
 Update/install instructions for:
 * drupal-hdbt 1.3.4
@@ -14,7 +31,9 @@ Update/install instructions for:
 6. Check that the configuration changes hasn't overridden any of your custom modifications.
 7. Commit the configurations changes to your repository.
 
+
 ## 2021-06-03.1
+### Stonehenge update
 
 Updated Stonehenge to 3.x version. *IMPORTANT*: This contains backward incompatible changes and requires manual actions.
 
@@ -28,6 +47,7 @@ To update any existing project to use Stonehenge 3.x:
 - Restart project's docker containers (`make stop && make up`)
 
 ## 2021-06-02.1
+### New Docker base images
 
 Added new Docker base images. NOTE: This change needs to be coordinated with IBM. Use [helsinkisolutionoffice](https://helsinkisolutionoffice.atlassian.net/secure/RapidBoard.jspa?rapidView=167) JIRA to create a ticket where you coordinate this change. For example: https://helsinkisolutionoffice.atlassian.net/browse/PLATTA-749
 
@@ -50,6 +70,7 @@ Available PHP versions: 8.0 and 7.4 (8.0 is used by default).
 PHP version can be changed by modifying [docker/openshift/Dockerfile](docker/openshift/Dockerfile) and [docker/local/Dockerfile](docker/local/Dockerfile) and changing the version tag from 8.0 to 7.4 (not recommended).
 
 ## 2021-05-28.1
+### Admin toolbar
 
 Added Admin toolbar (`admin_toolbar`) as a dependency for the helfi-platform-config.
 
