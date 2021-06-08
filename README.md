@@ -63,6 +63,10 @@ Rename `.github/workflows/test.yml.dist` to `.github/workflows/test.yml` to enab
 
 Rename all `azure-pipelines-*.yml.dist` files to `azure-pipelines-*.yml` and replace `drupal-REPLACEME` values to match your own project.
 
+## OpenShift
+
+See [openshift/docker](openshift/docker) for documentation.
+
 ## Contact
 
 Slack: #helfi-drupal (http://helsinkicity.slack.com/)
