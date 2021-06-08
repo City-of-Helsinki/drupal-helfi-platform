@@ -65,7 +65,7 @@ Rename all `azure-pipelines-*.yml.dist` files to `azure-pipelines-*.yml` and rep
 
 ## OpenShift
 
-See [openshift/docker](openshift/docker) for documentation.
+See [docker/openshift](docker/openshift) for documentation.
 
 ## Contact
 
