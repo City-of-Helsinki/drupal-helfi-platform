@@ -1,6 +1,16 @@
 # Changelog
 
-## 2021-06-07.2 
+## 2021-06-08.1
+### Cron support on OpenShift
+
+Added support to run crons on OpenShift environments. See [docker/openshift/README.md](docker/openshift/README.md) for more information.
+
+### Required actions
+
+- Copy contents from [docker/openshift](docker/openshift) folder to your repository's `docker/openshift` folder.
+- This change requires actions from IBM. Use [helsinkisolutionoffice](https://helsinkisolutionoffice.atlassian.net/secure/RapidBoard.jspa?rapidView=167) JIRA to create a ticket labeled `Drupal cron support: {project name}` and assign it to your project's EPIC.
+
+## 2021-06-07.2
 ### Remote video paragraph
 
 Update/install instructions for:
@@ -16,7 +26,7 @@ Update/install instructions for:
 7. Commit the configurations changes to your repository.
 
 
-## 2021-06-07.1 
+## 2021-06-07.1
 ### Branding navigation
 
 Update/install instructions for:
