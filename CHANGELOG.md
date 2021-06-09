@@ -1,5 +1,16 @@
 # Changelog
 
+## 2021-06-09.1
+### OpenShift deploy script fix
+
+Deploy script was previously meant to be run after nginx process was started, causing it to never run. This should be fixed now.
+
+### Required actions
+You can either remove entire `docker/openshift/` folder and replace it with `docker/openshift` folder from this repository or:
+
+1. Remove `docker/openshift/entrypoints/90-deploy.sh` file from your repository and replace it with `docker/openshift/entrypoints/20-deploy.sh` from platform's repository.
+2. Modify `docker/openshift/Dockerfile` file and change lines containing `90-deploy.sh` to `20-deploy.sh`.
+
 ## 2021-06-08.1
 ### Cron support on OpenShift
 
