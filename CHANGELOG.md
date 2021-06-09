@@ -3,7 +3,7 @@
 ## 2021-06-08.1
 ### Cron support on OpenShift
 
-Added support to run crons on OpenShift environments. See [docker/openshift/README.md](docker/openshift/README.md) for more information.
+Added support to run crons on OpenShift environment. See [docker/openshift/README.md](docker/openshift/README.md#cron) for more information.
 
 ### Required actions
 
