@@ -63,7 +63,7 @@ Stonehenge 3.x changed the default domain from `*.docker.sh` to `*.docker.so`.
 To update any existing project to use Stonehenge 3.x:
 
 - Go to your stonehenge installation folder and run `git pull && git checkout 3.x`
-- Run `make down && make up`
+- Run `make down && make up` (in stonehenge's installation folder)
 - Update your project's `.env` and `README.md` with new `*.docker.so` domain
 - Restart project's docker containers (`make stop && make up`)
 
