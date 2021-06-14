@@ -95,9 +95,6 @@
             "make cast-spell",
             "@copy-commit-message-script"
         ],
-        "post-install-cmd": [
-            "@copy-commit-message-script"
-        ],
         "post-update-cmd": [
             "@copy-commit-message-script"
         ]
