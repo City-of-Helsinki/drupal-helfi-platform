@@ -17,7 +17,7 @@
         "drupal/helfi_azure_fs": "^1.0",
         "drupal/helfi_hauki": "^1.0",
         "drupal/helfi_linkedevents": "^1.0",
-        "drupal/helfi_platform_config": "^1.1",
+        "drupal/helfi_platform_config": "^1",
         "drupal/helfi_tpr": "^1.0",
         "drupal/helfi_tunnistamo": "^1.0",
         "drush/drush": "^10.4"
