@@ -7,6 +7,7 @@ public/modules/contrib
 public/themes/contrib
 public/sites/default/files
 vendor
+helfi-test-automation-python/
 
 # Ignore the folder created by PhpStorm
 .idea/*
