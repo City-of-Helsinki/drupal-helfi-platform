@@ -17,7 +17,7 @@ As the HDBT Subtheme is only distributed via the [HELfi Platform](https://github
 HDBT Subtheme requires HDBT theme as a base theme and it should be installed in `/themes/custom/hdbt`.
 
 Requirements for developing:
-- [NodeJS ( ^ 14.15.0 )](https://nodejs.org/en/)
+- [NodeJS ( ^ 14.17.1 )](https://nodejs.org/en/)
 - [NPM](https://npmjs.com/)
 - optional [NVM](https://github.com/nvm-sh/nvm)
 
