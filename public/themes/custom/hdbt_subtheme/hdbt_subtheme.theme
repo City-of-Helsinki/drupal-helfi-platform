@@ -32,3 +32,13 @@ function hdbt_subtheme_preprocess(&$variables) {
   $variables['hdbt_subtheme_icons_path'] = hdbt_subtheme_get_icons_path();
   $variables['#attached']['drupalSettings']['hdbtSubthemeIconsPath'] = $variables['hdbt_subtheme_icons_path'];
 }
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter for blocks.
+ */
+function hdbt_subtheme_theme_suggestions_block_alter(&$suggestions) {
+  // Load theme suggestions for blocks from parent theme.
+  foreach ($suggestions as &$suggestion) {
+    $suggestion = str_replace('hdbt_subtheme_', '', $suggestion);
+  }
+}
