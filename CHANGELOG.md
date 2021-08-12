@@ -1,5 +1,15 @@
 # Changelog
 
+## 2021-08-12.1
+### Easy breadcrumb 2.0
+
+Update/install instructions for:
+* drupal-helfi-platform-config 1.3.0
+
+1. Update the HELfi platform config module by running: `composer require drupal/helfi_platform_config:1.3.0 --with-all-dependencies`.
+2. Update your current Easy breadcrumb configuration file by copying the default settings file from `/public/modules/contrib/helfi_platform_config/features/helfi_base_config/config/install/easy_breadcrumb.settings.yml` to `/conf/cmi`. Do not forget to change any previously made changes to what was made to the file.
+3. Commit the configurations changes to your repository.
+
 ## 2021-06-09.1
 ### OpenShift deploy script fix
 
