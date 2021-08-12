@@ -14,7 +14,7 @@ drush-enable-modules: ## Enable modules and base configurations.
 	$(call drush_on_docker,en -y helfi_platform_config helfi_base_config)
 
 PHONY += drush-enable-example-content
-drush-enable-modules: ## Enable example content.
+drush-enable-example-content: ## Enable example content.
 	$(call step,Install HELfi Example content...)
 	$(call drush_on_docker,cr)
 	$(call drush_on_docker,en -y helfi_example_content)
