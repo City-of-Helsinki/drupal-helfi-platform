@@ -20,6 +20,7 @@
         "drupal/helfi_platform_config": "^1",
         "drupal/helfi_tpr": "^1.0",
         "drupal/helfi_tunnistamo": "^1.0",
+        "drupal/siteimprove": "^1.11",
         "drush/drush": "^10.4"
     },
     "require-dev": {
