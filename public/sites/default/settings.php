@@ -44,7 +44,7 @@ if (isset($_SERVER['WODBY_APP_NAME'])) {
   include '/var/www/conf/wodby.settings.php';
 }
 
-// get environment variables & set them as configuration values
+// Get environment variables & set them as configuration values.
 if (getenv('SITEIMPROVE_API_USERNAME') && getenv('SITEIMPROVE_API_KEY')) {
   $config['siteimprove.settings']['api_username'] = getenv('SITEIMPROVE_API_USERNAME');
   $config['siteimprove.settings']['api_key'] = getenv('SITEIMPROVE_API_KEY');
