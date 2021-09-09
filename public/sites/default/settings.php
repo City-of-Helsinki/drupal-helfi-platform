@@ -35,6 +35,8 @@ if ($ssl_ca_path = getenv('AZURE_SQL_SSL_CA_PATH')) {
   $settings['php_storage']['twig']['secret'] = $settings['hash_salt'];
   $settings['file_chmod_directory'] = 16895;
   $settings['file_chmod_file'] = 16895;
+
+  $config['system.performance']['cache']['page']['max_age'] = 86400;
 }
 
 // Only in Wodby environment.
