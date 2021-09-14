@@ -1,5 +1,14 @@
 # Changelog
 
+## 2021-09-14.1
+### Run deploy tasks only once per deploy
+
+At the moment the deploy script is run every time a container replica is started. This can lead to a race condition when multiple containers are running deploy script at the same time, corrupting the entire configuration stack.
+
+### Required actions
+
+Replace your existing `docker/openshift/entrypoints/20-deploy.sh` with the updated one from this repository.
+
 ## 2021-08-12.1
 ### Easy breadcrumb 2.0
 
