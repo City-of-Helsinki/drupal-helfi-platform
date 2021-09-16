@@ -1,16 +1,25 @@
 # Changelog
 
-## 2021-09-8.1
+## 2021-09-16.1
 ### HELfi Platform Config 2.0
 
 Update/install instructions for:
 * drupal-helfi-platform-config 2.0.0
 
+### Required actions
 1. Install the site with your current configuration by running either `make new` or `make fresh`.  
 2. When the site is up and running, run `composer require drupal/helfi_platform_config:^2.0 --with-all-dependencies` to retrieve the new version of HELfi Platform config.
 3. Run updates and export the configurations by running `make drush-updb drush-cr drush-cex`.
 4. Go through configuration changes from `/conf/cmi/` and revert/modify any changes what will override your customised configurations.
 5. Commit the changes to your repository.
+
+## 2021-09-14.1
+### Run deploy tasks only once per deploy
+
+At the moment the deploy script is run every time a container replica is started. This can lead to a race condition when multiple containers are running deploy script at the same time, corrupting the entire configuration stack.
+
+### Required actions
+Replace your existing `docker/openshift/entrypoints/20-deploy.sh` with the updated one from this repository.
 
 ## 2021-08-12.1
 ### Easy breadcrumb 2.0
