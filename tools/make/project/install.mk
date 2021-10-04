@@ -9,20 +9,20 @@ endif
 
 PHONY += drush-enable-modules
 drush-enable-modules: ## Enable modules and base configurations.
-	$(call step,Install base configurations...)
-	$(call drush_on_docker,cr)
-	$(call drush_on_docker,en -y helfi_platform_config helfi_base_config)
+	$(call step,Install base configurations...\n)
+	$(call drush,cr)
+	$(call drush,en -y helfi_platform_config helfi_base_config)
 
 PHONY += drush-enable-example-content
 drush-enable-example-content: ## Enable example content.
-	$(call step,Install HELfi Example content...)
-	$(call drush_on_docker,cr)
-	$(call drush_on_docker,en -y helfi_example_content)
+	$(call step,Install HELfi Example content...\n)
+	$(call drush,cr)
+	$(call drush,en -y helfi_example_content)
 
 PHONY += drush-locale-update
 drush-locale-update: ## Update translations.
-	$(call step,Update translations...)
-	$(call drush_on_docker,state:set locale.translation_last_checked 0)
-	$(call drush_on_docker,locale:update)
-	$(call step,Import custom translations...)
-	$(call drush_on_docker,helfi:locale-import helfi_platform_config)
+	$(call step,Update translations...\n)
+	$(call drush,state:set locale.translation_last_checked 0)
+	$(call drush,locale:update)
+	$(call step,Import custom translations...\n)
+	$(call drush,helfi:locale-import helfi_platform_config)
