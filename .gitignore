@@ -12,13 +12,6 @@ helfi-test-automation-python/
 # Ignore the folder created by PhpStorm
 .idea/*
 
-# Ignore themes with own git repositories
-public/themes/custom/hdbt
-public/themes/custom/hdbt_admin
-
-# Ignore modules with own repositories
-public/modules/custom/helfi_*
-
 # Ignore OSX generated files
 ._*
 .DS_Store
