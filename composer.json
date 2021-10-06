@@ -19,7 +19,7 @@
         "drupal/helfi_linkedevents": "^1.0",
         "drupal/helfi_platform_config": "^2.0",
         "drupal/helfi_tpr": "^1.0",
-        "drupal/helfi_tunnistamo": "^1.0",
+        "drupal/helfi_tunnistamo": "^2.0",
         "drush/drush": "^10.4"
     },
     "require-dev": {
