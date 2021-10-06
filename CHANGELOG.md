@@ -8,7 +8,7 @@ Tunnistamo module has a major release to support openid_connect:2.0.
 ### Required actions
 - Run composer require "drupal/helfi_tunnistamo:^2.0" -W in your project's root
 - Run database updates: drush updb -y
-- Delete old openid_connect clients: rm conf/cmi/openid_connect.settings.facebook.yml conf/cmi/openid_connect.settings.generic.yml conf/cmi/openid_connect.settings.github.yml conf/cmi/openid_connect.settings.google.yml conf/cmi/openid_connect.settings.linkedin.yml conf/cmi/openid_connect.settings.tunnistamo.yml
+- Delete old openid_connect clients: `rm conf/cmi/openid_connect.settings.facebook.yml conf/cmi/openid_connect.settings.generic.yml conf/cmi/openid_connect.settings.github.yml conf/cmi/openid_connect.settings.google.yml conf/cmi/openid_connect.settings.linkedin.yml conf/cmi/openid_connect.settings.tunnistamo.yml`
 - Re-create tunnistamo client from /admin/config/people/openid-connect
 - Update any settings.php overrides (`settings` key was changed to `client`), for example:  `$config['openid_connect.settings.tunnistamo']['settings']['is_production']` should now be `$config['openid_connect.client.tunnistamo']['settings']['is_production']`.
 
