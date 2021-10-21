@@ -13,3 +13,6 @@ RUN chmod +x /entrypoints/20-deploy.sh
 RUN mkdir /crons
 COPY docker/openshift/crons/ /crons
 RUN chmod +x /crons/*
+
+# Copy nginx overrides.
+COPY docker/openshift/custom.locations /etc/nginx/conf.d/custom.locations

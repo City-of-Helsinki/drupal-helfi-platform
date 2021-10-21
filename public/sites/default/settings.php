@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Request;
+
 if (PHP_SAPI === 'cli') {
   ini_set('memory_limit', '512M');
 }
@@ -47,9 +49,9 @@ if (isset($_SERVER['WODBY_APP_NAME'])) {
 }
 
 // Get environment variables & set them as configuration values.
-if (getenv('SITEIMPROVE_API_USERNAME') && getenv('SITEIMPROVE_API_KEY')) {
-  $config['siteimprove.settings']['api_username'] = getenv('SITEIMPROVE_API_USERNAME');
-  $config['siteimprove.settings']['api_key'] = getenv('SITEIMPROVE_API_KEY');
+ if (getenv('SITEIMPROVE_API_USERNAME') && getenv('SITEIMPROVE_API_KEY')) {
+   $config['siteimprove.settings']['api_username'] = getenv('SITEIMPROVE_API_USERNAME');
+   $config['siteimprove.settings']['api_key'] = getenv('SITEIMPROVE_API_KEY');
 }
 
 $config['openid_connect.client.tunnistamo']['settings']['client_id'] = getenv('TUNNISTAMO_CLIENT_ID');
@@ -83,7 +85,7 @@ if ($reverse_proxy_address = getenv('DRUPAL_REVERSE_PROXY_ADDRESS')) {
   }
   $settings['reverse_proxy'] = TRUE;
   $settings['reverse_proxy_addresses'] = $reverse_proxy_address;
-  $settings['reverse_proxy_trusted_headers'] = \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_ALL;
+  $settings['reverse_proxy_trusted_headers'] = Request::HEADER_X_FORWARDED_ALL;
   $settings['reverse_proxy_host_header'] = 'X_FORWARDED_HOST';
 }
 
@@ -123,3 +125,43 @@ if ($blob_storage_name = getenv('AZURE_BLOB_STORAGE_NAME')) {
   $settings['flysystem'] = $schemes;
 }
 
+
+if ($varnish_host = getenv('DRUPAL_VARNISH_HOST')) {
+  $config['varnish_purger.settings.default']['hostname'] = $varnish_host;
+  $config['varnish_purger.settings.varnish_purge_all']['hostname'] = $varnish_host;
+}
+
+if ($varnish_port = getenv('DRUPAL_VARNISH_PORT')) {
+  $config['varnish_purger.settings.default']['port'] = $varnish_port;
+  $config['varnish_purger.settings.varnish_purge_all']['port'] = $varnish_port;
+}
+
+$config['varnish_purger.settings.default']['headers'] = [
+  [
+    'field' => 'Cache-Tags',
+    'value' => '[invalidation:expression]',
+  ],
+];
+
+$config['varnish_purger.settings.varnish_purge_all']['headers'] = [
+  [
+    'field' => 'X-VC-Purge-Method',
+    'value' => 'regex',
+  ],
+];
+
+if ($varnish_purge_key = getenv('VARNISH_PURGE_KEY')) {
+  // Configuration doesn't know about existing config yet so we can't
+  // just append new headers to an already existing headers array here.
+  // If you have configured any extra headers in your purge settings
+  // you must add them here as well.
+  // @todo Replace this with config override service?
+  $config['varnish_purger.settings.default']['headers'][] = [
+    'field' => 'X-VC-Purge-Key',
+    'value' => $varnish_purge_key,
+  ];
+  $config['varnish_purger.settings.varnish_purge_all']['headers'][] = [
+    'field' => 'X-VC-Purge-Key',
+    'value' => $varnish_purge_key,
+  ];
+}

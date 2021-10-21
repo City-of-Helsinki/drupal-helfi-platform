@@ -7,17 +7,30 @@ services:
     container_name: "${COMPOSE_PROJECT_NAME}-app"
     image: "${DRUPAL_IMAGE}"
     volumes:
-      - .:/app:delegated
+      - ./docker/local/nginx.conf:/etc/nginx/conf.d/default.conf:cached
+      - ./docker/local/custom.locations:/etc/nginx/conf.d/custom.locations:cached
+      - ./docker/local/php-fpm-pool.conf:/etc/php8/php-fpm.d/www.conf:cached
+      - ./docker/local/entrypoints/30-chromedriver.sh:/entrypoints/30-chromedriver.sh:cached
+      - ./docker/local/entrypoints/30-drush-server.sh:/entrypoints/30-drush-server.sh:cached
       - ssh:/tmp/druid_ssh-agent:ro
+      - .:/app:delegated
     build:
       context: ./docker/local
     environment:
       APP_ENV: "${APP_ENV:-dev}"
-      DRUPAL_ROUTES: "https://varnish-${DRUPAL_HOSTNAME}"
+      DRUPAL_ROUTES: "https://varnish-${DRUPAL_HOSTNAME},https://helfi-proxy.docker.so,http://${COMPOSE_PROJECT_NAME}-varnish"
+      DRUPAL_REVERSE_PROXY_ADDRESS: helfi-proxy.docker.so
       DRUSH_OPTIONS_URI: "https://${DRUPAL_HOSTNAME}"
       #XDEBUG_ENABLE: "true"
-      SIMPLETEST_BASE_URL: "http://app:8080"
+      # DOCKERHOST: host.docker.internal
+      # Use drush server to run functional tests so we don't have to care about
+      # permission issues.
+      SIMPLETEST_BASE_URL: "http://127.0.0.1:8888"
       SIMPLETEST_DB: "mysql://drupal:drupal@db:3306/drupal"
+      DRUPAL_VARNISH_HOST: "${COMPOSE_PROJECT_NAME}-varnish"
+      DRUPAL_VARNISH_PORT: 6081
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - internal
       - stonehenge-network

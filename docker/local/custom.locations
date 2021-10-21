@@ -1,0 +1,12 @@
+location ~ ^/(?:.*)-assets/(.*)$ {
+  alias /app/public/$1;
+}
+
+location ~* \.(css|cur|js|jpe?g|gif|htc|ico|png|xml|otf|ttf|eot|woff|woff2|svg|mp4|svgz|ogg|ogv|pdf|pptx?|zip|tgz|gz|rar|bz2|doc|xls|exe|tar|mid|midi|wav|bmp|rtf|txt|map)$ {
+  add_header Access-Control-Allow-Origin "*";
+  try_files $uri @rewrite;
+  expires 1y;
+  add_header Pragma "cache";
+  add_header Cache-Control "public";
+  log_not_found off;
+}

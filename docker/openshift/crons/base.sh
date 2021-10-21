@@ -16,6 +16,11 @@ echo "Starting cron: $(date)"
 # done
 # @endcode
 
+# Uncomment this to enable TPR migration cron
+#exec "/crons/migrate-tpr.sh" &
+# Uncomment this to enable Varnish purge cron
+#exec "/crons/purge-queue.sh" &
+
 while true
 do
   echo "Running cron: $(date)\n"
