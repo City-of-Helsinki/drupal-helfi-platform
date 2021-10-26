@@ -51,11 +51,12 @@ if (isset($_SERVER['WODBY_APP_NAME'])) {
 $config['openid_connect.client.tunnistamo']['settings']['client_id'] = getenv('TUNNISTAMO_CLIENT_ID');
 $config['openid_connect.client.tunnistamo']['settings']['client_secret'] = getenv('TUNNISTAMO_CLIENT_SECRET');
 
-// Get environment variables & set them as configuration values.
-if (getenv('SITEIMPROVE_API_USERNAME') && getenv('SITEIMPROVE_API_KEY')) {
-  $config['siteimprove.settings']['api_username'] = getenv('SITEIMPROVE_API_USERNAME');
-  $config['siteimprove.settings']['api_key'] = getenv('SITEIMPROVE_API_KEY');
-}
+$config['siteimprove.settings']['prepublish_enabled'] = TRUE;
+$config['siteimprove.settings']['api_username'] = getenv('SITEIMPROVE_API_USERNAME');
+$config['siteimprove.settings']['api_key'] = getenv('SITEIMPROVE_API_KEY');
+
+$settings['matomo_site_id'] = getenv('MATOMO_SITE_ID');
+$settings['siteimprove_id'] = getenv('SITEIMPROVE_ID');
 
 // Drupal route(s).
 $routes = (getenv('DRUPAL_ROUTES')) ? explode(',', getenv('DRUPAL_ROUTES')) : [];
