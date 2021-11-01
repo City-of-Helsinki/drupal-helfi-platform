@@ -26,7 +26,11 @@
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
         "drupal/coder": "^8.3",
         "drupal/core-dev": "^9.1",
+        "mglaman/phpstan-drupal": "^1.0",
         "phpspec/prophecy-phpunit": "^2",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan": "^1.0",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpunit/phpunit": "~9.4.0"
     },
     "conflict": {
