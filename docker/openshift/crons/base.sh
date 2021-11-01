@@ -20,6 +20,8 @@ echo "Starting cron: $(date)"
 #exec "/crons/migrate-tpr.sh" &
 # Uncomment this to enable Varnish purge cron
 #exec "/crons/purge-queue.sh" &
+# Uncomment this to enable automatic translation updates.
+# exec "/crons/update-translations.sh" &
 
 while true
 do
