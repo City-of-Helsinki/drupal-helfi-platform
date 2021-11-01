@@ -88,6 +88,16 @@
         }
     ],
     "scripts": {
+        "test": [
+          "@lint-php",
+          "@test-php"
+        ],
+        "test-php": "vendor/bin/phpunit -c phpunit.xml.dist",
+        "lint-php": "vendor/bin/phpcs --standard=Drupal",
+        "test-ci": [
+          "@lint-php",
+          "vendor/bin/phpunit -c phpunit.platform.xml"
+        ],
         "copy-commit-message-script": "make copy-commit-message-script",
         "post-create-project-cmd": [
             "rm .github/workflows/ci.yml",
