@@ -1,0 +1,5 @@
+parameters:
+  treatPhpDocTypesAsCertain: false
+  excludePaths:
+      - *Test.php
+      - *TestBase.php
