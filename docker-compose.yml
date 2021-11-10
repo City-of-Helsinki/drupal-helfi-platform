@@ -5,7 +5,6 @@ services:
   app:
     hostname: "${DRUPAL_HOSTNAME}"
     container_name: "${COMPOSE_PROJECT_NAME}-app"
-    image: "${DRUPAL_IMAGE}"
     volumes:
       - ./docker/local/nginx.conf:/etc/nginx/conf.d/default.conf:cached
       - ./docker/local/custom.locations:/etc/nginx/conf.d/custom.locations:cached
