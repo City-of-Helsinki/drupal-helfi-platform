@@ -23,6 +23,8 @@ $databases['default']['default'] = [
   'port' => getenv('DRUPAL_DB_PORT') ?: 3306,
   'namespace' => 'Drupal\Core\Database\Driver\mysql',
   'driver' => 'mysql',
+  'charset' => 'utf8mb4',
+  'collation' => 'utf8mb4_swedish_ci',
 ];
 
 $settings['hash_salt'] = getenv('DRUPAL_HASH_SALT') ?: '000';
