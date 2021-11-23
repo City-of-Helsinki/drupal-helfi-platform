@@ -7,3 +7,5 @@ src/icons/hds
 
 # Other
 .DS_Store
+.idea
+dist/**/*.map

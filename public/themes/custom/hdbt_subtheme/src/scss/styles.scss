@@ -5,9 +5,8 @@
 
 @import "~breakpoint-sass";
 
-@import "library/variables/*.*";
-@import "library/mixins/*.*";
-@import "layout/*";
-@import "state/*";
-@import "base/**/*.*";
-@import "components/**/*.*";
+@import "library/_index";
+@import "layout/_index";
+@import "state/_index";
+@import "base/_index";
+@import "components/_index";

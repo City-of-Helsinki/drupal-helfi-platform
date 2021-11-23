@@ -34,11 +34,53 @@ function hdbt_subtheme_preprocess(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_HOOK().
+ */
+function hdbt_subtheme_preprocess_block(&$variables) {
+  if (isset($variables['elements']['#id'])) {
+    $variables['content']['#attributes']['block_id'] = $variables['elements']['#id'];
+  }
+}
+
+/**
  * Implements hook_theme_suggestions_HOOK_alter for blocks.
  */
 function hdbt_subtheme_theme_suggestions_block_alter(&$suggestions) {
   // Load theme suggestions for blocks from parent theme.
   foreach ($suggestions as &$suggestion) {
     $suggestion = str_replace('hdbt_subtheme_', '', $suggestion);
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * Provide block based menu suggestions.
+ */
+function hdbt_subtheme_theme_suggestions_menu_alter(&$suggestions, $variables) {
+  if (isset($variables['attributes']['block_id'])) {
+    $block_id = str_replace('hdbt_subtheme_', '', $variables['attributes']['block_id']);
+
+    switch ($block_id) {
+      case 'mobile_navigation':
+        $suggestions[] = 'menu__mobile';
+        break;
+
+      case 'mainnavigation':
+        $suggestions[] = 'menu__main__desktop';
+        break;
+
+      case 'main_navigation_level_2':
+        $suggestions[] = 'menu__main__sidebar';
+        break;
+
+      case 'brandingnavigation':
+        $suggestions[] = 'menu__main__branding';
+        break;
+
+      default:
+        $suggestions[] = 'menu__' . $variables['attributes']['block_id'];
+        break;
+    }
   }
 }

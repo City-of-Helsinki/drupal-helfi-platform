@@ -17,7 +17,7 @@ As the HDBT Subtheme is only distributed via the [HELfi Platform](https://github
 HDBT Subtheme requires HDBT theme as a base theme and it should be installed in `/themes/custom/hdbt`.
 
 Requirements for developing:
-- [NodeJS ( ^ 14.17.1 )](https://nodejs.org/en/)
+- [NodeJS ( ^ 16.10 )](https://nodejs.org/en/)
 - [NPM](https://npmjs.com/)
 - optional [NVM](https://github.com/nvm-sh/nvm)
 
@@ -25,6 +25,7 @@ Requirements for developing:
 
 | Command       | Description                                                                       |
 | ------------- | --------------------------------------------------------------------------------- |
+| nvm use       | Uses correct Node version chosen for the subtheme compiler                        |
 | npm i         | Install dependencies and link local packages.                                     |
 | npm ci        | Install a project with a clean slate. Use especially in travis like environments. |
 | npm run dev   | Compile styles for development environment and watch file changes.                |
@@ -60,7 +61,12 @@ hdbt_subtheme
 │   └───scss
 │   │   │   styles.scss
 │   │   └───base
+│   │   │   └───__index.scss
+│   │   │   └───_base.scss
+│   │   │   └───...
 │   │   └───components
+│   │   │   └───__index.scss
+│   │   │   └───...
 │   │   └───...
 │   └───js
 │   │   │   common.js
