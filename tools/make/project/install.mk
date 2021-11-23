@@ -22,7 +22,7 @@ drush-enable-example-content: ## Enable example content.
 PHONY += drush-locale-update
 drush-locale-update: ## Update translations.
 	$(call step,Update translations...\n)
-	$(call drush,state:set locale.translation_last_checked 0)
+	$(call drush,locale:check)
 	$(call drush,locale:update)
 	$(call step,Import custom translations...\n)
 	$(call drush,helfi:locale-import helfi_platform_config)
