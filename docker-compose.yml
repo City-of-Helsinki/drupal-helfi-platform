@@ -5,16 +5,9 @@ services:
   app:
     hostname: "${DRUPAL_HOSTNAME}"
     container_name: "${COMPOSE_PROJECT_NAME}-app"
+    image: "${DRUPAL_IMAGE}"
     volumes:
-      - ./docker/local/nginx.conf:/etc/nginx/conf.d/default.conf:cached
-      - ./docker/local/custom.locations:/etc/nginx/conf.d/custom.locations:cached
-      - ./docker/local/php-fpm-pool.conf:/etc/php8/php-fpm.d/www.conf:cached
-      - ./docker/local/entrypoints/30-chromedriver.sh:/entrypoints/30-chromedriver.sh:cached
-      - ./docker/local/entrypoints/30-drush-server.sh:/entrypoints/30-drush-server.sh:cached
-      - ssh:/tmp/druid_ssh-agent:ro
       - .:/app:delegated
-    build:
-      context: ./docker/local
     environment:
       APP_ENV: "${APP_ENV:-dev}"
       DRUPAL_ROUTES: "https://varnish-${DRUPAL_HOSTNAME},https://helfi-proxy.docker.so,http://${COMPOSE_PROJECT_NAME}-varnish"
@@ -77,6 +70,3 @@ networks:
 
 volumes:
   db_data:
-  ssh:
-    name: stonehenge-ssh
-    external: true

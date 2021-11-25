@@ -1,5 +1,14 @@
 # Changelog
 
+## 2021-11-25.2
+
+### Pre-built drupal image that supports the new Apple M1 chip
+
+### Required actions
+- Remove `docker/local` folder (`rm -r docker/local`)
+- Update value for `DRUPAL_IMAGE` in your `.env` file: `DRUPAL_IMAGE=ghcr.io/city-of-helsinki/drupal-web:8.0`
+- Copy `docker-compose.yml` to your project's repository
+
 ## 2021-11-25.1
 ### Database sync from dev/testing to local
 
@@ -7,7 +16,7 @@ Added a support for database syncing from dev/testing environment to local.
 
 ### Required actions
 - Copy contents from `drush/` folder to your project's repository
-- Copy `tools/make/project/install.mk`, `docker/local/Dockerfile` and `.gitignore` files to your project's repository
+- Copy `tools/make/project/install.mk` and `.gitignore` files to your project's repository
 - Add `OC_PROJECT_NAME=` environment variable to your `.env` file. The value should be your project's name in OpenShift
 - Re-build your containers with `docker compose build` and restart them with `make stop && make up`
 
