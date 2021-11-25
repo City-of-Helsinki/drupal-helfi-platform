@@ -12,6 +12,8 @@ helfi-test-automation-python/
 # Ignore the folder created by PhpStorm
 .idea/*
 
+*.sql
+
 # Ignore OSX generated files
 ._*
 .DS_Store
