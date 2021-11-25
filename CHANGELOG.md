@@ -26,7 +26,7 @@ Run `make fresh` to start the database sync.
 
 You can use `stage_file_proxy` module to serve files directly from your testing/dev environment without having to sync them to your local environment.
 
-- Copy `settings.php` and add `STAGE_FILE_PROXY_ORIGIN` and `STAGE_FILE_PROXY_ORIGIN_DIR` environment variables to your `docker-compose.yml` file
+- Copy `settings.php` and add `STAGE_FILE_PROXY_ORIGIN` and `STAGE_FILE_PROXY_ORIGIN_DIR` environment variables to your `.env` file
 - Install and enable `stage_file_proxy` module (`composer install drupal/stage_file_proxy`, `drush en stage_file_proxy`)
 
 If you store files in azure blob storage then `STAGE_FILE_PROXY_ORIGIN` value should be something like `https://{storage-accountname}.core.windows.net` and `STAGE_FILE_PROXY_ORIGIN_DIR` should be your container's name, for example `dev`.
