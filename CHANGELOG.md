@@ -1,5 +1,29 @@
 # Changelog
 
+## 2021-11-25.1
+### Database sync from dev/testing to local
+
+Added a support for database syncing from dev/testing environment to local.
+
+### Required actions
+- Copy contents from `drush/` folder to your project's repository
+- Copy `tools/make/project/install.mk`, `docker/local/Dockerfile` and `.gitignore` files to your project's repository
+- Add `OC_PROJECT_NAME=` environment variable to your `.env` file. The value should be your project's name in OpenShift
+- Re-build your containers with `docker compose build` and restart them with `make stop && make up`
+
+Run `make fresh` to start the database sync.
+
+### Optional actions
+
+You can use `stage_file_proxy` module to serve files directly from your testing/dev environment without having to sync them to your local environment.
+
+- Copy `settings.php` and add `STAGE_FILE_PROXY_ORIGIN` and `STAGE_FILE_PROXY_ORIGIN_DIR` environment variables to your `docker-compose.yml` file
+- Install and enable `stage_file_proxy` module (`composer install drupal/stage_file_proxy`, `drush en stage_file_proxy`)
+
+If you store files in azure blob storage then `STAGE_FILE_PROXY_ORIGIN` value should be something like `https://{storage-accountname}.core.windows.net` and `STAGE_FILE_PROXY_ORIGIN_DIR` should be your container's name, for example `dev`.
+
+Otherwise `STAGE_FILE_PROXY_ORIGIN` should be an URL to your instance (`https://nginx-{project}-{env}.agw.arodevtest.hel.fi`) and `STAGE_FILE_PROXY_ORIGIN_DIR` is `sites/default/files`.
+
 ## 2021-10-06.1
 ### Tunnistamo 2.0
 
@@ -19,7 +43,7 @@ Update/install instructions for:
 * drupal-helfi-platform-config 2.0.0
 
 ### Required actions
-1. Install the site with your current configuration by running either `make new` or `make fresh`.  
+1. Install the site with your current configuration by running either `make new` or `make fresh`.
 2. When the site is up and running, run `composer require drupal/helfi_platform_config:^2.0 --with-all-dependencies` to retrieve the new version of HELfi Platform config.
 3. Run updates and export the configurations by running `make drush-updb drush-cr drush-cex`.
 4. Go through configuration changes from `/conf/cmi/` and revert/modify any changes what will override your customised configurations.
