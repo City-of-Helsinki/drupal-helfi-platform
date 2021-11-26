@@ -1,5 +1,6 @@
 # Ignore project files that should not be in version control
 drush/sites/
+drush/Commands/*
 node_modules
 public/core
 public/libraries
