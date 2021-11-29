@@ -1,0 +1,55 @@
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [config_change]
+name: Update config
+env:
+  SIMPLETEST_BASE_URL: "http://127.0.0.1:8080"
+  SIMPLETEST_DB: "mysql://drupal:drupal@db:3306/drupal"
+  XDEBUG_MODE: off
+jobs:
+  update-config:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/city-of-helsinki/drupal-php-docker:8.0
+
+    services:
+      db:
+        image: druidfi/db:mysql5.7-drupal
+        ports:
+          - 3306:3306
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Download latest dump
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh run download -n latest.sql
+
+      - name: Build project
+        run: |
+          composer install
+          $(drush sql:connect) < latest.sql
+          drush cr && drush cim -y
+          composer update drupal/helfi_platform_config drupal/helfi_drupal_tools
+          drush updb -y
+          drush cex -y
+          # Update platform
+          drush helfi:tools:update-platform
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          committer: GitHub <noreply@github.com>
+          author: actions-bot <actions-bot@users.noreply.github.com>
+          commit-message: Update configuration
+          title: Automatic update
+          body: |
+            - Updated active configuration.
+            - Updated platform
+
+          branch: update-configuration
