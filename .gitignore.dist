@@ -15,6 +15,7 @@ helfi-test-automation-python/
 public/sites/default/local.settings.php
 
 *.sql
+*.env.local
 
 # Ignore OSX generated files
 ._*

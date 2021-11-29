@@ -14,6 +14,7 @@ helfi-test-automation-python/
 .idea/*
 
 *.sql
+.env.local
 
 # Ignore OSX generated files
 ._*
