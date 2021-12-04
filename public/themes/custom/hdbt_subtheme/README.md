@@ -4,13 +4,13 @@
 
 HDBT Subtheme is a so called "starterkit" which you can start using by enabling it in `/admin/appearance`.
 
-Or if you don't accept the theme name, you can rename every `hdbt_subtheme` file with `your_theme_name` and renaming every `hdbt_subtheme_*` variable/reference with `your_theme_name_*`. And then enable it in `/admin/appearance`. 
+Or if you don't accept the theme name, you can rename every `hdbt_subtheme` file with `your_theme_name` and renaming every `hdbt_subtheme_*` variable/reference with `your_theme_name_*`. And then enable it in `/admin/appearance`.
 
 Of course you have a choice to not use it at all by just deleting the whole folder.
 
 HDBT Subtheme uses webpack module bundler to compile the JS and SCSS files. Also the SVG icons are combined in to a sprite.svg via webpack.
 
-As the HDBT Subtheme is only distributed via the [HELfi Platform](https://github.com/City-of-Helsinki/drupal-helfi-platform), it doesn't have an upgrade path per se. In case there is a demand for upgradeability for existing projects then of course we will consider changing the theme to an upgradeable model. 
+As the HDBT Subtheme is only distributed via the [HELfi Platform](https://github.com/City-of-Helsinki/drupal-helfi-platform), it doesn't have an upgrade path per se. In case there is a demand for upgradeability for existing projects then of course we will consider changing the theme to an upgradeable model.
 
 ## Requirements
 
@@ -91,13 +91,13 @@ Once installed it can be accessed in `/admin/appearance/hdbt/component-library`.
 
 ### How can I add a new SVG icon and then use it on my site.
 
-You can add your custom icons to `./src/icons/`. F.e. `my-awesome-icon.svg`. 
+You can add your custom icons to `./src/icons/`. F.e. `my-awesome-icon.svg`.
 Running `nvm use && npm i && npm run build` will collect the icon to the sprite.svg and it should then be available for use on your site by calling `my-awesome-icon`. Just remember to clear caches.
 The icons can be used in twig like so:
 
     {# HDBT Subtheme specific icons #}
     {% include "@hdbt_subtheme/misc/icon.twig" with {icon: 'my-awesome-icon'} %}
-    
+
     {# HDBT specific icons #}
     {% include "@hdbt/misc/icon.twig" with {icon: 'google-view'} %}
 
@@ -155,3 +155,43 @@ The issue here is actually in the combination of source maps and theme js aggreg
 associated with source maps because the aggregation names the files differently. What you need to do is disable js
 aggregation from Drupal. Go to /admin/config/development/performance and uncheck 'Aggregate JavaScript files'. Clear
 site caches and you should be able to continue with your work.
+
+### How can I add custom translations?
+Add your UI translations to ``./translations/{fi/sv}.po`` files like it is explained in Translation in Drupal 8 documentation: https://www.drupal.org/docs/understanding-drupal/translation-in-drupal-8.
+These translations consists of:
+
+PHP
+```
+$this->t('Example', [], ['context' => 'My custom context'])
+```
+Twig
+```
+{{ 'Example'|t({}, {'context': 'My custom context'}) }}
+```
+JS
+```
+const variable = Drupal.t('Example', {}, {context: 'My custom context'});
+```
+
+And the way to add the actual translation in to f.e. `fi.po` is done like so:
+```
+msgctxt "My custom context"
+msgid "Example"
+msgstr "Esimerkki"
+```
+
+Plural example:
+
+```
+msgctxt "My custom context"
+msgid "Singular"
+msgid_plural "Plural"
+msgstr[0] "Yksikkö"
+msgstr[1] "Monikko"
+```
+
+To see these translation changes in an instance, run in container shell:
+```
+drush locale:check && drush locale:update
+```
+And then flush all caches from top left drupal admin menu under "Druplicon".
