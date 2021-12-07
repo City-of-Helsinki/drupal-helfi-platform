@@ -1,0 +1,3 @@
+# Finnish translations
+msgid ""
+msgstr ""
