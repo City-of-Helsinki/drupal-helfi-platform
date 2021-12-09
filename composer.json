@@ -9,8 +9,8 @@
     "require": {
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.6.7",
-        "drupal/core-composer-scaffold": "^9.1",
-        "drupal/core-recommended": "^9.1",
+        "drupal/core-composer-scaffold": "^9.2",
+        "drupal/core-recommended": "~9.2.0",
         "drupal/hdbt": "^2.0",
         "drupal/hdbt_admin": "^1.0",
         "drupal/helfi_ahjo": "^1.0",
@@ -26,7 +26,7 @@
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
         "drupal/coder": "^8.3",
-        "drupal/core-dev": "^9.1",
+        "drupal/core-dev": "~9.2.0",
         "mglaman/phpstan-drupal": "^1.0",
         "phpspec/prophecy-phpunit": "^2",
         "phpstan/extension-installer": "^1.1",
