@@ -18,5 +18,10 @@ fi
 # tasks only once per deploy.
 if [ "$(drush state:get deploy_id)" != "$OPENSHIFT_BUILD_NAME" ]; then
   drush state:set deploy_id $OPENSHIFT_BUILD_NAME
+  # Put site in maintenance mode during deploy
+  drush state:set system.maintenance_mode 1 --input-format=integer
+  # Run maintenance tasks (config import, database updates etc)
   drush deploy
+  # Disable maintenance mode
+  drush state:set system.maintenance_mode 0 --input-format=integer
 fi
