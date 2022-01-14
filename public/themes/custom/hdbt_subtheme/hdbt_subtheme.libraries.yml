@@ -2,6 +2,7 @@ global-styling:
   version: 1.x
   css:
     theme:
+#      dist/css/hdbt-icons.css: {}
       dist/css/styles.min.css: {}
 
 global-scripting:

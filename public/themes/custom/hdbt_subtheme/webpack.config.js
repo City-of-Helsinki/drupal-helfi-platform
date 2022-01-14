@@ -8,6 +8,8 @@ const FriendlyErrorsWebpackPlugin = require('@nuxt/friendly-errors-webpack-plugi
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
+const SvgSpriteHash = require('../../contrib/hdbt/webpack.svgSpriteHash');
+const SvgToCss = require('../../contrib/hdbt/webpack.svgToCss');
 
 // Handle entry points.
 const Entries = () => {
@@ -99,6 +101,7 @@ module.exports = {
     extensions: [".js", ".json"],
   },
   plugins: [
+    new SvgToCss(path.resolve(__dirname, 'src/icons/**/*.svg'), 'css/hdbt-icons.css'),
     new FriendlyErrorsWebpackPlugin(),
     new RemoveEmptyScriptsPlugin(),
     new CleanWebpackPlugin({
@@ -127,6 +130,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'css/[name].min.css',
     }),
+    new SvgSpriteHash('./dist/icons', 'sprite', 'svg', 'css/hdbt-icons.css'),
   ],
   watchOptions: {
     aggregateTimeout: 300,
