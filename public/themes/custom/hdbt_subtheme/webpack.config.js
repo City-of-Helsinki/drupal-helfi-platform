@@ -3,13 +3,10 @@ const isDev = (process.env.NODE_ENV !== 'production');
 const path = require('path');
 const glob = require('glob');
 
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('@nuxt/friendly-errors-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
-const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
-const SvgSpriteHash = require('../../contrib/hdbt/webpack.svgSpriteHash');
-const SvgToCss = require('../../contrib/hdbt/webpack.svgToCss');
+const SvgToSprite = require('./webpack.svgToSprite');
 
 // Handle entry points.
 const Entries = () => {
@@ -44,6 +41,7 @@ module.exports = {
     pathinfo: true,
     filename: 'js/[name].min.js',
     publicPath: '../',
+    clean: true,
   },
   module: {
     rules: [
@@ -101,36 +99,16 @@ module.exports = {
     extensions: [".js", ".json"],
   },
   plugins: [
-    new SvgToCss(path.resolve(__dirname, 'src/icons/**/*.svg'), 'css/hdbt-icons.css'),
+    new SvgToSprite(
+      path.resolve(__dirname, 'src/icons/**/*.svg'),
+      'icons/hdbt-subtheme-sprite.svg',
+      'icons.json'
+    ),
     new FriendlyErrorsWebpackPlugin(),
     new RemoveEmptyScriptsPlugin(),
-    new CleanWebpackPlugin({
-      cleanAfterEveryBuildPatterns: ['dist']
-    }),
-    new SVGSpritemapPlugin([
-      path.resolve(__dirname, 'src/icons/**/*.svg'),
-    ], {
-      output: {
-        filename: './icons/sprite.svg',
-        svg: {
-          sizes: false
-        }
-      },
-      sprite: {
-        prefix: false,
-        gutter: 0,
-        generate: {
-          title: false,
-          symbol: true,
-          use: true,
-          view: '-view'
-        }
-      },
-    }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].min.css',
     }),
-    new SvgSpriteHash('./dist/icons', 'sprite', 'svg', 'css/hdbt-icons.css'),
   ],
   watchOptions: {
     aggregateTimeout: 300,

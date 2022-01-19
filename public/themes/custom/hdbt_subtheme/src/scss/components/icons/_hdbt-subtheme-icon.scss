@@ -1,0 +1,11 @@
+.hdbt-subtheme-icon {
+  --fallback: calc(var(--line-height, 1) * 1em); // By default we try to set icons same size as the current line-height
+  background-color: currentColor;
+  display: inline-block;
+  height: var(--icon-size, var(--fallback));
+  mask-image: var(--url);
+  mask-position: center center;
+  mask-repeat: no-repeat;
+  vertical-align: text-bottom;
+  width: var(--icon-size, var(--fallback));
+}
