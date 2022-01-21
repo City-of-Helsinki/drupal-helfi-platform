@@ -49,6 +49,7 @@ class svgToSprite {
                 stack: {
                   dest: "dist",
                   sprite: this.svgSpriteFilename,
+                  rootViewBox: false,
                 }
               }
             });
@@ -89,15 +90,15 @@ class svgToSprite {
     compiler.hooks.emit.tapAsync('svgToCss', (compilation, callback) => {
 
       // Create --hel-icon--{icon name} CSS variables.
-      let cssVariables = 'html{';
+      let cssVariables = [];
 
       while(this.cssVariables.length) {
         let fullFilename = this.cssVariables.shift();
         let filename = fullFilename.replace(/^.*[\\\/]/, '')
         let name = filename.split('.');
-        cssVariables += `--${this.themeName}-icon--${name[0]}: url(../${this.spriteHashFilename}#${name[0]});`;
+        cssVariables.push(`--${this.themeName}-icon--${name[0]}:url(../${this.spriteHashFilename}#${name[0]})`);
       }
-      cssVariables += '}';
+      cssVariables = `:root{${ cssVariables.join(';') }}`;
 
       // Create .hel-icon--{icon name} or {theme-name}--{icon name} css classes.
       let cssClasses = '';
@@ -105,15 +106,16 @@ class svgToSprite {
         let fullFilename = this.classes.shift();
         let filename = fullFilename.replace(/^.*[\\\/]/, '')
         let name = filename.split('.');
-        cssClasses += `.${this.themeName}-icon--${name[0]} {--url: var(--${this.themeName}-icon--${name[0]});}`;
+        cssClasses += `.${this.themeName}-icon--${name[0]}{--url:var(--${this.themeName}-icon--${name[0]})}`;
       }
 
       // Add a URL as a CSS variable to the hel-icon mask-image.
       // If icons are used elsewhere (f.e. in a separate theme or module) this
       // variable will provide the correct URL for the icon.
       let hdbtIconUrl = `.${this.themeName}-icon{` +
-        `-webkit-mask-image:var(--url);mask-image:var(--url);` +
-        `}`;
+        `-webkit-mask-image:var(--url);` +
+        `mask-image:var(--url)` +
+      `}`;
 
       // Combine CSS variables and classes.
       let filelist = cssVariables + cssClasses + hdbtIconUrl;
