@@ -6,34 +6,6 @@
  */
 
 /**
- * Helper function to get the icons path.
- *
- * @return string|null
- *   Returns path for the icons SVG or null.
- */
-function hdbt_subtheme_get_icons_path() {
-  static $icon_path;
-  if (!isset($icon_path)) {
-    $theme_handler = \Drupal::service('theme_handler');
-    $icon_path = '/' . $theme_handler->getTheme('hdbt_subtheme')->getPath() . '/dist/icons/sprite.svg';
-
-    // Add icons path as a global variable.
-    if (!empty($icon_path)) {
-      return $icon_path;
-    }
-  }
-  return $icon_path;
-}
-
-/**
- * Implements hook_preprocess().
- */
-function hdbt_subtheme_preprocess(&$variables) {
-  $variables['hdbt_subtheme_icons_path'] = hdbt_subtheme_get_icons_path();
-  $variables['#attached']['drupalSettings']['hdbtSubthemeIconsPath'] = $variables['hdbt_subtheme_icons_path'];
-}
-
-/**
  * Implements hook_preprocess_HOOK().
  */
 function hdbt_subtheme_preprocess_block(&$variables) {
