@@ -37,7 +37,11 @@ services:
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-app.tls=true"
       - "traefik.http.services.${COMPOSE_PROJECT_NAME}-app.loadbalancer.server.port=8080"
       - "traefik.docker.network=stonehenge-network"
-
+  redis:
+    container_name: "${COMPOSE_PROJECT_NAME}-redis"
+    image: redis:6-alpine
+    networks:
+      - internal
   db:
     container_name: "${COMPOSE_PROJECT_NAME}-db"
     image: druidfi/db:mysql5.7-drupal
@@ -47,7 +51,6 @@ services:
       - 3306
     networks:
       - internal
-
   varnish:
     container_name: "${COMPOSE_PROJECT_NAME}-varnish"
     image: druidfi/varnish:6-drupal
