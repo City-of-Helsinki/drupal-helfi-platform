@@ -191,8 +191,8 @@ if (
   extension_loaded('redis')
 ) {
   // Redis namespace is not available until redis module is enabled, so
-  // we have to manually register it to enable the module without having
-  // to remove this configuration.
+  // we have to manually register it in order to enable the module and have
+  // this configuration when the module is installed, but not yet enabled.
   $class_loader->addPsr4('Drupal\\redis\\', 'modules/contrib/redis/src');
   $redis_port = getenv('REDIS_PORT') ?: 6379;
 
