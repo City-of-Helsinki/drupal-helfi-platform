@@ -184,3 +184,36 @@ if ($stage_file_proxy_origin = getenv('STAGE_FILE_PROXY_ORIGIN')) {
   $config['stage_file_proxy.settings']['hotlink'] = FALSE;
   $config['stage_file_proxy.settings']['use_imagecache_root'] = FALSE;
 }
+
+if (
+  ($redis_host = getenv('REDIS_HOST')) &&
+  file_exists('modules/contrib/redis/example.services.yml') &&
+  extension_loaded('redis')
+) {
+  // Redis namespace is not available until redis module is enabled, so
+  // we have to manually register it in order to enable the module and have
+  // this configuration when the module is installed, but not yet enabled.
+  $class_loader->addPsr4('Drupal\\redis\\', 'modules/contrib/redis/src');
+  $redis_port = getenv('REDIS_PORT') ?: 6379;
+
+  // Force SSL on azure.
+  if (getenv('AZURE_SQL_SSL_CA_PATH')) {
+    $redis_host = 'tls://' . $redis_host;
+  }
+
+  if ($redis_prefix = getenv('REDIS_PREFIX')) {
+    $settings['cache_prefix']['default'] = $redis_prefix;
+  }
+
+  if ($redis_password = getenv('REDIS_PASSWORD')) {
+    $settings['redis.connection']['password'] = $redis_password;
+  }
+  $settings['redis.connection']['interface'] = 'PhpRedis';
+  $settings['redis.connection']['host'] = $redis_host;
+  $settings['redis.connection']['port'] = $redis_port;
+  $settings['cache']['default'] = 'cache.backend.redis';
+  $settings['container_yamls'][] = 'modules/contrib/redis/example.services.yml';
+  // Register redis services to make sure we don't get a non-existent service
+  // error while trying to enable the module.
+  $settings['container_yamls'][] = 'modules/contrib/redis/redis.services.yml';
+}
