@@ -196,11 +196,6 @@ if (
   $class_loader->addPsr4('Drupal\\redis\\', 'modules/contrib/redis/src');
   $redis_port = getenv('REDIS_PORT') ?: 6379;
 
-  // Force SSL on azure.
-  if (getenv('AZURE_SQL_SSL_CA_PATH')) {
-    $redis_host = 'tls://' . $redis_host;
-  }
-
   if ($redis_prefix = getenv('REDIS_PREFIX')) {
     $settings['cache_prefix']['default'] = $redis_prefix;
   }
