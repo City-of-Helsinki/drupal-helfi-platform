@@ -18,6 +18,7 @@ PHONY += oc-sync
 oc-sync:
 	$(call drush,helfi:oc:get-dump)
 	$(call drush,sql-query --file=${DOCKER_PROJECT_ROOT}/$(DUMP_SQL_FILENAME),SQL dump imported)
+	$(call drush,helfi:oc:sanitize-database)
 	$(call drush,cr)
 	$(call drush,cim -y)
 	$(call drush,cr)
