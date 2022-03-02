@@ -5,9 +5,11 @@
 # PROJECT-1234-test-test
 # PROJECT-1234_test_test
 id=$(echo `git rev-parse --abbrev-ref HEAD` | sed -nE 's|([a-z]+/)?([A-Z]+-[0-9]+)(-.+)?(_.+)?|\2|p')
+COMMIT_MESSAGE=$(cat $1)
 
-# only prepare commit message if pattern matched and jiraId was found
-if [[ ! -z $id ]]; then
+# Only prepare commit message if pattern matched and Jira ID was found and
+# message doesn't contain Jira ID already.
+if [[ ! -z $id ]] && [[ $COMMIT_MESSAGE != $id* ]]; then
   # $1 is the name of the file containing the commit message
   # Prepend "ABCD-123: "
   sed -i.bak -E "1s/^/${id}: /" $1
