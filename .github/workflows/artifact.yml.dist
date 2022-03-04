@@ -36,7 +36,7 @@ jobs:
           drush sql-dump --result-file=${GITHUB_WORKSPACE}/latest.sql
 
       - name: Upload latest database dump
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: latest.sql
           path: latest.sql
