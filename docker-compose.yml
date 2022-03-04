@@ -45,7 +45,7 @@ services:
       - internal
   db:
     container_name: "${COMPOSE_PROJECT_NAME}-db"
-    image: druidfi/db:mysql5.7-drupal
+    image: druidfi/mariadb:10.5-drupal
     volumes:
       - db_data:/var/lib/mysql
     ports:
