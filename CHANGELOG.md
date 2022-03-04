@@ -1,5 +1,24 @@
 # Changelog
 
+## 2022-03-04.1
+### Changed from druidfi/db:mysql5.7-drupal to druidfi/mariadb:10.5-drupal image
+
+This change was necessary since the base [mysql](https://hub.docker.com/_/mysql?tab=tags&page=1&name=5.7) image used to build `druidfi/db:mysql5.7-drupal` does not seem to support Apple's M1 chip anytime soon.
+
+### Required actions
+- Run `drush helfi:tools:update-platform` or update your `docker-compose.yml` [manually](https://github.com/City-of-Helsinki/drupal-helfi-platform/commit/b3b07018292638fc0b27d0e391774642718734fd#diff-e45e45baeda1c1e73482975a664062aa56f20c03dd9d64a827aba57775bed0d3).
+
+## 2021-01-07.1
+### Introducing drupal/helfi_drupal_tools package
+
+The Drupal tools aims to provide a way to sync changes made in `drupal-helfi-platform` to your project automatically.
+
+### Required actions
+- Update your `composer.json` to use correct installer-path: https://github.com/City-of-Helsinki/drupal-helfi-platform/commit/0359fd9d3f82f4d3e51eac5cb872b7ed0b5424c6#diff-d2ab9925cad7eac58e0ff4cc0d251a937ecf49e4b6bf57f8b95aab76648a9d34
+- Install the package: `composer require drupal/helfi_drupal_tools`
+- Run `drush helfi:tools:update-platform` to update changed files. This might require some manual actions, such as moving custom `settings.php` changes to `all.settings.php`.
+- Commit or revert changes files.
+
 ## 2021-11-25.2
 ### Database sync from dev/testing to local
 
