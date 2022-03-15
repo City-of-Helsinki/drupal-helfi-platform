@@ -20,6 +20,7 @@
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+        "donatj/mock-webserver": "^2.4",
         "drupal/coder": "^8.3",
         "drupal/core-dev": "^9.3",
         "mglaman/phpstan-drupal": "^1.0",
@@ -34,7 +35,14 @@
     },
     "config": {
         "optimize-autoloader": true,
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "composer/installers": true,
+            "cweagans/composer-patches": true,
+            "drupal/core-composer-scaffold": true,
+            "phpstan/extension-installer": true
+        }
     },
     "extra": {
         "composer-exit-on-patch-failure": true,
