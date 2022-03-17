@@ -189,6 +189,15 @@ if ($stage_file_proxy_origin = getenv('STAGE_FILE_PROXY_ORIGIN')) {
   $config['stage_file_proxy.settings']['use_imagecache_root'] = FALSE;
 }
 
+// Override session suffix when present.
+if ($session_suffix = getenv('DRUPAL_SESSION_SUFFIX')) {
+  $config['helfi_proxy.settings']['session_suffix'] = $session_suffix;
+}
+
+if ($robots_header_enabled = getenv('DRUPAL_X_ROBOTS_TAG_HEADER')) {
+  $config['helfi_proxy.settings']['robots_header_enabled'] = (bool) $robots_header_enabled;
+}
+
 if (
   ($redis_host = getenv('REDIS_HOST')) &&
   file_exists('modules/contrib/redis/example.services.yml') &&
