@@ -46,7 +46,7 @@ Enable the `update-config` action by adding [.github/workflows/update-config.yml
 Then run the Update config action by going to Actions -> Update config -> Run workflow.
 
 
-### Triggering automatic updates automatically
+### Triggering updates automatically
 
 The Update config action is never run by default. If you wish to receive updates automatically, your project's repository must be whitelisted by us.
 
