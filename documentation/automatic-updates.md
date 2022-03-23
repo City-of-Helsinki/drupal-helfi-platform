@@ -33,7 +33,7 @@ The workflow is only run in repository's default branch. It's recommended to hav
 
 Once you have the action set up, go to Actions -> Build artifact -> Run workflow:
 
-![Update config workflow](/srv/http/helfi/drupal-base/documentation/images/workflow.png)
+![Update config workflow](/documentation/images/workflow.png)
 
 This will generate a SQL-dump based on your site's current configuration and save it as an artifact and will be used by `Update config` action to determine if your site is missing any platform updates.
 
