@@ -12,3 +12,8 @@
 ## Testing
 
 Rename `.github/workflows/test.yml.dist` to `.github/workflows/test.yml` to enable automatic code checks.
+
+
+## For developers
+
+- [Automatic updates](/documentation/automatic-updates.md)
