@@ -7,7 +7,7 @@
 ## Infrastructure
 
 - [OpenShift documentation](/documentation/openshift.md)
-- [Using OpenShift origin clien (OC)](/documentation/openshift-oc.md)
+- [Using OpenShift origin client (OC)](/documentation/openshift-oc.md)
 
 ## Testing
 
