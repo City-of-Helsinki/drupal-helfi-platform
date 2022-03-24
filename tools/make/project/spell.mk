@@ -9,7 +9,7 @@ else
 	@sed -i '/composer.lock/d' .gitignore
 endif
 	@rm CHANGELOG.md README.md tools/make/project/spell.mk
-	@rm documentation/images/* rm documentation/*
+	@rm documentation/images/* documentation/*
 	@rmdir documentation/images documentation/
 	@mv README.project.md README.md
 	@$(MAKE) self-update
