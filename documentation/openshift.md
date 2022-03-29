@@ -20,7 +20,7 @@ Crons are run inside a separate cron container and use [docker/openshift/crons/b
 
 The cron container is run using the same image as the Drupal container and should contain everything your normal container does.
 
-The entrypoint is run only once and the container will die as soon as the "main" loop is finished, meaning that all scripts must be run inside an infinite loop. You can use `sleep XX` to define how often certain task should be run.
+The entrypoint is run only once and the container will die as soon as the "main" loop is finished, meaning that all scripts must be run inside an infinite loop. You can use `sleep XX` to define how often a certain task should be run.
 
 Any scripts placed in repository's `docker/openshift/crons` folder will be copied automatically
 to `/crons` folder inside the cron container, but won't be run automatically.
