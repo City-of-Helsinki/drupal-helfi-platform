@@ -16,7 +16,7 @@ services:
       DRUPAL_ROUTES: "https://varnish-${DRUPAL_HOSTNAME},https://helfi-proxy.docker.so,http://${COMPOSE_PROJECT_NAME}-varnish"
       DRUPAL_REVERSE_PROXY_ADDRESS: helfi-proxy.docker.so
       DRUSH_OPTIONS_URI: "https://${DRUPAL_HOSTNAME}"
-      # XDEBUG_ENABLE: "true"
+      XDEBUG_ENABLE: "${XDEBUG_ENABLE:-false}"
       # DOCKERHOST: host.docker.internal
       # Use drush server to run functional tests so we don't have to care about
       # permission issues.
