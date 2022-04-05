@@ -16,3 +16,4 @@ $settings['file_chmod_directory'] = 16895;
 $settings['file_chmod_file'] = 16895;
 
 $config['system.performance']['cache']['page']['max_age'] = 86400;
+$config['filelog.settings']['location'] = '/tmp';

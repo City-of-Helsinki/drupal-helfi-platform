@@ -163,7 +163,6 @@ if ($robots_header_enabled = getenv('DRUPAL_X_ROBOTS_TAG_HEADER')) {
 }
 
 $config['filelog.settings']['rotation']['schedule'] = 'never';
-$config['filelog.settings']['location'] = '/tmp';
 
 if (
   ($redis_host = getenv('REDIS_HOST')) &&
