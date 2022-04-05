@@ -16,6 +16,9 @@ services:
       DRUPAL_ROUTES: "https://varnish-${DRUPAL_HOSTNAME},https://helfi-proxy.docker.so,http://${COMPOSE_PROJECT_NAME}-varnish"
       DRUPAL_REVERSE_PROXY_ADDRESS: helfi-proxy.docker.so
       DRUSH_OPTIONS_URI: "https://${DRUPAL_HOSTNAME}"
+      # To enable xdebug, run `export XDEBUG_ENABLE=true` before (re)starting your project.
+      # Optionally, you can add this to your default environments variables to enable or disable
+      # xdebug by default (like /etc/environments, ~/.bashrc, or ~/.zshrc).
       XDEBUG_ENABLE: "${XDEBUG_ENABLE:-false}"
       # DOCKERHOST: host.docker.internal
       # Use drush server to run functional tests so we don't have to care about
