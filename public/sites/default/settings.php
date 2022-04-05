@@ -162,6 +162,9 @@ if ($robots_header_enabled = getenv('DRUPAL_X_ROBOTS_TAG_HEADER')) {
   $config['helfi_proxy.settings']['robots_header_enabled'] = (bool) $robots_header_enabled;
 }
 
+$config['filelog.settings']['rotation']['schedule'] = 'never';
+$config['filelog.settings']['location'] = '/tmp';
+
 if (
   ($redis_host = getenv('REDIS_HOST')) &&
   file_exists('modules/contrib/redis/example.services.yml') &&
