@@ -24,3 +24,4 @@ public/sites/default/local.settings.php
 
 !*.gitkeep
 !*.keepme
+.phpunit.*

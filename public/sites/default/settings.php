@@ -52,9 +52,10 @@ $settings['siteimprove_id'] = getenv('SITEIMPROVE_ID');
 
 // Drupal route(s).
 $routes = (getenv('DRUPAL_ROUTES')) ? explode(',', getenv('DRUPAL_ROUTES')) : [];
+$routes[] = 'http://127.0.0.1';
 
 foreach ($routes as $route) {
-  $hosts[] = $host = parse_url($route)['host'];
+  $host = parse_url($route)['host'];
   $trusted_host = str_replace('.', '\.', $host);
   $settings['trusted_host_patterns'][] = '^' . $trusted_host . '$';
 }
