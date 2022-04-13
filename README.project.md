@@ -36,7 +36,11 @@ Or sync the database from testing environment:
 $ make fresh
 ```
 
-NOTE: Change these according of the state of your project.
+To show all available commands:
+
+```bash
+$ make help
+```
 
 ## Login to Drupal container
 
@@ -45,3 +49,7 @@ This will log you inside the app container:
 ```bash
 $ make shell
 ```
+
+## Documentation
+
+See [documentatation](https://github.com/City-of-Helsinki/drupal-helfi-platform/tree/main/documentation).
