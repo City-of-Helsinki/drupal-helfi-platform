@@ -1,8 +1,8 @@
 # OpenShift OC tool
 
 ## Preparation
-You need openshift-cli to your local to use these instructions.
-If you are a mac user you can install it from homebrew: `brew install openshift-cli`
+
+All `city-of-helsinki/drupal-web` images should contain `oc` binary. Call `make shell` to log into app container.
 
 ## Logging in
 
