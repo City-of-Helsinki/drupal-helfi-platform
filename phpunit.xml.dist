@@ -13,6 +13,10 @@
   <ini name="memory_limit" value="-1"/>
   <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="public/sites/simpletest"/>
   <env name="MINK_DRIVER_ARGS_WEBDRIVER" value='["chrome", {"browserName":"chrome","chromeOptions":{"w3c": false, "args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:4444"]' />
+  <env name="DTT_MINK_DRIVER_ARGS" value='["chrome", {"chromeOptions":{"w3c": false }}, "http://127.0.0.1:4444"]'/>
+  <env name="DTT_API_OPTIONS" value='{"socketTimeout": 360, "domWaitTimeout": 3600000}' />
+  <env name="DTT_API_URL" value="http://127.0.0.1:9222"/>
+  <env name="DTT_BASE_URL" value="http://127.0.0.1:8888"/>
 </php>
 <testsuites>
   <testsuite name="unit">
@@ -34,6 +38,12 @@
     <directory>./public/modules/custom/*/tests/src/FunctionalJavascript</directory>
     <directory>./public/themes/custom/*/tests/src/FunctionalJavascript</directory>
     <directory>./public/profiles/custom/*/tests/src/FunctionalJavascript</directory>
+  </testsuite>
+  <testsuite name="existing-site">
+    <directory>./tests/dtt/src/ExistingSite</directory>
+  </testsuite>
+  <testsuite name="existing-site-javascript">
+    <directory>./tests/dtt/src/ExistingSiteJavascript</directory>
   </testsuite>
 </testsuites>
 <listeners>

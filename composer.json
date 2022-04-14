@@ -28,7 +28,8 @@
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan": "^1.0",
         "phpstan/phpstan-deprecation-rules": "^1.0",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "weitzman/drupal-test-traits": "^1.5"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -83,6 +84,11 @@
             "drush/Commands/{$name}": [
                 "type:drupal-drush"
             ]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Drupal\\Tests\\dtt\\": "tests/dtt/src"
         }
     },
     "repositories": [

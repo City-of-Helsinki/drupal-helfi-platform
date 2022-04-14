@@ -44,8 +44,17 @@ jobs:
       - name: Install Drupal
         run: mysql --user=drupal --password=drupal --database=drupal --host=db --port=3306 -A < latest.sql
 
-      - name: Run PHPUnit tests
+      - name: Start services
         run: |
           drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
           chromedriver --port=4444 > /dev/null 2>&1 &
+          # Uncomment the line below to run 'existing-site-javascript' tests.
+          # chromium-browser --headless --disable-gpu --remote-debugging-port=9222 &
+          # Wait for drush server to start.
+          for i in {1..5}; do RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$SIMPLETEST_BASE_URL" || true); if [ "$RESPONSE_CODE" -gt "301" ] || [ "$RESPONSE_CODE" -lt "200" ]; then sleep 2; fi; done
+
+      - name: Run PHPUnit tests
+        run: |
           composer test-php public/modules/custom
+          # Uncomment the line below to run drupal-test-trait tests under tests/src/* folder.
+          # composer test-php tests/
