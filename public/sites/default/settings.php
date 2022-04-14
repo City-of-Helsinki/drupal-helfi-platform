@@ -117,6 +117,11 @@ if ($varnish_port = getenv('DRUPAL_VARNISH_PORT')) {
   $config['varnish_purger.settings.varnish_purge_all']['port'] = $varnish_port;
 }
 
+// settings.php doesn't know about existing configuration yet so we can't
+// just append new headers to an already existing headers array here.
+// If you have configured any extra headers in your purge settings
+// you must add them in your all.settings.php as well.
+// @todo Replace this with config override service?
 $config['varnish_purger.settings.default']['headers'] = [
   [
     'field' => 'Cache-Tags',
@@ -132,11 +137,6 @@ $config['varnish_purger.settings.varnish_purge_all']['headers'] = [
 ];
 
 if ($varnish_purge_key = getenv('VARNISH_PURGE_KEY')) {
-  // settings.php doesn't know about existing configuration yet so we can't
-  // just append new headers to an already existing headers array here.
-  // If you have configured any extra headers in your purge settings
-  // you must add them here as well.
-  // @todo Replace this with config override service?
   $config['varnish_purger.settings.default']['headers'][] = [
     'field' => 'X-VC-Purge-Key',
     'value' => $varnish_purge_key,
@@ -167,7 +167,7 @@ $config['filelog.settings']['rotation']['schedule'] = 'never';
 
 if (
   ($redis_host = getenv('REDIS_HOST')) &&
-  file_exists('modules/contrib/redis/example.services.yml') &&
+  file_exists('modules/contrib/redis/redis.services.yml') &&
   extension_loaded('redis')
 ) {
   // Redis namespace is not available until redis module is enabled, so
@@ -184,8 +184,18 @@ if (
     $settings['redis.connection']['password'] = $redis_password;
   }
   $settings['redis.connection']['interface'] = 'PhpRedis';
-  $settings['redis.connection']['host'] = $redis_host;
   $settings['redis.connection']['port'] = $redis_port;
+
+  // REDIS_INSTANCE environment variable is used to support Redis sentinel
+  // and the value should contain both the host and the port, like
+  // 'sentinel-external:5000'.
+  if ($redis_instance = getenv('REDIS_INSTANCE')) {
+    $settings['redis.connection']['instance'] = $redis_instance;
+    // Sentinel expects redis host to be an array.
+    $redis_host = explode(',', $redis_host);
+  }
+  $settings['redis.connection']['host'] = $redis_host;
+
   $settings['cache']['default'] = 'cache.backend.redis';
   $settings['container_yamls'][] = 'modules/contrib/redis/example.services.yml';
   // Register redis services to make sure we don't get a non-existent service
