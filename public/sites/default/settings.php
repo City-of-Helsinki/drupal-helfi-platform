@@ -187,7 +187,8 @@ if (
   $settings['redis.connection']['port'] = $redis_port;
 
   // REDIS_INSTANCE environment variable is used to support Redis sentinel.
-  // REDIS_HOST value should contain host and port, like 'sentinel-external:5000'.
+  // REDIS_HOST value should contain host and port, like 'sentinel-external:5000'
+  // when using Sentinel.
   if ($redis_instance = getenv('REDIS_INSTANCE')) {
     $settings['redis.connection']['instance'] = $redis_instance;
     // Sentinel expects redis host to be an array.
