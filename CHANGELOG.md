@@ -1,7 +1,7 @@
 # Changelog
 
 ## 2022-03-04.1
-### Changed from druidfi/db:mysql5.7-drupal to druidfi/mariadb:10.5-drupal image
+### Changed druidfi/db:mysql5.7-drupal docmer image to druidfi/mariadb:10.5-drupal
 
 This change was necessary since the base [mysql](https://hub.docker.com/_/mysql?tab=tags&page=1&name=5.7) image used to build `druidfi/db:mysql5.7-drupal` does not support Apple's M1 chip (arm64).
 
@@ -11,7 +11,7 @@ This change was necessary since the base [mysql](https://hub.docker.com/_/mysql?
 ## 2021-01-07.1
 ### Introducing drupal/helfi_drupal_tools package
 
-The Drupal tools aims to provide a way to sync updates in `drupal-helfi-platform` to projects using it automatically.
+The Drupal tools aims to provide a way to sync updates from `drupal-helfi-platform` to projects using it automatically.
 
 ### Required actions
 - Update your `composer.json` to use correct installer-path: https://github.com/City-of-Helsinki/drupal-helfi-platform/commit/0359fd9d3f82f4d3e51eac5cb872b7ed0b5424c6#diff-d2ab9925cad7eac58e0ff4cc0d251a937ecf49e4b6bf57f8b95aab76648a9d34
