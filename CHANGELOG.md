@@ -1,7 +1,7 @@
 # Changelog
 
 ## 2022-03-04.1
-### Changed druidfi/db:mysql5.7-drupal docmer image to druidfi/mariadb:10.5-drupal
+### Changed druidfi/db:mysql5.7-drupal docker image to druidfi/mariadb:10.5-drupal
 
 This change was necessary since the base [mysql](https://hub.docker.com/_/mysql?tab=tags&page=1&name=5.7) image used to build `druidfi/db:mysql5.7-drupal` does not support Apple's M1 chip (arm64).
 
