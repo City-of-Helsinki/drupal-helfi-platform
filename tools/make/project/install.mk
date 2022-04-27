@@ -1,8 +1,4 @@
-ifeq ($(DRUPAL_CONF_EXISTS),yes)
-	DRUPAL_NEW_TARGETS := up build drush-si drush-cr drush-locale-update drush-uli
-else
-	DRUPAL_NEW_TARGETS := up build drush-si helfi-drush-enable-modules drush-locale-update drush-uli
-endif
+DRUPAL_NEW_TARGETS := up build drush-si-new helfi-drush-enable-modules drush-locale-update drush-uli
 DRUPAL_POST_INSTALL_TARGETS := drush-deploy drush-locale-update drush-uli
 
 OC_LOGIN_TOKEN ?= $(shell bash -c 'read -s -p "You must obtain an API token by visiting https://oauth-openshift.apps.arodevtest.hel.fi/oauth/token/request (Token):" token; echo $$token')
@@ -36,3 +32,7 @@ drush-locale-update: ## Update translations.
 	$(call drush_on_docker,cr)
 	$(call step,Import custom translations...)
 	$(call drush,helfi:locale-import helfi_platform_config)
+
+PHONY+= drush-si-new
+drush-si-new: ## Install Drupal with minimal profile.
+	$(call drush, si -y minimal)
