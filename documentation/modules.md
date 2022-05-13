@@ -9,7 +9,9 @@ Base module for `drupal-helfi-platform` ecosystem. Most modules listed below dep
 
 ## Azure FS
 
-Azure's NFS file mount used to store and serve files (from `sites/default/files`) does not support certain file operations (such as chmod), causing any request that performs them to give a 5xx error, like the initial request that attempts to generate an image style.
+Azure's NFS file system (used to store/serve files from `sites/default/files`) does not support certain file operations (such as chmod), causing any request that performs them to throw a 5xx error. For example:
+- Request that aggregates multiple css/js files together
+- Attempt to generate a preview image for file upload.
 
 This module decorates core's `file_system` service to skip unsupported file operations when the site is operating on Azure environment.
 
