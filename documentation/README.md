@@ -17,3 +17,4 @@ Rename `.github/workflows/test.yml.dist` to `.github/workflows/test.yml` to enab
 ## For developers
 
 - [Automatic updates](/documentation/automatic-updates.md)
+- [Available modules](/documentation/modules.md)
