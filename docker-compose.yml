@@ -74,7 +74,7 @@ services:
       - "traefik.http.services.${COMPOSE_PROJECT_NAME}-varnish.loadbalancer.server.port=6081"
       - "traefik.docker.network=stonehenge-network"
   robo:
-    image: ghcr.io/city-of-helsinki/drupal-robo:alpine
+    image: ghcr.io/city-of-helsinki/drupal-robo:latest
     shm_size: '2gb'
     tty: true
     volumes:
