@@ -1,5 +1,17 @@
 # Changelog
 
+## 2022-05-19.1
+### HDBT 3.0
+
+The HDBT theme page layouts and blocks were overhauled and might cause BC breaks.
+See changes: https://github.com/City-of-Helsinki/drupal-hdbt/releases/tag/3.0.0
+
+### Required actions
+1. Make sure your Drupal instance is up and running on latest dev/main branch
+2. Update the HDBT and necessary modules by running: `composer require drupal/hdbt:^3.0 --with-all-dependencies; composer update drupal/helfi_platform_config drupal/helfi_tpr drupal/hdbt_admin`.
+3. Run updates and export configuration. `make drush-updb drush-cr drush-cex`
+4. Check that exported configuration is correct and commit the configuration changes to your repository.
+
 ## 2022-03-04.1
 ### Changed druidfi/db:mysql5.7-drupal docker image to druidfi/mariadb:10.5-drupal
 
