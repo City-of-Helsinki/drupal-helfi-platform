@@ -11,7 +11,7 @@ This change was necessary since the base [mysql](https://hub.docker.com/_/mysql?
 ## 2021-01-07.1
 ### Introducing drupal/helfi_drupal_tools package
 
-The Drupal tools aims to provide a way to sync updates from `drupal-helfi-platform` to projects using it automatically.
+The Drupal tools aims to provide a way to automatically sync updates from `drupal-helfi-platform`.
 
 ### Required actions
 - Update your `composer.json` to use correct installer-path: https://github.com/City-of-Helsinki/drupal-helfi-platform/commit/0359fd9d3f82f4d3e51eac5cb872b7ed0b5424c6#diff-d2ab9925cad7eac58e0ff4cc0d251a937ecf49e4b6bf57f8b95aab76648a9d34
