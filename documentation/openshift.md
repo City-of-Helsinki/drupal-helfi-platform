@@ -1,4 +1,8 @@
-# OpenShift
+# OpenShift docker image
+
+## Usage
+
+The docker image is re-built on every deployment using project's [docker/openshift/Dockerfile](/docker/openshift/Dockerfile). 
 
 See [City-of-Helsinki/drupal-docker-images](https://github.com/City-of-Helsinki/drupal-docker-images#openshift-drupal-docker-image) to see how the image is built.
 
