@@ -1,8 +1,12 @@
-# OpenShift docker image
+# OpenShift Drupal docker image
 
 ## Usage
 
-The docker image is re-built on every deployment using project's [docker/openshift/Dockerfile](/docker/openshift/Dockerfile). 
+The docker image is re-built on every deployment using project's [/docker/openshift/Dockerfile](/docker/openshift/Dockerfile). 
+
+The codebase is built into image's `/var/www/html` folder using composer: `composer install --no-progress --profile --prefer-dist --no-interaction --no-dev --optimize-autoloader` as `root` user. 
+
+The container is run as random UID (non-root) user (like uid `10009900`) that has no write permissions to any files (except inside `/tmp` folder), meaning that files inside the container cannot be modified after the image is built.
 
 See [City-of-Helsinki/drupal-docker-images](https://github.com/City-of-Helsinki/drupal-docker-images#openshift-drupal-docker-image) for more documentation about the underlying Docker image.
 
