@@ -8,6 +8,7 @@
 
 - [Infrastructure documentation (OpenShift)](/documentation/openshift.md)
 - [Using OpenShift origin client (OC)](/documentation/openshift-oc.md)
+- [Syncing Databases between environments](/documentation/openshift-db-sync.md)
 
 ## Testing
 
