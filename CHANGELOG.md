@@ -1,5 +1,9 @@
 # Changelog
 
+## 2022-05-31.1
+
+Added documentation of how to sync databases between OpenShift environments: [documentation/openshift-db-sync.md](/documentation/openshift-db-sync.md).
+
 ## 2022-05-19.1
 ### HDBT 3.0
 
