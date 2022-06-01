@@ -61,9 +61,9 @@ To get your project whitelisted you can either contact us directly or:
 
 ### Scheduled updates
 
-The `Update config` action is not updated by the action itself, so you can modify it any way you want. For example, you can set it to run on schedule using the `schedule` event.
+The `Update config` action is never updated automatically, so you can modify it any way you want. For example, you can set it to run on schedule using the `schedule` event.
 
-See [Events that trigger workflows](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule) for different ways to trigger an update.
+See [Events that trigger workflows](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule) for different ways to trigger it automatically.
 
 ## Developing
 
