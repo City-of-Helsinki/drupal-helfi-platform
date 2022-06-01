@@ -19,7 +19,7 @@ Tasks done by Update config action:
 5. Export the configuration (`drush config:export`).
 6. Create a pull request of any files changed in process.
 
-This is useful beyond just updating the changes from `drupal-helfi-platform` for a few reasons. For example when you forget to export the configuration changes after running the update hooks locally, which can lead to some unexpected behaviour when a deployment attempts to run update hooks and then override the active configuration using stale (pre-update hook) configuration.
+This is useful beyond just updating the changes from `drupal-helfi-platform` for a few reasons, like to ensure that configuration changes done by update hooks are always exported to repository.
 
 You can see it in action [here](https://github.com/City-of-Helsinki/drupal-helfi-kymp/pull/302/files).
 
