@@ -10,7 +10,7 @@ The automatic update bot can be used to:
 
 The idea behind this is to create an SQL-dump once a week from your site's active configuration. The dump is then used as a reference point by `Update config` GitHub action to determine if your site is missing any configuration updates.
 
-Tasks done in update config:
+Tasks done by Update config action:
 
 1. Install the site using the reference SQL-dump.
 2. Import the configuration (`drush config:import`) to make sure everything is up-to-date before updating anything.
