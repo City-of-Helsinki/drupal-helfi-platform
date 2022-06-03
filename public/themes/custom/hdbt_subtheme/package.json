@@ -78,5 +78,12 @@
     "> 1%",
     "ie > 10",
     "iOS > 9"
-  ]
+  ],
+  "devDependencies": {
+    "js-yaml": "^4.1.0",
+    "stylelint": "^14.8.5",
+    "stylelint-config-standard-scss": "^4.0.0",
+    "stylelint-order": "^5.0.0",
+    "stylelint-scss": "^4.2.0"
+  }
 }
