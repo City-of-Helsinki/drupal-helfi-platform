@@ -50,6 +50,18 @@ $config['siteimprove.settings']['api_key'] = getenv('SITEIMPROVE_API_KEY');
 $settings['matomo_site_id'] = getenv('MATOMO_SITE_ID');
 $settings['siteimprove_id'] = getenv('SITEIMPROVE_ID');
 
+// Elasticsearch settings.
+if(getenv('ELASTICSEARCH_URL')) {
+  $config['elasticsearch_connector.cluster.news']['url'] = getenv('ELASTICSEARCH_URL');
+
+  if(getenv('ELASTIC_USER') && getenv('ELASTIC_PASSWORD')) {
+    $config['elasticsearch_connector.cluster.news']['options']['use_authentication'] = '1';
+    $config['elasticsearch_connector.cluster.news']['options']['authentication_type'] = 'Basic';
+    $config['elasticsearch_connector.cluster.news']['options']['username'] = getenv('ELASTIC_USER');
+    $config['elasticsearch_connector.cluster.news']['options']['password'] = getenv('ELASTIC_PASSWORD');
+  }
+}
+
 // Drupal route(s).
 $routes = (getenv('DRUPAL_ROUTES')) ? explode(',', getenv('DRUPAL_ROUTES')) : [];
 $routes[] = 'http://127.0.0.1';
