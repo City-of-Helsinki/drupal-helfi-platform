@@ -9,6 +9,8 @@ command:
       options:
         # Set a predetermined username and password when using site-install.
         account-name: 'helfi-admin'
+        account-mail: 'drupal@hel.fi'
+        site-mail: 'drupal@hel.fi'
 
 sql:
   # List of tables whose *data* is skipped by the 'sql-dump' and 'sql-sync'
