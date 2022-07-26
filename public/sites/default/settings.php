@@ -91,6 +91,7 @@ if ($blob_storage_name = getenv('AZURE_BLOB_STORAGE_NAME')) {
       'config' => [
         'name' => $blob_storage_name,
         'key' => getenv('AZURE_BLOB_STORAGE_KEY'),
+        'token' => getenv('AZURE_BLOB_STORAGE_SAS_TOKEN'),
         'container' => getenv('AZURE_BLOB_STORAGE_CONTAINER'),
         'endpointSuffix' => 'core.windows.net',
         'protocol' => 'https',
