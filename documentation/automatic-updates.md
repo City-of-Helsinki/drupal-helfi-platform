@@ -35,7 +35,7 @@ Once you have the action set up, go to Actions -> Build artifact -> Run workflow
 
 ![Update config workflow](/documentation/images/workflow.png)
 
-This will generate a SQL-dump based on your site's current configuration and save it as an artifact and will be used by `Update config` action to determine if your site is missing any platform updates.
+This will generate an SQL-dump based on your site's current configuration and save it as an artifact and will be used by `Update config` action to determine if your site is missing any platform updates.
 
 The action will be run automatically once a week after you first run it.
 
@@ -77,4 +77,8 @@ Settings:
 - Payload URL: Contact helfi dev team
 - Secret: Contact helfi dev team
 - Select individual events that trigger the webhook: `releases`
+
+We use Github account called `hel-platta-automation` to trigger the dispatch event via Github API. Go to your repository's `Settings` -> `Collaborators and teams`, click `Add people` and give `hel-platta-automation` user `write` permissions to your repository. 
+
+See https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event.
 
