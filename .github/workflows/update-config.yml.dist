@@ -41,8 +41,7 @@ jobs:
           $(drush sql:connect) < latest.sql
           drush cr && drush cim -y
           composer update drupal/helfi_* drupal/hdbt* -W
-          drush updb -y
-          drush cex -y
+          drush cr && drush updb -y && drush cex -y
           # Update platform
           drush helfi:tools:update-platform
 
