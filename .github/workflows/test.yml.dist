@@ -34,7 +34,7 @@ jobs:
         run: |
           vendor/bin/phpcs public/modules/custom/ --ignore="*.js,*.css" --extensions=php,module,install --standard=Drupal
           vendor/bin/phpcs public/themes/custom/ --ignore="*.js,*.css" --extensions=php,theme --standard=Drupal
-          
+
       - name: Download latest dump
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -42,7 +42,9 @@ jobs:
           gh run download -n latest.sql
 
       - name: Install Drupal
-        run: mysql --user=drupal --password=drupal --database=drupal --host=db --port=3306 -A < latest.sql
+        run: |
+          mysql --user=drupal --password=drupal --database=drupal --host=db --port=3306 -A < latest.sql
+          drush cr && drush cim -y
 
       - name: Start services
         run: |
