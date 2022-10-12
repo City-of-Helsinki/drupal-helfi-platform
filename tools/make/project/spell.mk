@@ -8,7 +8,7 @@ ifeq ($(UNAME_S),Darwin)
 else
 	@sed -i '/composer.lock/d' .gitignore
 endif
-	@rm CHANGELOG.md README.md tools/make/project/spell.mk
+	@rm CHANGELOG.md README.md renovate.json .github/workflows/ci.yml tools/make/project/spell.mk
 	@rm -r documentation/
 	@mv README.project.md README.md
 	@$(MAKE) self-update

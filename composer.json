@@ -110,7 +110,6 @@
         "lint-php": "vendor/bin/phpcs --standard=Drupal",
         "copy-commit-message-script": "make copy-commit-message-script",
         "post-create-project-cmd": [
-            "rm .github/workflows/ci.yml",
             "make cast-spell",
             "@copy-commit-message-script"
         ],
