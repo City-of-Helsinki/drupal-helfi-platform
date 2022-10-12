@@ -31,16 +31,15 @@ See [CHANGELOG.md](/CHANGELOG.md)
 
 #### Create a new project using composer
 
-```
-$ composer create-project City-of-Helsinki/drupal-helfi-platform:dev-main yoursite --no-interaction \
-    --repository https://repository.drupal.hel.ninja/
+```console
+$ composer create-project City-of-Helsinki/drupal-helfi-platform:dev-main yoursite --no-interaction --repository https://repository.drupal.hel.ninja/
 ```
 
 Now you need to have Stonehenge up & running. See [Docker and Stonehenge](https://github.com/druidfi/guidelines/blob/master/docs/local_dev_env.md).
 
 Start the development environment, build development codebase and install empty site with minimal profile:
 
-```
+```console
 $ make new
 ```
 

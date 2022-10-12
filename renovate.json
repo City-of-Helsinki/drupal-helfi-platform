@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "config:base",
+    ":disableRateLimiting",
+    ":preserveSemverRanges",
+    "github>druidfi/renovate-config:drupal",
+    "github>druidfi/renovate-config:js"
+  ],
+  "dependencyDashboard": true,
+  "prConcurrentLimit": 10,
+  "packageRules": [
+    {
+      "matchLanguages": ["php"],
+      "rangeStrategy": "update-lockfile"
+    }
+  ]
+}
