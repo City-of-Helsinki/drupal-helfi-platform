@@ -7,7 +7,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "composer/installers": "^1.9",
+        "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.6.7",
         "drupal/core-composer-scaffold": "^9.3",
         "drupal/core-recommended": "^9.3",
