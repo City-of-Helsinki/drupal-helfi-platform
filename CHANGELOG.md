@@ -5,7 +5,7 @@
 PHP 8.1 is now the default PHP version.
 
 ### Required actions
-1. Run `drush helfi:tools:update-platform`
+1. Run `drush helfi:tools:update-platform`. See [City-of-Helsinki/drupal-tools](https://github.com/City-of-Helsinki/drupal-tools) for instructions if the command does not exist.
 2. Verify and test changes locally
 3. Update `DRUPAL_DOCKER_TAG` value to `8.1` or `8.1-dev` on Azure DevOps (if set).
 
