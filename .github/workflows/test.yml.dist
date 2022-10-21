@@ -30,6 +30,9 @@ jobs:
       - name: Build project
         run: composer install
 
+      - name: Check that subtheme is not built with dev mode
+        run: if grep -q 'sourceMappingURL=' -R public/themes/custom/hdbt_subtheme/dist/css; then exit 1; fi
+
       - name: Run PHPCS
         run: |
           vendor/bin/phpcs public/modules/custom/ --ignore="*.js,*.css" --extensions=php,module,install --standard=Drupal
@@ -38,8 +41,7 @@ jobs:
       - name: Download latest dump
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh run download -n latest.sql
+        run: gh run download -n latest.sql
 
       - name: Install Drupal
         run: |
