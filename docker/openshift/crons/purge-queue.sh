@@ -15,7 +15,7 @@ while true
 do
   if has_items; then
     echo "Flushing purge queue: $(date)"
-    drush p:queue-work --no-interaction -q --finish
+    drush p:queue-work --no-interaction --finish
   fi
   # Sleep for 60 seconds.
   sleep 60
