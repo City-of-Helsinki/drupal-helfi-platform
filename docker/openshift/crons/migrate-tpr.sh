@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "Running TPR Migrations: $(date)"
-
 function populate_variables {
   # Generate variables used to control which migrates needs
   # to be reset and which ones needs to be skipped based on
@@ -46,19 +44,19 @@ do
 
   if run_migrate "tpr_unit"; then
     echo "Running TPR Unit migrate: $(date)"
-    PARTIAL_MIGRATE=1 drush migrate:import tpr_unit
+    PARTIAL_MIGRATE=1 drush migrate:import tpr_unit --no-progress
   fi
   if run_migrate "tpr_service"; then
     echo "Running TPR Service migrate: $(date)"
-    PARTIAL_MIGRATE=1 drush migrate:import tpr_service
+    PARTIAL_MIGRATE=1 drush migrate:import tpr_service --no-progress
   fi
   if run_migrate "tpr_errand_service"; then
     echo "Running TPR Errand Service migrate: $(date)"
-    PARTIAL_MIGRATE=1 drush migrate:import tpr_errand_service
+    PARTIAL_MIGRATE=1 drush migrate:import tpr_errand_service --no-progress
   fi
   if run_migrate "tpr_service_channel"; then
     echo "Running TPR Service Channel migrate: $(date)"
-    PARTIAL_MIGRATE=1 drush migrate:import tpr_service_channel
+    PARTIAL_MIGRATE=1 drush migrate:import tpr_service_channel --no-progress
   fi
   # Reset migrate status if migrate has been running for more
   # than 12 hours.
