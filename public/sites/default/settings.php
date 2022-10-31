@@ -221,8 +221,16 @@ if ($env = getenv('APP_ENV')) {
     include __DIR__ . '/' . $env . '.settings.php';
   }
 
-  if (file_exists(__DIR__ . '/' . $env . '.services.yml')) {
-    $settings['container_yamls'][] = __DIR__ . '/' . $env . '.services.yml';
+  $servicesFiles = [
+    'services.yml',
+    'all.services.yml',
+    $env . '.services.yml',
+  ];
+
+  foreach ($servicesFiles as $fileName) {
+    if (file_exists(__DIR__ . '/' . $fileName)) {
+      $settings['container_yamls'][] = __DIR__ . '/' . $fileName;
+    }
   }
 
   if (getenv('OPENSHIFT_BUILD_NAMESPACE') && file_exists(__DIR__ . '/azure.settings.php')) {
