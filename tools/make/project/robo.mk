@@ -32,8 +32,8 @@ start-stonehenge:
 
 PHONY += install-drupal-ci
 install-drupal-ci:
-	$(call docker_run_ci,app,drush si standard -y)
-	$(call docker_run_ci,app,drush deploy)
+	$(call docker_run_ci,app,drush si minimal -y)
+	$(call docker_run_ci,app,drush cr)
 
 PHONY += install-drupal
 install-drupal:
