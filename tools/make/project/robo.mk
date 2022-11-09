@@ -1,5 +1,6 @@
 STONEHENGE_PATH ?= ${HOME}/stonehenge
 PROJECT_DIR ?= ${GITHUB_WORKSPACE}
+APP_PATH ?= /app
 SITE_PREFIX ?= /
 
 SETUP_ROBO_TARGETS :=
@@ -10,7 +11,7 @@ ifeq ($(CI),true)
 	CI_POST_INSTALL_TARGETS += fix-files-permission
 endif
 
-SETUP_ROBO_TARGETS += up composer-install $(CI_POST_INSTALL_TARGETS) update-automation
+SETUP_ROBO_TARGETS += up composer-install $(CI_POST_INSTALL_TARGETS)
 
 ifeq ($(DRUPAL_BUILD_FROM_SCRATCH),true)
 	SETUP_ROBO_TARGETS += install-drupal post-install-tasks
@@ -21,18 +22,11 @@ endif
 install-stonehenge: $(STONEHENGE_PATH)/.git
 
 $(STONEHENGE_PATH)/.git:
-	git clone -b 3.x https://github.com/druidfi/stonehenge.git $(STONEHENGE_PATH)
+	git clone -b 4.x https://github.com/druidfi/stonehenge.git $(STONEHENGE_PATH)
 
 PHONY += start-stonehenge
 start-stonehenge:
 	cd $(STONEHENGE_PATH) && COMPOSE_FILE=docker-compose.yml make up
-
-$(PROJECT_DIR)/helfi-test-automation-python/.git:
-	git clone https://github.com/City-of-Helsinki/helfi-test-automation-python.git $(PROJECT_DIR)/helfi-test-automation-python
-
-PHONY += update-automation
-update-automation: $(PROJECT_DIR)/helfi-test-automation-python/.git
-	git pull
 
 PHONY += install-drupal
 install-drupal:
@@ -83,4 +77,4 @@ setup-robo: $(SETUP_ROBO_TARGETS)
 
 PHONY += run-robo-tests
 run-robo-tests:
-	$(call docker_run_ci,robo,cd /app/helfi-test-automation-python && chmod +x run_all_tests.sh && PREFIX=$(SITE_PREFIX) BASE_URL=$(DRUPAL_HOSTNAME) ./run_all_tests.sh)
+	$(call docker_run_ci,robo,cd $(APP_PATH) && chmod +x run_all_tests.sh && PREFIX=$(SITE_PREFIX) BASE_URL=$(DRUPAL_HOSTNAME) ./run_all_tests.sh)
