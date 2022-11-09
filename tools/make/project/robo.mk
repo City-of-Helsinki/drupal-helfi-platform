@@ -14,7 +14,6 @@ else
 endif
 
 ifeq ($(CI),true)
-	DRUPAL_INSTALL_TARGET = install-drupal-ci
 	SETUP_ROBO_TARGETS += install-stonehenge start-stonehenge set-permissions
 	CI_POST_INSTALL_TARGETS += fix-files-permission
 endif
@@ -30,7 +29,7 @@ PHONY += start-stonehenge
 start-stonehenge:
 	cd $(STONEHENGE_PATH) && COMPOSE_FILE=docker-compose.yml make up
 
-PHONY += install-drupal-ci
+PHONY += install-drupal-ci-clean
 install-drupal-ci:
 	$(call docker_run_ci,app,drush si minimal -y)
 	$(call docker_run_ci,app,drush cr)
@@ -51,7 +50,7 @@ install-drupal-from-dump:
 PHONY += post-install-tasks
 post-install-tasks:
 	$(call docker_run_ci,app,drush upwd helfi-admin Test_Automation)
-	$(call docker_run_ci,app,drush en helfi_example_content syslog -y)
+	$(call docker_run_ci,app,drush en helfi_tpr helfi_example_content syslog -y)
 	$(call docker_run_ci,app,drush helfi:migrate-fixture tpr_unit --publish)
 	$(call docker_run_ci,app,drush helfi:migrate-fixture tpr_service --publish)
 	$(call docker_run_ci,app,drush helfi:migrate-fixture tpr_errand_service --publish)
