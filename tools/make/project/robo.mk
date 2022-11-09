@@ -2,22 +2,24 @@ STONEHENGE_PATH ?= ${HOME}/stonehenge
 PROJECT_DIR ?= ${GITHUB_WORKSPACE}
 APP_PATH ?= /app
 SITE_PREFIX ?= /
+DRUPAL_INSTALL_TARGET ?=
 
 SETUP_ROBO_TARGETS :=
 CI_POST_INSTALL_TARGETS :=
 
+ifeq ($(DRUPAL_BUILD_FROM_SCRATCH),true)
+	DRUPAL_INSTALL_TARGET += install-drupal
+else
+	DRUPAL_INSTALL_TARGET += install-drupal-from-dump
+endif
+
 ifeq ($(CI),true)
+	DRUPAL_INSTALL_TARGET = install-drupal-ci
 	SETUP_ROBO_TARGETS += install-stonehenge start-stonehenge set-permissions
 	CI_POST_INSTALL_TARGETS += fix-files-permission
 endif
 
-SETUP_ROBO_TARGETS += up composer-install $(CI_POST_INSTALL_TARGETS)
-
-ifeq ($(DRUPAL_BUILD_FROM_SCRATCH),true)
-	SETUP_ROBO_TARGETS += install-drupal post-install-tasks
-else
-	SETUP_ROBO_TARGETS += install-drupal-from-dump post-install-tasks
-endif
+SETUP_ROBO_TARGETS += up composer-install $(CI_POST_INSTALL_TARGETS) $(DRUPAL_INSTALL_TARGET) post-install-tasks
 
 install-stonehenge: $(STONEHENGE_PATH)/.git
 
@@ -27,6 +29,11 @@ $(STONEHENGE_PATH)/.git:
 PHONY += start-stonehenge
 start-stonehenge:
 	cd $(STONEHENGE_PATH) && COMPOSE_FILE=docker-compose.yml make up
+
+PHONY += install-drupal-ci
+install-drupal-ci:
+	$(call docker_run_ci,app,drush si standard -y)
+	$(call docker_run_ci,app,drush deploy)
 
 PHONY += install-drupal
 install-drupal:
