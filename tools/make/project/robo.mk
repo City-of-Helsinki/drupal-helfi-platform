@@ -8,9 +8,9 @@ SETUP_ROBO_TARGETS :=
 CI_POST_INSTALL_TARGETS :=
 
 ifeq ($(DRUPAL_BUILD_FROM_SCRATCH),true)
-	DRUPAL_INSTALL_TARGET += install-drupal
+	DRUPAL_INSTALL_TARGET = install-drupal
 else
-	DRUPAL_INSTALL_TARGET += install-drupal-from-dump
+	DRUPAL_INSTALL_TARGET = install-drupal-from-dump
 endif
 
 ifeq ($(CI),true)
