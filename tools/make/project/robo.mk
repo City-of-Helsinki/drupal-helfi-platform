@@ -2,15 +2,13 @@ STONEHENGE_PATH ?= ${HOME}/stonehenge
 PROJECT_DIR ?= ${GITHUB_WORKSPACE}
 APP_PATH ?= /app
 SITE_PREFIX ?= /
-DRUPAL_INSTALL_TARGET ?=
+DRUPAL_INSTALL_TARGET ?= install-drupal-from-dump
 
 SETUP_ROBO_TARGETS :=
 CI_POST_INSTALL_TARGETS :=
 
 ifeq ($(DRUPAL_BUILD_FROM_SCRATCH),true)
-	DRUPAL_INSTALL_TARGET = install-drupal
-else
-	DRUPAL_INSTALL_TARGET = install-drupal-from-dump
+	DRUPAL_INSTALL_TARGET := install-drupal
 endif
 
 ifeq ($(CI),true)
