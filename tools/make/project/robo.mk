@@ -34,7 +34,7 @@ install-drupal-ci:
 	$(call docker_run_ci,app,ls -la)
 	$(call docker_run_ci,app,composer config repositories.5 path /app/helfi_platform_config)
 	$(call docker_run_ci,app,composer require drupal/helfi_platform_config -W)
-	$(call docker_run_ci,app,set -e && drush en helfi_platform_config && for d in /app/public/modules/contrib/helfi_platform_config/helfi_features/*; do vendor/bin/drush -y en $(echo "$d" | awk -F/ '{print $NF}'); done)
+	$(call docker_run_ci,app,set -e && drush en helfi_platform_config && for d in /app/public/modules/contrib/helfi_platform_config/helfi_features/*; do drush -y en $(echo "$d" | awk -F/ '{print $NF}'); done)
 
 PHONY += install-drupal
 install-drupal:
