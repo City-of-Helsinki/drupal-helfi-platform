@@ -31,7 +31,7 @@ PHONY += install-drupal-ci-clean
 install-drupal-ci:
 	$(call docker_run_ci,app,drush si minimal -y)
 	$(call docker_run_ci,app,drush cr)
-	$(call docker_run_ci,robo,set -e && drush en helfi_platform_config && for d in /app/public/modules/contrib/helfi_platform_config/helfi_features/*; do vendor/bin/drush -y en $(echo "$d" | awk -F/ '{print $NF}'); done)
+	$(call docker_run_ci,app,set -e && drush en helfi_platform_config && for d in /app/public/modules/contrib/helfi_platform_config/helfi_features/*; do vendor/bin/drush -y en $(echo "$d" | awk -F/ '{print $NF}'); done)
 
 
 PHONY += install-drupal
