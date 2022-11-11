@@ -1,7 +1,7 @@
 STONEHENGE_PATH ?= ${HOME}/stonehenge
 PROJECT_DIR ?= ${GITHUB_WORKSPACE}
 APP_PATH ?= /app
-SITE_PREFIX ?= /
+SITE_PREFIX ?=
 DRUPAL_INSTALL_TARGET ?= install-drupal-from-dump
 
 SETUP_ROBO_TARGETS :=
