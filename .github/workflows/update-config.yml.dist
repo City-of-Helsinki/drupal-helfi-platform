@@ -52,6 +52,7 @@ jobs:
           author: actions-bot <actions-bot@users.noreply.github.com>
           commit-message: Update configuration
           title: Automatic update
+          labels: auto-update
           body: |
             - Updated active configuration.
             - Updated platform
