@@ -84,4 +84,4 @@ setup-robo: $(SETUP_ROBO_TARGETS)
 
 PHONY += run-robo-tests
 run-robo-tests:
-	$(call docker_run_ci,robo,cd $(APP_PATH) && chmod +x run_all_tests.sh && PREFIX=$(SITE_PREFIX) BASE_URL=$(DRUPAL_HOSTNAME) ./run_all_tests.sh)
+	$(call docker_run_ci,robo,cd $(APP_PATH) && chmod +x run_all_tests.sh && CI_TA_PATH=$(APP_PATH) PREFIX=$(SITE_PREFIX) BASE_URL=$(DRUPAL_HOSTNAME) ./run_all_tests.sh)
