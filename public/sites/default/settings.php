@@ -211,6 +211,8 @@ if (
   $settings['container_yamls'][] = 'modules/contrib/redis/redis.services.yml';
 }
 
+$settings['is_azure'] = FALSE;
+
 // Environment specific overrides.
 if (file_exists(__DIR__ . '/all.settings.php')) {
   include __DIR__ . '/all.settings.php';
