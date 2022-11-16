@@ -1,4 +1,4 @@
-# INSERT_TASK_ID_LINK_HERE
+# [UHF-0000](https://helsinkisolutionoffice.atlassian.net/browse/UHF-0000)
 <!-- What problem does this solve? -->
 
 ## What was done
@@ -9,7 +9,7 @@
 ## How to install
 
 * Make sure your instance is up and running on correct branch.
-  * `git pull origin INSERT_BRANCH_HERE`
+  * `git checkout UHF-0000_insert_correct_branch`
   * `make fresh`
 * Run `make drush-cr`
 
