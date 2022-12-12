@@ -12,7 +12,7 @@
         "drupal/core-composer-scaffold": "^9.3",
         "drupal/core-recommended": "^9.3",
         "drupal/hdbt": "^4.0",
-        "drupal/hdbt_admin": "^1.0",
+        "drupal/hdbt_admin": "dev-UHF-7219",
         "drupal/helfi_azure_fs": "^1.0",
         "drupal/helfi_drupal_tools": "dev-main",
         "drupal/helfi_platform_config": "^2.0",
