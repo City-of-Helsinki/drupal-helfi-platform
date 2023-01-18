@@ -13,6 +13,11 @@ if [ ! -n "$OPENSHIFT_BUILD_NAME" ]; then
   exit 1
 fi
 
+# Generate twig caches.
+if [ ! -d "/tmp/twig" ]; then
+  drush twig:compile || true
+fi
+
 # This script is run every time a container is spawned and certain environments might
 # start more than one Drupal container. This is used to make sure we run deploy
 # tasks only once per deploy.
