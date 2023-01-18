@@ -4,7 +4,7 @@
 
 Twig caches are now compiled on container start. This should considerably speed up the initial request after a new container is spawned.
 
-See [https://github.com/City-of-Helsinki/drupal-helfi-platform/pull/106/commits/d490cc5fe3632634e245ab069843b72726f78dff](https://github.com/City-of-Helsinki/drupal-helfi-platform/pull/106/commits/d490cc5fe3632634e245ab069843b72726f78dff).
+See [docker/openshift/entrypoints/20-deploy.sh](/docker/openshift/entrypoints/20-deploy.sh).
 
 ## 2022-10-14
 
