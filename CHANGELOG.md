@@ -1,5 +1,11 @@
 # Changelog
 
+## 2023-01-18
+
+Twig caches are now compiled on container start. This should considerably speed up the initial request after a new container is spawned.
+
+See [docker/openshift/entrypoints/20-deploy.sh](/docker/openshift/entrypoints/20-deploy.sh).
+
 ## 2022-10-14
 
 PHP 8.1 is now the default PHP version.
@@ -76,7 +82,7 @@ Otherwise `STAGE_FILE_PROXY_ORIGIN` should be an URL to your instance (`https://
 - Remove `docker/local` folder (`rm -r docker/local`)
 - Update value for `DRUPAL_IMAGE` in your `.env` file: `DRUPAL_IMAGE=ghcr.io/city-of-helsinki/drupal-web:8.0`
 - Copy `docker-compose.yml` to your project's repository
-  
+
 ## 2021-10-06.1
 ### Tunnistamo 2.0
 
