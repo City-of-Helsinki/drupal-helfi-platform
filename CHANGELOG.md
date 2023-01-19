@@ -1,5 +1,11 @@
 # Changelog
 
+## 2023-01-18
+
+Twig caches are now compiled on container start. This should considerably speed up the initial request after a new container is spawned.
+
+See [docker/openshift/entrypoints/20-deploy.sh](/docker/openshift/entrypoints/20-deploy.sh).
+
 ## 2022-10-14
 
 PHP 8.1 is now the default PHP version.
@@ -8,6 +14,14 @@ PHP 8.1 is now the default PHP version.
 1. Run `drush helfi:tools:update-platform`. See [City-of-Helsinki/drupal-tools](https://github.com/City-of-Helsinki/drupal-tools) for instructions if the command does not exist.
 2. Verify and test changes locally
 3. Update `DRUPAL_DOCKER_TAG` value to `8.1` or `8.1-dev` on Azure DevOps (if set).
+
+### Optional actions
+
+Update guzzle to newer version to fix deprecation warnings:
+
+1. Remove `drupal/core-recommended` package from your `composer.json`
+2. Check if you have `weitzman/drupal-test-traits` package installed: `composer show weitzman/drupal-test-traits`. If it's installed you have to update it to version 2.0: `composer require --dev weitzman/drupal-test-traits:^2.0`.
+3. Run `composer update`
 
 ## 2022-05-31.1
 
@@ -76,7 +90,7 @@ Otherwise `STAGE_FILE_PROXY_ORIGIN` should be an URL to your instance (`https://
 - Remove `docker/local` folder (`rm -r docker/local`)
 - Update value for `DRUPAL_IMAGE` in your `.env` file: `DRUPAL_IMAGE=ghcr.io/city-of-helsinki/drupal-web:8.0`
 - Copy `docker-compose.yml` to your project's repository
-  
+
 ## 2021-10-06.1
 ### Tunnistamo 2.0
 
