@@ -15,6 +15,14 @@ PHP 8.1 is now the default PHP version.
 2. Verify and test changes locally
 3. Update `DRUPAL_DOCKER_TAG` value to `8.1` or `8.1-dev` on Azure DevOps (if set).
 
+### Optional actions
+
+Update guzzle to newer version to fix deprecation warnings:
+
+1. Remove `drupal/core-recommended` package from your `composer.json`
+2. Check if you have `weitzman/drupal-test-traits` package installed: `composer show weitzman/drupal-test-traits`. If it's installed you have to update it to version 2.0: `composer require --dev weitzman/drupal-test-traits:^2.0`.
+3. Run `composer update`
+
 ## 2022-05-31.1
 
 Added documentation of how to sync databases between OpenShift environments: [documentation/openshift-db-sync.md](/documentation/openshift-db-sync.md).
