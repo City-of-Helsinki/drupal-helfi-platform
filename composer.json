@@ -106,7 +106,7 @@
           "@test-php"
         ],
         "test-php": "vendor/bin/phpunit -c $PWD/phpunit.xml.dist",
-        "lint-php": "vendor/bin/phpcs --standard=Drupal",
+        "lint-php": "vendor/bin/phpcs --standard=Drupal --extensions=php,inc,test,info,module,install",
         "copy-commit-message-script": "make copy-commit-message-script",
         "post-create-project-cmd": [
             "make cast-spell",
