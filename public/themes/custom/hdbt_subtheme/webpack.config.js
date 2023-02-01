@@ -21,7 +21,7 @@ const Entries = () => {
   const pattern = './src/js/**/*.js';
   const ignore = [
     // Some javascript what is needed to ignore and handled separately.
-    // './src/js/component-library.js'
+    // './src/js/some-component.js'
   ];
 
   glob.sync(pattern, {ignore: ignore}).map((item) => {
