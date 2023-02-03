@@ -25,6 +25,9 @@ $databases['default']['default'] = [
   'driver' => 'mysql',
   'charset' => 'utf8mb4',
   'collation' => 'utf8mb4_swedish_ci',
+  'init_commands' => [
+    'isolation_level' => 'SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED',
+  ],
 ];
 
 $settings['hash_salt'] = getenv('DRUPAL_HASH_SALT') ?: '000';
