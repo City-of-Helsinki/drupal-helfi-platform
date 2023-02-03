@@ -1,5 +1,16 @@
 # Changelog
 
+## 2023-02-03
+
+Added a GitHub Action to automatically create pull request from `dev` to `main` branch when a new commit is added to `dev` branch.
+
+See [City-of-Helsinki/drupal-helfi-platform/blob/main/.github/workflows/auto-release-pr.yml.dist](https://github.com/City-of-Helsinki/drupal-helfi-platform/blob/main/.github/workflows/auto-release-pr.yml.dist)
+
+## Required actions
+
+To use this:
+- Run `drush helfi:tools:update-platform` and rename the newly added `auto-release-pr.yml.dist` to `auto-release-pr.yml`
+
 ## 2023-01-18
 
 Twig caches are now compiled on container start. This should considerably speed up the initial request after a new container is spawned.
