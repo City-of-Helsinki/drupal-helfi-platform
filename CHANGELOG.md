@@ -1,6 +1,16 @@
 # Changelog
 
-## 2023-02-03
+## 2023-02-03.2
+
+Enabled `READ-COMMITTED transaction isolation level` MySQL setting by default to improve performance and to minimize locking issues.
+
+See https://www.drupal.org/docs/system-requirements/setting-the-mysql-transaction-isolation-level for more information.
+
+## Required actions
+
+- Run `drush helfi:tools:update-platform` to update your `settings.php` file.
+
+## 2023-02-03.1
 
 Added a GitHub Action to automatically create pull request from `dev` to `main` branch when a new commit is added to `dev` branch.
 
