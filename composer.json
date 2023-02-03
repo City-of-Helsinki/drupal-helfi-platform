@@ -18,7 +18,7 @@
         "drush/drush": "^10.4 || ^11"
     },
     "require-dev": {
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "donatj/mock-webserver": "^2.4",
         "drupal/coder": "^8.3",
         "drupal/core-dev": "^9.3",
@@ -106,7 +106,7 @@
           "@test-php"
         ],
         "test-php": "vendor/bin/phpunit -c $PWD/phpunit.xml.dist",
-        "lint-php": "vendor/bin/phpcs --standard=Drupal",
+        "lint-php": "vendor/bin/phpcs --standard=Drupal --extensions=php,inc,test,info,module,install",
         "copy-commit-message-script": "make copy-commit-message-script",
         "post-create-project-cmd": [
             "make cast-spell",
