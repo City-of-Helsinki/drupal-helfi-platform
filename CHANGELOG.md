@@ -1,5 +1,26 @@
 # Changelog
 
+## 2023-02-03.2
+
+Enabled `READ-COMMITTED transaction isolation level` MySQL setting by default to improve performance and to minimize locking issues.
+
+See https://www.drupal.org/docs/system-requirements/setting-the-mysql-transaction-isolation-level for more information.
+
+## Required actions
+
+- Run `drush helfi:tools:update-platform` to update your `settings.php` file.
+
+## 2023-02-03.1
+
+Added a GitHub Action to automatically create pull request from `dev` to `main` branch when a new commit is added to `dev` branch.
+
+See [City-of-Helsinki/drupal-helfi-platform/blob/main/.github/workflows/auto-release-pr.yml.dist](https://github.com/City-of-Helsinki/drupal-helfi-platform/blob/main/.github/workflows/auto-release-pr.yml.dist)
+
+## Required actions
+
+To use this:
+- Run `drush helfi:tools:update-platform` and rename the newly added `auto-release-pr.yml.dist` to `auto-release-pr.yml`
+
 ## 2023-01-18
 
 Twig caches are now compiled on container start. This should considerably speed up the initial request after a new container is spawned.
