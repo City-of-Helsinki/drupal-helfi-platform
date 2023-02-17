@@ -4,10 +4,10 @@ Description of your project.
 
 ## Environments
 
-Env | Branch | Drush alias | URL
---- | ------ | ----------- | ---
-development | * | - | http://yoursite.docker.so/
-production | main | @main | TBD
+Env | Branch | URL
+--- | ------ | ---
+development | * | http://yoursite.docker.so/
+production | main | TBD
 
 ## Requirements
 
