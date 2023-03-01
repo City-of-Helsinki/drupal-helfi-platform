@@ -81,12 +81,6 @@ hdbt_subtheme
         |   sprite.svg
 ```
 
-## Component library
-
-Ready to use components can be explored from component library.
-Component library is not installed by default, but it can be installed in same fashion as any other module.
-Once installed it can be accessed in `/admin/appearance/hdbt/component-library`.
-
 ## How tos
 
 ### How can I add a new SVG icon and then use it on my site.

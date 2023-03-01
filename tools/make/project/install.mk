@@ -25,7 +25,7 @@ PHONY += helfi-drush-enable-modules
 helfi-drush-enable-modules: ## Enable modules and base configurations.
 	$(call step,Install base configurations...)
 	$(call drush,cr)
-	$(call drush,en -y helfi_platform_config helfi_base_config)
+	$(call drush,en -y helfi_platform_config helfi_platform_config_base)
 
 PHONY += drush-locale-update
 drush-locale-update: ## Update translations.
