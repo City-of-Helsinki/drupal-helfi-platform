@@ -10,11 +10,11 @@
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.6.7",
         "drupal/core-composer-scaffold": "^9.5",
-        "drupal/hdbt": "dev-UHF-7883_platform_config_v3",
-        "drupal/hdbt_admin": "dev-UHF-7883_platform_config_v3",
+        "drupal/hdbt": "^5.0",
+        "drupal/hdbt_admin": "^2.0",
         "drupal/helfi_azure_fs": "^1.0",
         "drupal/helfi_drupal_tools": "dev-main",
-        "drupal/helfi_platform_config": "3.x-dev",
+        "drupal/helfi_platform_config": "^3.0",
         "drush/drush": "^10.4 || ^11"
     },
     "require-dev": {
