@@ -60,10 +60,3 @@ Provides an integration for [Tunnistamo](https://dev.hel.fi/authentication) SSO 
 
 - [Code](https://github.com/City-of-Helsinki/drupal-module-helfi-tunnistamo)
 - [Documentation](https://github.com/City-of-Helsinki/drupal-module-helfi-tunnistamo/blob/main/README.md)
-
-## Media map
-
-Allows `kartta.hel.fi` and `palvelukartta.hel.fi` maps to be embedded using Media.
-
-- [Code](https://github.com/City-of-Helsinki/drupal-module-helfi-media-map)
-- [Documentation](https://github.com/City-of-Helsinki/drupal-module-helfi-media-map/blob/main/README.md)
