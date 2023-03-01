@@ -6,22 +6,40 @@ The automatic update bot can be used to:
 - Update changed `drupal-helfi-platform` files using ([helfi_drupal_tools](https://github.com/City-of-Helsinki/drupal-tools)).
 - Update `drupal/helfi_*` and `drupal/hdbt*` packages using Composer.
 
-### How it works
+## The problem this is trying to solve
 
-The idea behind this is to create an SQL-dump once a week from your site's active configuration. The dump is then used as a reference point by `Update config` GitHub action to determine if your site is missing any configuration updates.
+We’ve been testing different services for updating Drupal packages/dependencies automatically, such as Renovate and Dependabot. Even though they work great on paper, we always ended up having the same issue: database updates.
 
-Tasks done by Update config action:
+For example:
 
-1. Install the site using the reference SQL-dump.
-2. Import the configuration (`drush config:import`) to make sure everything is up-to-date before updating anything.
-3. Update packages listed earlier.
-4. Run the database update-hooks (`drush updb`).
-5. Export the configuration (`drush config:export`).
-6. Create a pull request of any files changed in process.
+- Commerce module receives an update that:
+  - [Adds a new field](https://git.drupalcode.org/project/commerce/-/blob/8.x-2.x/modules/order/commerce_order.install#L231) and a [dependency to Token module](https://git.drupalcode.org/project/commerce/-/blob/8.x-2.x/commerce.install#L30).
+- Dependabot/Renovate updates Commerce to the latest version.
+- The next deployment installs the updated Commerce, runs config import, database updates and installs the missing field and token dependency.
+- At this point, your active configuration (in database) has the required changes, but the configuration stored in Git does not.
+- The next deployment will run the configuration import again and override all changes done by previous deployment, meaning the code depending on that new field or Token module will suddenly break.
 
-This is useful beyond just updating the changes from `drupal-helfi-platform` for a few reasons, like to ensure that configuration changes done by update hooks are always exported to repository.
+This made the whole automatic update process pretty useless since we always had to manually run database updates and commit the changed configuration to Git anyway.
 
-You can see it in action [here](https://github.com/City-of-Helsinki/drupal-helfi-kymp/pull/302/files).
+## How we solved it
+
+We use GitHub Actions to automate database update/config export process. See [.github/workflows/update-config.yml](/.github/workflows/update-config.yml.dist).
+
+In the simplest terms it just:
+
+1. Install Drupal: `drush site-install --existing-config`
+2. Flush caches and re-import configuration to make sure everything is up-to-date: `drush cr`, `drush config:import`.
+3. Update required dependencies using `composer`.
+4. Run update hooks and export configuration: `drush updb`, `drush config:export`.
+5. Commit changed files to repository. We use [peter-evans/create-pull-request@v4](https://github.com/peter-evans/create-pull-request) Action to create a pull request, so we can run tests/code checks against the changes.
+
+You can see this in action [here](https://github.com/City-of-Helsinki/drupal-helfi-kymp/pull/302/files).
+
+Installing Drupal from scratch (with existing configuration) can take a really long time, especially for more complex sites.
+
+We speed things up by creating a “reference” database dump and install Drupal using that dump. The database dump is created by [.github/actions/artifact.yml.dist](/.github/workflows/artifact.yml) Action and stored as workflow artifact using [actions/upload-artifact](https://github.com/actions/upload-artifact).
+
+The database dump is also used by all our automated tests.
 
 ## Adding update bot to your project
 
@@ -35,7 +53,7 @@ Once you have the action set up, go to Actions -> Build artifact -> Run workflow
 
 ![Update config workflow](/documentation/images/workflow.png)
 
-This will generate an SQL-dump based on your site's current configuration and save it as an artifact and will be used by `Update config` action to determine if your site is missing any platform updates.
+This will generate an SQL-dump based on your site's current configuration and save it as an artifact and will be used by `Update config` action to speed up the installation process.
 
 The action will be run automatically once a week after you first run it.
 
@@ -44,7 +62,6 @@ The action will be run automatically once a week after you first run it.
 Enable the `update-config` action by adding [.github/workflows/update-config.yml](/.github/workflows/update-config.yml.dist) file to your repository. *NOTE*: `.github/workflows/update-config.yml.dist` might already exist, if it does then you can just rename it to `update-config.yml`.
 
 Then run the Update config action by going to Actions -> Update config -> Run workflow.
-
 
 ## Triggering updates automatically
 
@@ -78,7 +95,7 @@ Settings:
 - Secret: Contact helfi dev team
 - Select individual events that trigger the webhook: `releases`
 
-We use Github account called `hel-platta-automation` to trigger the dispatch event via Github API. Go to your repository's `Settings` -> `Collaborators and teams`, click `Add people` and give `hel-platta-automation` user `write` permissions to your repository. 
+We use Github account called `hel-platta-automation` to trigger the dispatch event via Github API. Go to your repository's `Settings` -> `Collaborators and teams`, click `Add people` and give `hel-platta-automation` user `write` permissions to your repository.
 
 See https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event.
 
