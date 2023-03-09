@@ -54,4 +54,4 @@ You can run `make help` to list all available commands for you.
 
 Slack: #helfi-drupal (http://helsinkicity.slack.com/)
 
-Mail: drupal@hel.fi
+Mail: `drupal@hel.fi`
