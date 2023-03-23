@@ -6,7 +6,7 @@ environment with Stonehenge.
 ## Includes
 
 - Drupal 9.x
-- Drush 10.x
+- Drush 11.x
 - Docker setup for development using [Stonehenge](https://github.com/druidfi/stonehenge)
 - [druidfi/tools](https://github.com/druidfi/tools)
 - Web root is `/public`
