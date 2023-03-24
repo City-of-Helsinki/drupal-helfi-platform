@@ -6,7 +6,7 @@ environment with Stonehenge.
 ## Includes
 
 - Drupal 9.x
-- Drush 10.x
+- Drush 11.x
 - Docker setup for development using [Stonehenge](https://github.com/druidfi/stonehenge)
 - [druidfi/tools](https://github.com/druidfi/tools)
 - Web root is `/public`
@@ -54,4 +54,4 @@ You can run `make help` to list all available commands for you.
 
 Slack: #helfi-drupal (http://helsinkicity.slack.com/)
 
-Mail: helfi-drupal-aaaactuootjhcono73gc34rj2u@druid.slack.com
+Mail: `drupal@hel.fi`
