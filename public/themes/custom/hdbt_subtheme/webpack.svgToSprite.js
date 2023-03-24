@@ -55,8 +55,8 @@ class svgToSprite {
             });
 
             // Add SVG files to Spriter instance.
-            this.files.map((pathname) => {
-              return spriter.add(pathname, null, fs.readFileSync(pathname, 'utf-8'));
+            this.files.forEach(function(pathname) {
+              spriter.add(pathname, null, fs.readFileSync(pathname, 'utf-8'));
             });
 
             // Compile the sprite.
