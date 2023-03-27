@@ -36,6 +36,7 @@ $settings['hash_salt'] = getenv('DRUPAL_HASH_SALT') ?: '000';
 // @see https://wodby.com/docs/stacks/drupal/#overriding-settings-from-wodbysettingsphp
 if (isset($_SERVER['WODBY_APP_NAME'])) {
   // The include won't be added automatically if it's already there.
+  // phpcs:ignore
   include_once '/var/www/conf/wodby.settings.php'; // NOSONAR
 }
 
@@ -221,11 +222,13 @@ $settings['is_azure'] = FALSE;
 
 // Environment specific overrides.
 if (file_exists(__DIR__ . '/all.settings.php')) {
+  // phpcs:ignore
   include_once __DIR__ . '/all.settings.php'; // NOSONAR
 }
 
 if ($env = getenv('APP_ENV')) {
   if (file_exists(__DIR__ . '/' . $env . '.settings.php')) {
+    // phpcs:ignore
     include_once __DIR__ . '/' . $env . '.settings.php'; // NOSONAR
   }
 
@@ -242,6 +245,7 @@ if ($env = getenv('APP_ENV')) {
   }
 
   if (getenv('OPENSHIFT_BUILD_NAMESPACE') && file_exists(__DIR__ . '/azure.settings.php')) {
+    // phpcs:ignore
     include_once __DIR__ . '/azure.settings.php'; // NOSONAR
   }
 }
