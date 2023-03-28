@@ -4,7 +4,7 @@
 
 Scheduler cron key is now read from `DRUPAL_SCHEDULER_CRON_KEY` environment variable when set, and will fall back to `$settings['hash_salt']`.
 
-The cron key is used by `scheduler` module to allow cron tasks to be triggered via HTTP API (`/scheduler/cron/{cron_key}`).
+The cron key is used by `scheduler` module to allow scheduler tasks to be triggered via HTTP API (`/scheduler/cron/{cron_key}`).
 
 ### Required actions
 
