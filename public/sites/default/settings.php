@@ -40,6 +40,8 @@ if (isset($_SERVER['WODBY_APP_NAME'])) {
   include_once '/var/www/conf/wodby.settings.php'; // NOSONAR
 }
 
+$config['scheduler.settings']['lightweight_cron_access_key'] = getenv('DRUPAL_SCHEDULER_CRON_KEY') ?: $settings['hash_salt'];
+
 $config['openid_connect.client.tunnistamo']['settings']['client_id'] = getenv('TUNNISTAMO_CLIENT_ID');
 $config['openid_connect.client.tunnistamo']['settings']['client_secret'] = getenv('TUNNISTAMO_CLIENT_SECRET');
 

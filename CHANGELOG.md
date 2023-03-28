@@ -1,5 +1,15 @@
 # Changelog
 
+## 2023-03-28.1
+
+Scheduler cron key is now read from `DRUPAL_SCHEDULER_CRON_KEY` environment variable when set, and will fall back to `$settings['hash_salt']`.
+
+The cron key is used by `scheduler` module to allow scheduler tasks to be triggered via HTTP API (`/scheduler/cron/{cron_key}`).
+
+### Required actions
+
+By default, `scheduler` is run using Drush ([docker/openshift/content-scheduler.sh](/docker/openshift/content-scheduler.sh)) and this change should require no actions.
+
 ## 2023-02-03.2
 
 Enabled `READ-COMMITTED transaction isolation level` MySQL setting by default to improve performance and to minimize locking issues.
