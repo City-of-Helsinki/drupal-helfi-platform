@@ -51,7 +51,7 @@ services:
       - internal
   db:
     container_name: "${COMPOSE_PROJECT_NAME}-db"
-    image: druidfi/mariadb:10.9-drupal
+    image: druidfi/mariadb:10.11-drupal
     environment:
       MARIADB_AUTO_UPGRADE: "1"
       MARIADB_INITDB_SKIP_TZINFO: "1"
