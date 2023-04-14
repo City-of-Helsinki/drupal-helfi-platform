@@ -171,6 +171,11 @@ if ($stage_file_proxy_origin = getenv('STAGE_FILE_PROXY_ORIGIN')) {
   $config['stage_file_proxy.settings']['use_imagecache_root'] = FALSE;
 }
 
+// Map API accounts. See 
+if ($api_accounts = getenv('DRUPAL_API_ACCOUNTS')) {
+  $config['helfi_api_base.api_accounts']['accounts'] = json_decode($api_accounts, TRUE);
+}
+
 // Override session suffix when present.
 if ($session_suffix = getenv('DRUPAL_SESSION_SUFFIX')) {
   $config['helfi_proxy.settings']['session_suffix'] = $session_suffix;
