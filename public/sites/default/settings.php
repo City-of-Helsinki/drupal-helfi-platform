@@ -63,17 +63,14 @@ if ($drupal_routes = getenv('DRUPAL_ROUTES')) {
 }
 $routes[] = 'http://127.0.0.1';
 
+if ($drush_options_uri = getenv('DRUSH_OPTIONS_URI')) {
+  $routes[] = $drush_options_uri;
+}
+
 foreach ($routes as $route) {
   $host = parse_url($route, PHP_URL_HOST);
   $trusted_host = str_replace('.', '\.', $host);
   $settings['trusted_host_patterns'][] = '^' . $trusted_host . '$';
-}
-
-$drush_options_uri = getenv('DRUSH_OPTIONS_URI');
-
-if ($drush_options_uri && !in_array($drush_options_uri, $routes)) {
-  $host = str_replace('.', '\.', parse_url($drush_options_uri)['host']);
-  $settings['trusted_host_patterns'][] = '^' . $host . '$';
 }
 
 $settings['config_sync_directory'] = '../conf/cmi';
@@ -169,6 +166,12 @@ if ($stage_file_proxy_origin = getenv('STAGE_FILE_PROXY_ORIGIN')) {
   $config['stage_file_proxy.settings']['origin_dir'] = getenv('STAGE_FILE_PROXY_ORIGIN_DIR') ?: 'test';
   $config['stage_file_proxy.settings']['hotlink'] = FALSE;
   $config['stage_file_proxy.settings']['use_imagecache_root'] = FALSE;
+}
+
+// Map API accounts.
+// @see https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/documentation/api-accounts.md.
+if ($api_accounts = getenv('DRUPAL_API_ACCOUNTS')) {
+  $config['helfi_api_base.api_accounts']['accounts'] = json_decode($api_accounts, TRUE);
 }
 
 // Override session suffix when present.
