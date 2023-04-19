@@ -171,7 +171,7 @@ if ($stage_file_proxy_origin = getenv('STAGE_FILE_PROXY_ORIGIN')) {
 // Map API accounts.
 // @see https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/documentation/api-accounts.md.
 if ($api_accounts = getenv('DRUPAL_API_ACCOUNTS')) {
-  $config['helfi_api_base.api_accounts']['accounts'] = json_decode($api_accounts, TRUE);
+  $config['helfi_api_base.api_accounts']['accounts'] = base64_decode(json_decode($api_accounts, TRUE));
 }
 
 // Override session suffix when present.
