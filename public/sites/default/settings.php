@@ -168,10 +168,10 @@ if ($stage_file_proxy_origin = getenv('STAGE_FILE_PROXY_ORIGIN')) {
   $config['stage_file_proxy.settings']['use_imagecache_root'] = FALSE;
 }
 
-// Map API accounts.
+// Map API accounts. The value should be a base64 encoded JSON string.
 // @see https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/documentation/api-accounts.md.
 if ($api_accounts = getenv('DRUPAL_API_ACCOUNTS')) {
-  $config['helfi_api_base.api_accounts']['accounts'] = json_decode($api_accounts, TRUE);
+  $config['helfi_api_base.api_accounts']['accounts'] = json_decode(base64_decode($api_accounts), TRUE);
 }
 
 // Override session suffix when present.
