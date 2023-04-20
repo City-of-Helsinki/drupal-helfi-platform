@@ -39,7 +39,7 @@ jobs:
         run: |
           composer install
           $(drush sql:connect) < latest.sql
-          drush deploy
+          drush cim -y && drush updb -y && drush cr
           composer update drupal/helfi_* drupal/hdbt* -W
           drush cr && drush updb -y && drush cex -y
           # Update platform
