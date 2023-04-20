@@ -128,6 +128,16 @@ if ($navigation_authentication_key = getenv('DRUPAL_NAVIGATION_API_KEY')) {
   $config['helfi_navigation.api']['key'] = $navigation_authentication_key;
 }
 
+// Make sure project name and app env are defined in GitHub actions too.
+if ($github_repository = getenv('GITHUB_REPOSITORY')) {
+  if (!getenv('APP_ENV')) {
+    putenv('APP_ENV=ci');
+  }
+
+  if (!getenv('PROJECT_NAME')) {
+    putenv('PROJECT_NAME=' . $github_repository);
+  }
+}
 $config['helfi_api_base.environment_resolver.settings']['environment_name'] = getenv('APP_ENV');
 $config['helfi_api_base.environment_resolver.settings']['project_name'] = getenv('PROJECT_NAME');
 
