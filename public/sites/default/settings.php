@@ -184,6 +184,12 @@ if ($api_accounts = getenv('DRUPAL_API_ACCOUNTS')) {
   $config['helfi_api_base.api_accounts']['accounts'] = json_decode(base64_decode($api_accounts), TRUE);
 }
 
+// Map vault accounts. The value should be a base64 encoded JSON string.
+// @see https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/documentation/api-accounts.md.
+if ($vault_accounts = getenv('DRUPAL_VAULT_ACCOUNTS')) {
+  $config['helfi_api_base.api_accounts']['vault'] = json_decode(base64_decode($vault_accounts), TRUE);
+}
+
 // Override session suffix when present.
 if ($session_suffix = getenv('DRUPAL_SESSION_SUFFIX')) {
   $config['helfi_proxy.settings']['session_suffix'] = $session_suffix;
