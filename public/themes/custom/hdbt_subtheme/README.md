@@ -15,7 +15,7 @@ Do not rename the `hdbt_subtheme` as the Platform config 3.* assumes that the su
 HDBT Subtheme requires [HDBT theme](https://github.com/City-of-helsinki/drupal-hdbt) as a base theme, and it should be installed in `/themes/contrib/hdbt`.
 
 Requirements for developing:
-- [NodeJS ( ^ 18.15 )](https://nodejs.org/en/)
+- [NodeJS ( ^ 18.16 )](https://nodejs.org/en/)
 - [NPM](https://npmjs.com/)
 - optional [NVM](https://github.com/nvm-sh/nvm)
 
