@@ -4,20 +4,18 @@
 
 HDBT Subtheme is a so called "starterkit" which you can start using by enabling it in `/admin/appearance`.
 
-Or if you don't accept the theme name, you can rename every `hdbt_subtheme` file with `your_theme_name` and renaming every `hdbt_subtheme_*` variable/reference with `your_theme_name_*`. And then enable it in `/admin/appearance`.
+HDBT Subtheme uses webpack module bundler to compile the JS and SCSS files. Also, the SVG icons are combined in to a sprite.svg via webpack.
 
-Of course you have a choice to not use it at all by just deleting the whole folder.
-
-HDBT Subtheme uses webpack module bundler to compile the JS and SCSS files. Also the SVG icons are combined in to a sprite.svg via webpack.
-
-As the HDBT Subtheme is only distributed via the [HELfi Platform](https://github.com/City-of-Helsinki/drupal-helfi-platform), it doesn't have an upgrade path per se. In case there is a demand for upgradeability for existing projects then of course we will consider changing the theme to an upgradeable model.
+As the HDBT Subtheme is only distributed via the [HELfi Platform](https://github.com/City-of-Helsinki/drupal-helfi-platform), it doesn't have an upgrade path per se. In case there is a demand for upgrade-ability for existing projects then of course we will consider changing the theme to an upgradeable model.
 
 ## Requirements
 
-HDBT Subtheme requires HDBT theme as a base theme and it should be installed in `/themes/custom/hdbt`.
+Do not rename the `hdbt_subtheme` as the Platform config 3.* assumes that the sub theme name is `hdbt_subtheme`.
+
+HDBT Subtheme requires [HDBT theme](https://github.com/City-of-helsinki/drupal-hdbt) as a base theme, and it should be installed in `/themes/contrib/hdbt`.
 
 Requirements for developing:
-- [NodeJS ( ^ 16.10 )](https://nodejs.org/en/)
+- [NodeJS ( ^ 18.16 )](https://nodejs.org/en/)
 - [NPM](https://npmjs.com/)
 - optional [NVM](https://github.com/nvm-sh/nvm)
 
