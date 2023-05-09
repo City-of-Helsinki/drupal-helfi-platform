@@ -26,6 +26,6 @@ regions:
   attachments: Attachments
 
 # Libraries
-libraries:
-  - hdbt_subtheme/global-styling
-  - hdbt_subtheme/global-scripting
+#libraries:
+#  - hdbt_subtheme/global-styling
+#  - hdbt_subtheme/global-scripting

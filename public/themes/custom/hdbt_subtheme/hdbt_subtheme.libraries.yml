@@ -9,6 +9,6 @@ global-styling:
 global-scripting:
   version: 1.x
   js:
-    dist/js/bundle.min.js: {}
+    dist/js/common.min.js: {}
   dependencies:
     - core/drupal
