@@ -52,6 +52,10 @@ services:
   db:
     container_name: "${COMPOSE_PROJECT_NAME}-db"
     image: druidfi/mariadb:10.11-drupal
+    command:
+      - --max_allowed_packet=512M
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_swedish_ci
     environment:
       MARIADB_AUTO_UPGRADE: "1"
       MARIADB_INITDB_SKIP_TZINFO: "1"
