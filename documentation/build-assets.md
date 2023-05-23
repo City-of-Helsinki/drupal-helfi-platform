@@ -4,7 +4,7 @@
 
 You can run arbitrary commands inside the `node` container with `docker compose exec -w /working/directory node {command}`.
 
-Use `-w` flag to define the working directory inside the container. This can be anything, like `/app/custom/modules/my_react_module` or `/app/public/themes/contrib/hdbt`.
+Use `-w` flag to define the working directory inside the container. This can be anything, like `/app/modules/custom/my_react_module` or `/app/public/themes/contrib/hdbt`.
 
 For example:
 
