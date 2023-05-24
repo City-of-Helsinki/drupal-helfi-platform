@@ -24,9 +24,9 @@ See the [deployment](/docker/openshift/entrypoints/20-deploy.sh) script for more
 
 ### Handling failures
 
-In case of a failure, an error message is sent to a configured Slack channel. See [notify.php](/docker/openshift/notify.php).
+In case of a failure, an error message is sent to a configured Slack channel. See [notify.php](/docker/openshift/notify.php) script for more documentation.
 
-In order to use this feature, you must add `HelfiDev notifications` app to your Slack channel and define the following environment variables:
+In order to use this feature, you must add `HelfiDev notifications` app (or create your own application) to your Slack channel and define the following environment variables:
 
 ```bash
 # You can find this value by right-clicking the channel name and selecting
