@@ -40,6 +40,8 @@ SLACK_CHANNEL_ID=your-slack-channel-id
 SLACK_AUTHORIZATION=authorization-token
 ```
 
+See https://helsinkisolutionoffice.atlassian.net/wiki/spaces/HEL/pages/6785826654/Ymp+rist+muuttujien+lis+ys+Azure+DevOpsissa for more documentation (in Finnish) on how to define environment variables.
+
 ## Cron
 
 Crons are run inside a separate cron container and use [docker/openshift/crons/base.sh](/docker/openshift/crons/base.sh) as an entrypoint.
