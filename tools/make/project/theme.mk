@@ -45,5 +45,5 @@ $(strip $(shell cat $(PROJECT_DIR)/$(1)/.nvmrc 2>/dev/null || echo $(DEFAULT_NOD
 endef
 
 define node
-	docker run -it --rm --name helfi-node-$(call node_version,$(1)) -v $(PROJECT_DIR):/app -w /app$(1) node:$(call node_version,$(1)) "$(2)"
+	docker run -it --rm --name helfi-node-$(call node_version,$(1)) -v $(shell pwd):/app -w /app$(1) node:$(call node_version,$(1)) "$(2)"
 endef
