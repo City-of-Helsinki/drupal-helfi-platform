@@ -2,9 +2,9 @@
 
 ## Usage
 
-The docker image is re-built on every deployment using project's [/docker/openshift/Dockerfile](/docker/openshift/Dockerfile). 
+The docker image is re-built on every deployment using project's [/docker/openshift/Dockerfile](/docker/openshift/Dockerfile).
 
-The codebase is built into image's `/var/www/html` folder using composer: `composer install --no-progress --profile --prefer-dist --no-interaction --no-dev --optimize-autoloader` as `root` user. 
+The codebase is built into image's `/var/www/html` folder using composer: `composer install --no-progress --profile --prefer-dist --no-interaction --no-dev --optimize-autoloader` as `root` user.
 
 The container is run as random UID (non-root) user (like uid `10009900`) that has no write permissions to any files (except inside `/tmp` folder), meaning that files inside the container cannot be modified after the image is built.
 
@@ -21,6 +21,26 @@ The tasks:
 3. Maintenance mode is disabled.
 
 See the [deployment](/docker/openshift/entrypoints/20-deploy.sh) script for more up-to-date information.
+
+### Handling failures
+
+In case of a failure, an error message is sent to a configured Slack channel. See [notify.php](/docker/openshift/notify.php) script for more documentation.
+
+In order to use this feature, you must add `HelfiDev notifications` app (or create your own application) to your Slack channel and define the following environment variables:
+
+```bash
+# You can find this value by right-clicking the channel name and selecting
+# Copy -> Copy link. The last part of the link should be the channel ID.
+SLACK_CHANNEL_ID=your-slack-channel-id
+```
+
+```bash
+# The authorization token for your Slack application.
+# You can get this value by contacting the Hel.fi development team.
+SLACK_AUTHORIZATION=authorization-token
+```
+
+See https://helsinkisolutionoffice.atlassian.net/wiki/spaces/HEL/pages/6785826654/Ymp+rist+muuttujien+lis+ys+Azure+DevOpsissa for more documentation (in Finnish) on how to define environment variables.
 
 ## Cron
 
