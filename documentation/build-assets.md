@@ -2,22 +2,17 @@
 
 ## Usage
 
-You can run arbitrary commands inside the `node` container with `docker compose exec -w /working/directory node {command}`.
+You can run arbitrary commands inside node container by logging into node container `make node-shell`.
 
-Use `-w` flag to define the working directory inside the container. This can be anything, like `/app/modules/custom/my_react_module` or `/app/public/themes/contrib/hdbt`.
+### Override node version
+
+The node version is defined in `DEFAULT_NODE_VERSION` variable and can be changed by adding `DEFAULT_NODE_VERSION=your-node-version` before your make command.
 
 For example:
 
 ```bash
-# Install npm dependencies
-docker compose exec -w /app/public/themes/custom/hdbt_subtheme node npm install
-# Run 'npm build'
-docker compose exec -w /app/public/themes/custom/hdbt_subtheme node npm run build
-# Run 'npm run dev' (Starts SCSS/JS watcher)
-docker compose exec -w /app/public/themes/custom/hdbt_subtheme node npm run dev
+DEFAULT_NODE_VERSION=18.14.0 make node-shell
 ```
-
-Start an interactive shell: `docker compose exec node sh` or `make node-shell`.
 
 ## Make commands
 
@@ -29,6 +24,9 @@ make node-shell # Login to node container. Same as `make shell`, but for node co
 ```
 
 ### HDBT Subtheme
+
+The default node version is read from `.nvmrc` file located in `hdbt_subtheme` folder. To override the node version see [Override node version](#override-node-version) section.
+
 ```bash
 make install-hdbt-subtheme # Installs NPM dependencies inside hdbt_subtheme folder (`npm install`).
 make build-hdbt-subtheme # Builds SCSS/JS assets inside hdbt_subtheme folder (`npm run build`).
@@ -36,6 +34,9 @@ make watch-hdbt-subtheme # Starts SCSS/JS watcher inside hdbt_subtheme folder (`
 ```
 
 ### HDBT theme
+
+The default node version is read from `.nvmrc` file located in `hdbt` folder. To override the node version see [Override node version](#override-node-version) section.
+
 ```bash
 make install-hdbt # Installs NPM dependencies inside hdbt folder (`npm install`).
 make build-hdbt # Builds SCSS/JS assets inside hdbt folder (`npm run build`).
@@ -43,6 +44,9 @@ make watch-hdbt # Starts SCSS/JS watcher inside hdbt folder (`npm run dev`).
 ```
 
 ### HDBT Admin theme
+
+The default node version is read from `.nvmrc` file located in `hdbt_admin` folder. To override the node version see [Override node version](#override-node-version) section.
+
 ```bash
 make install-hdbt-admin # Installs NPM dependencies inside hdbt_admin folder (`npm install`).
 make build-hdbt-admin # Builds SCSS/JS assets inside hdbt_admin folder (`npm run build`).

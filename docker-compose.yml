@@ -78,12 +78,6 @@ services:
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-varnish.tls=true"
       - "traefik.http.services.${COMPOSE_PROJECT_NAME}-varnish.loadbalancer.server.port=6081"
       - "traefik.docker.network=stonehenge-network"
-  node:
-    image: node:18-alpine
-    volumes:
-      - .:/app:delegated
-    working_dir: /app
-    entrypoint: sh -c "sleep infinity"
   robo:
     image: ghcr.io/city-of-helsinki/drupal-robo:latest
     shm_size: '2gb'
