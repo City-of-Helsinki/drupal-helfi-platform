@@ -20,15 +20,15 @@
  *
  * Usage:
  *
- * echo "your message" | php notify.php
+ * php notify.php "your message"
  *
  * An additional metadata gathered from configured environment variables will
  * be appended to all messages, such as APP_ENV, OPENSHIFT_BUILD_ID etc.
  *
- * You can pass an optional boolean value as an argument to this script
- * to highlight everyone active in that channel. For example
+ * You can pass an optional boolean argument to this script to highlight
+ * everyone active in that channel. For example
  *
- * echo "your message" | php notify.php true
+ * php notify.php "your message" true
  *
  * This will, in addition to everything else, notify everyone active in that
  * channel. Like `@here your message`.
@@ -99,10 +99,6 @@ final class SlackApiClient {
 
 }
 
-// Make sure we don't keep running this indefinitely.
-stream_set_blocking(STDIN, FALSE);
-stream_set_timeout(STDIN, 1);
-
 $config = [
   'SLACK_CHANNEL_ID' => NULL,
   'SLACK_AUTHORIZATION' => NULL,
@@ -115,8 +111,8 @@ foreach ($config as $key => $item) {
   $config[$key] = getenv($key);
 }
 
-if (!$message = stream_get_contents(STDIN)) {
-  throw new \InvalidArgumentException('Usage: echo "your message" | php slack.php');
+if (!isset($argv[1])) {
+  throw new \InvalidArgumentException('Usage: php slack.php "your message"');
 }
 
 $metadata = [
@@ -136,7 +132,7 @@ foreach ($metadata as $key => $label) {
 
 $client = new SlackApiClient($config['SLACK_AUTHORIZATION'], $config['SLACK_CHANNEL_ID']);
 $client->send(vsprintf("%s\n%s\n*Project metadata*: \n\n%s", [
-  isset($argv[1]) ? '<!here>' : '',
-  $message,
+  isset($argv[2]) ? '<!here>' : '',
+  $argv[1],
   implode("\n", $extra),
 ]));

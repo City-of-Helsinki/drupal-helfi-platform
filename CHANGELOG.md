@@ -1,5 +1,17 @@
 # Changelog
 
+## 2023-05-23.1
+
+Added project specific `make` commands and documentation how to use `node` container to build local assets.
+
+See [Building assets](/documentation/build-assets.md) for more information.
+
+## 2023-05-24.1
+
+Added better deployment error handling and support for sending Slack messages for failed deployment.
+
+See [OpenShift](/documentation/openshift.md#handling-failures) documentation for more information.
+
 ## 2023-03-28.1
 
 Scheduler cron key is now read from `DRUPAL_SCHEDULER_CRON_KEY` environment variable when set, and will fall back to `$settings['hash_salt']`.

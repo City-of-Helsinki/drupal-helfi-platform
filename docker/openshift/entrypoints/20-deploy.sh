@@ -4,7 +4,7 @@ cd /var/www/html/public
 
 # Sends the given message to a Slack channel.
 function send_notification {
-  echo ${1} | php ../docker/openshift/notify.php ${2} || true
+  php ../docker/openshift/notify.php ${1} ${2} || true
 }
 
 function output_message {
