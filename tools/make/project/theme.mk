@@ -1,4 +1,9 @@
 DEFAULT_NODE_VERSION ?= 18
+NODE_DOCKER_RUN_EXTRA_ARGS ?= -it
+
+ifeq ($(CI),true)
+	NODE_DOCKER_RUN_EXTRA_ARGS =
+endif
 
 PHONY += install-hdbt-subtheme
 install-hdbt-subtheme: ## Installs dependencies for HDBT subtheme
@@ -45,5 +50,5 @@ $(strip $(shell cat $(PROJECT_DIR)/$(1)/.nvmrc 2>/dev/null || echo $(DEFAULT_NOD
 endef
 
 define node
-	docker run -it --rm --name helfi-node-$(call node_version,$(1)) -v $(shell pwd):/app -w /app$(1) node:$(call node_version,$(1)) "$(2)"
+	docker run $(NODE_DOCKER_RUN_EXTRA_ARGS) --rm --name helfi-node-$(call node_version,$(1)) -v $(shell pwd):/app -w /app$(1) node:$(call node_version,$(1)) "$(2)"
 endef
