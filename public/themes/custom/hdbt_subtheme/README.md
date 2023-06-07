@@ -4,15 +4,19 @@
 
 HDBT Subtheme is a so called "starterkit" which you can start using by enabling it in `/admin/appearance`.
 
-HDBT Subtheme uses webpack module bundler to compile the JS and SCSS files. Also, the SVG icons are combined in to a sprite.svg via webpack.
+HDBT Subtheme uses webpack module bundler to compile the JS and SCSS files. Also, the SVG icons are combined in to a
+sprite.svg via webpack.
 
-As the HDBT Subtheme is only distributed via the [HELfi Platform](https://github.com/City-of-Helsinki/drupal-helfi-platform), it doesn't have an upgrade path per se. In case there is a demand for upgrade-ability for existing projects then of course we will consider changing the theme to an upgradeable model.
+As the HDBT Subtheme is only distributed via the [HELfi Platform](https://github.com/City-of-Helsinki/drupal-helfi-platform),
+it doesn't have an upgrade path per se. In case there is a demand for upgrade-ability for existing projects then of
+course we will consider changing the theme to an upgradeable model.
 
 ## Requirements
 
 Do not rename the `hdbt_subtheme` as the Platform config 3.* assumes that the sub theme name is `hdbt_subtheme`.
 
-HDBT Subtheme requires [HDBT theme](https://github.com/City-of-helsinki/drupal-hdbt) as a base theme, and it should be installed in `/themes/contrib/hdbt`.
+HDBT Subtheme requires [hdbt theme](https://github.com/City-of-helsinki/drupal-hdbt) as a base theme, and it should be
+installed in `/themes/contrib/hdbt`.
 
 Requirements for developing:
 - [NodeJS ( ^ 18.16 )](https://nodejs.org/en/)
@@ -48,43 +52,16 @@ Build the minified versions of CSS/JS into dist with
 
 ## Structure for files and folders
 
-```
-hdbt_subtheme
-│   README.md
-└───templates
-│   └───block
-│   └───content
-│   └───...
-└───src
-│   └───scss
-│   │   │   styles.scss
-│   │   └───base
-│   │   │   └───__index.scss
-│   │   │   └───_base.scss
-│   │   │   └───...
-│   │   └───components
-│   │   │   └───__index.scss
-│   │   │   └───...
-│   │   └───...
-│   └───js
-│   │   │   common.js
-│   └───icons
-│       |   some-icon.svg
-└───dist
-    └───css
-        |   styles.min.css
-    └───js
-        |   bundle.min.js
-    └───icons
-        |   sprite.svg
-```
+The structure follows the same rules as in the hdbt-theme so you should read about more from the
+[hdbt documentation](https://github.com/City-of-helsinki/drupal-hdbt).
 
 ## How tos
 
 ### How can I add a new SVG icon and then use it on my site.
 
 You can add your custom icons to `./src/icons/`. F.e. `my-awesome-icon.svg`.
-Running `nvm use && npm i && npm run build` will collect the icon to the sprite.svg and it should then be available for use on your site by calling `my-awesome-icon`. Just remember to clear caches.
+Running `nvm use && npm i && npm run build` will collect the icon to the sprite.svg and it should then be available for
+use on your site by calling `my-awesome-icon`. Just remember to clear caches.
 The icons can be used in twig like so:
 
     {# HDBT Subtheme specific icons #}
@@ -99,8 +76,9 @@ To use the icon in SCSS, you can call it like so:
 
 ### My javascript has unexpected errors when loading a page in Drupal.
 
-If you have compiled the code with dev-flag (`nmp run dev`), then the sourcemaps expects the JS files to be found in correct places.
-This means that JS preprocessing (minifying) should be turned off. Just add the following lines to local.settings.php.
+If you have compiled the code with dev-flag (`nmp run dev`), then the sourcemaps expects the JS files to be found in
+correct places. This means that JS preprocessing (minifying) should be turned off. Just add the following lines to
+local.settings.php.
 ```
 $config['system.performance']['css']['preprocess'] = 0;
 $config['system.performance']['js']['preprocess'] = 0;
@@ -108,9 +86,11 @@ $config['system.performance']['js']['preprocess'] = 0;
 
 ### I need to rebuild caches every time I build the css or change the twig files. How can I automate it?
 
-You can create a `local.settings.php` and `local.services.yml` files to `/sites/default/` folder and paste the following contents in them.
+You can create a `local.settings.php` and `local.services.yml` files to `/sites/default/` folder and paste the following
+contents in them.
 
-**_Keep in mind that using the Null Cache Backend is the primary culprit for caching issues. F.e. Something works in local environment, but not in production environment._**
+**_Keep in mind that using the Null Cache Backend is the primary culprit for caching issues. F.e. Something works in
+local environment, but not in production environment._**
 
 local.services.yml:
 ```
@@ -149,7 +129,8 @@ aggregation from Drupal. Go to /admin/config/development/performance and uncheck
 site caches and you should be able to continue with your work.
 
 ### How can I add custom translations?
-Add your UI translations to ``./translations/{fi/sv}.po`` files like it is explained in Translation in Drupal 8 documentation: https://www.drupal.org/docs/understanding-drupal/translation-in-drupal-8.
+Add your UI translations to ``./translations/{fi/sv}.po`` files like it is explained in Translation in Drupal 8
+documentation: https://www.drupal.org/docs/understanding-drupal/translation-in-drupal-8.
 These translations consists of:
 
 PHP
