@@ -19,7 +19,7 @@ HDBT Subtheme requires [hdbt theme](https://github.com/City-of-helsinki/drupal-h
 installed in `/themes/contrib/hdbt`.
 
 Requirements for developing:
-- [NodeJS ( ^ 18.16 )](https://nodejs.org/en/)
+- [NodeJS](https://nodejs.org/en/)
 - [NPM](https://npmjs.com/)
 - optional [NVM](https://github.com/nvm-sh/nvm)
 
