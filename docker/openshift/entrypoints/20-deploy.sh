@@ -19,12 +19,12 @@ function output_error_message {
 
 # Make sure we have active Drupal configuration.
 if [ ! -f "../conf/cmi/system.site.yml" ]; then
-  output_error_message "Deployment failed: Codebase is not deployed properly. Exiting early."
+  output_error_message "Container start error: Codebase is not deployed properly. Exiting early."
   exit 1
 fi
 
 if [ ! -n "$OPENSHIFT_BUILD_NAME" ]; then
-  output_error_message "Deployment failed: OPENSHIFT_BUILD_NAME is not defined. Exiting early."
+  output_error_message "Container start error: OPENSHIFT_BUILD_NAME is not defined. Exiting early."
   exit 1
 fi
 
@@ -45,7 +45,7 @@ fi
 # Exit early if deploy ID is still not set. This usually means either Redis or
 # something else is down.
 if [[ -z "$(get_deploy_id)" ]]; then
-  output_error_message "Deployment failed: Could not fetch deploy ID. Exiting early."
+  output_error_message "Container start error: Could not fetch deploy ID. Exiting early."
   exit 1
 fi
 
@@ -56,13 +56,15 @@ if [ "$(get_deploy_id)" != "$OPENSHIFT_BUILD_NAME" ]; then
   drush state:set deploy_id $OPENSHIFT_BUILD_NAME
 
   if [ $? -ne 0 ]; then
-    output_error_message "Deployment failure: Failed set deploy_id"
+    output_error_message "Deployment failed: Failed set deploy_id"
+    exit 1
   fi
   # Put site in maintenance mode
   drush state:set system.maintenance_mode 1 --input-format=integer
 
   if [ $? -ne 0 ]; then
-    output_error_message "Deployment failure: Failed to enable maintenance_mode"
+    output_error_message "Deployment failed: Failed to enable maintenance_mode"
+    exit 1
   fi
   # Run helfi specific pre-deploy tasks. Allow this to fail in case
   # the environment is not using the 'helfi_api_base' module.
@@ -73,6 +75,7 @@ if [ "$(get_deploy_id)" != "$OPENSHIFT_BUILD_NAME" ]; then
 
   if [ $? -ne 0 ]; then
     output_error_message "Deployment failed: drush deploy failed with {$?} exit code. See logs for more information."
+    exit 1
   fi
   # Run helfi specific post deploy tasks. Allow this to fail in case
   # the environment is not using the 'helfi_api_base' module.
