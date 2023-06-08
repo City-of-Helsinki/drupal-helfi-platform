@@ -50,8 +50,8 @@ Related files.
 - `webpack.config.js` : Configuration file for the webpack-tool that is used to actually build the theme. Similar tool
   to Gulp or Grunt. Usually if there is something wrong with the compiled theme files the culprit can be found here.
 - `webpack.svgToSprite.js` : This file is used to create a sprite of all the icons used on the site. It gets all the
-  icons from the src-folder, compiles them into a sprite under `dist/icons` and also creates a css-file where the icons are
-  referenced called _hdbt-icons.css_.
+  icons from the `./src`, compiles them into a sprite under `./dist/icons` and also creates a css-file where the icons are
+  referenced called `./dist/css/hdbt-icons.css`.
 
 Start SCSS/JS watcher by running
 
@@ -140,7 +140,7 @@ aggregation from Drupal. Go to /admin/config/development/performance and uncheck
 site caches and you should be able to continue with your work.
 
 ### How can I add custom translations?
-Add your UI translations to ``./translations/{fi/sv}.po`` files like it is explained in Translation in Drupal 8
+Add your UI translations to `./translations/{fi/sv}.po` files like it is explained in Translation in Drupal
 documentation: https://www.drupal.org/docs/understanding-drupal/translation-in-drupal-8.
 These translations consists of:
 
@@ -176,6 +176,6 @@ msgstr[1] "Monikko"
 
 To see these translation changes in an instance, run in container shell:
 ```
-drush locale:check && drush locale:update
+drush locale:check && drush locale:update && drush cr
 ```
 And then flush all caches from top left drupal admin menu under "Druplicon".
