@@ -19,12 +19,12 @@ function output_error_message {
 
 # Make sure we have active Drupal configuration.
 if [ ! -f "../conf/cmi/system.site.yml" ]; then
-  output_error_message "Container start failure: Codebase is not deployed properly. Exiting early."
+  output_error_message "Container start error: Codebase is not deployed properly. Exiting early."
   exit 1
 fi
 
 if [ ! -n "$OPENSHIFT_BUILD_NAME" ]; then
-  output_error_message "Container start failure: OPENSHIFT_BUILD_NAME is not defined. Exiting early."
+  output_error_message "Container start error: OPENSHIFT_BUILD_NAME is not defined. Exiting early."
   exit 1
 fi
 
@@ -45,7 +45,7 @@ fi
 # Exit early if deploy ID is still not set. This usually means either Redis or
 # something else is down.
 if [[ -z "$(get_deploy_id)" ]]; then
-  output_error_message "Container start failure: Could not fetch deploy ID. Exiting early."
+  output_error_message "Container start error: Could not fetch deploy ID. Exiting early."
   exit 1
 fi
 
