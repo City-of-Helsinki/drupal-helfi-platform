@@ -79,6 +79,8 @@ final class SlackApiClient {
       'json' => [
         'channel' => $this->channel,
         'text' => $message,
+        'unfurl_links' => FALSE,
+        'unfurl_media' => FALSE ,
       ],
       'headers' => [
         'Authorization' => 'Bearer ' . $this->authorization,
@@ -116,10 +118,10 @@ if (!isset($argv[1])) {
 }
 
 $metadata = [
-  'OPENSHIFT_BUILD_ID' => 'Build ID',
-  'OPENSHIFT_BUILD_NAME' => 'Build name',
-  'OPENSHIFT_BUILD_SOURCE' => 'Project source',
   'APP_ENV' => 'Environment',
+  'OPENSHIFT_BUILD_NAMESPACE' => 'Namespace',
+  'OPENSHIFT_BUILD_NAME' => 'Build name',
+  'OPENSHIFT_BUILD_SOURCE' => 'Project'
 ];
 
 $extra = [];
@@ -127,12 +129,12 @@ foreach ($metadata as $key => $label) {
   if (!$value = getenv($key)) {
     continue;
   }
-  $extra[] = sprintf(">*%s*: %s\n", $label, $value);
+  $extra[] = sprintf(">*%s*: %s", $label, $value);
 }
 
 $client = new SlackApiClient($config['SLACK_AUTHORIZATION'], $config['SLACK_CHANNEL_ID']);
-$client->send(vsprintf("%s\n%s\n*Project metadata*: \n\n%s", [
-  isset($argv[2]) ? '<!here>' : '',
+$client->send(vsprintf("%s%s\n\n*Project metadata*: \n\n%s", [
+  isset($argv[2]) ? '<!here> ' : '',
   $argv[1],
   implode("\n", $extra),
 ]));
