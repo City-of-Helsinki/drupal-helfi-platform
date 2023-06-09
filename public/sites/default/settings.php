@@ -5,6 +5,12 @@ use Symfony\Component\HttpFoundation\Request;
 if (PHP_SAPI === 'cli') {
   ini_set('memory_limit', '512M');
 }
+else {
+  // New relic triggers garbage collector which adds extra time on the request.
+  // The gc enabled is useful for migration drush commands and probably others.
+  // For non cli requests, there should not be a case where gc is called / needed.
+  ini_set('zend.enable_gc', 'Off');
+}
 
 if ($simpletest_db = getenv('SIMPLETEST_DB')) {
   $parts = parse_url($simpletest_db);
