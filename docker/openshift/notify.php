@@ -27,6 +27,8 @@
 declare(strict_types = 1);
 
 use Sentry\ClientInterface;
+use Sentry\State\Scope;
+use function Sentry\configureScope;
 use function Sentry\init;
 
 include_once __DIR__ . '/../../vendor/autoload.php';
@@ -68,7 +70,9 @@ foreach ($metadata as $key => $label) {
   if (!$value = getenv($key)) {
     continue;
   }
-  $extra[] = sprintf("%s: %s", $label, $value);
+  $extra[$label] = $value;
 }
 
-throw new \DeploymentException(sprintf("%s\n\n%s", $argv[1], implode("\n", $extra)));
+configureScope(fn (Scope $scope) => $scope->setContext('meta', $extra));
+
+throw new \DeploymentException($argv[1]);
