@@ -2,7 +2,7 @@
 
 /**
  * @file
- * A php script to send messages to a configured Slack channel.
+ * A php script to send alerts from CLI tasks to Sentry.
  *
  * This script is called from 'docker/openshift/entrypoints/20-deploy.sh'.
  *
@@ -11,12 +11,10 @@
  * In order for this to work, you must define the following environment
  * variables:
  *
- * - SLACK_CHANNEL_ID
- *     You can find this value by right-clicking the channel name and selecting
- *     Copy -> Copy link. The last part of the link should be the channel ID.
- *
- * - SLACK_AUTHORIZATION
- *    The authorization token for your Slack application.
+ * - SENTRY_DSN
+ *    The DSN address to Sentry, something like 'https://xxxx@xxx.hel.fi/xxx'.
+ * - SENTRY_ENVIRONMENT
+ *    The environment name.
  *
  * Usage:
  *
@@ -24,104 +22,47 @@
  *
  * An additional metadata gathered from configured environment variables will
  * be appended to all messages, such as APP_ENV, OPENSHIFT_BUILD_ID etc.
- *
- * You can pass an optional boolean argument to this script to highlight
- * everyone active in that channel. For example
- *
- * php notify.php "your message" true
- *
- * This will, in addition to everything else, notify everyone active in that
- * channel. Like `@here your message`.
  */
 
 declare(strict_types = 1);
 
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
+use Sentry\ClientInterface;
+use Sentry\State\Scope;
+use function Sentry\configureScope;
+use function Sentry\init;
 
 include_once __DIR__ . '/../../vendor/autoload.php';
 
-/**
- * A client to interact with Slack API.
- */
-final class SlackApiClient {
+if (!interface_exists(ClientInterface::class)) {
+  throw new LogicException('Missing "sentry/sdk" dependency.');
+}
 
-  /**
-   * The HTTP client.
-   *
-   * @var \GuzzleHttp\ClientInterface
-   */
-  private ClientInterface $client;
-
-  /**
-   * Constructs a new instance.
-   *
-   * @param string $authorization
-   *   The bearer authorization token.
-   * @param string $channel
-   *   The channel id.
-   */
-  public function __construct(
-    private string $authorization,
-    private string $channel,
-  ) {
-    $this->client = new Client(['base_uri' => 'https://slack.com/api/']);
-  }
-
-  /**
-   * Sends a Slack message.
-   *
-   * @param string $message
-   *   The message to send.
-   */
-  public function send(string $message) : void {
-    $response = $this->client->request('POST', 'chat.postMessage', [
-      'json' => [
-        'channel' => $this->channel,
-        'text' => $message,
-        'unfurl_links' => FALSE,
-        'unfurl_media' => FALSE ,
-      ],
-      'headers' => [
-        'Authorization' => 'Bearer ' . $this->authorization,
-      ],
-    ]);
-    $content = json_decode($response->getBody()->getContents());
-
-    if (empty($content->ok) || $content->ok !== TRUE) {
-      $message = $content->error;
-
-      if (isset($content->response_metadata->messages)) {
-        $message = implode(',', $content->response_metadata->messages);
-      }
-
-      throw new InvalidArgumentException($message);
-    }
-  }
-
+class DeploymentException extends \Exception {
 }
 
 $config = [
-  'SLACK_CHANNEL_ID' => NULL,
-  'SLACK_AUTHORIZATION' => NULL,
+  'SENTRY_DSN' => NULL,
+  'SENTRY_ENVIRONMENT' => NULL,
 ];
 
 foreach ($config as $key => $item) {
   if (!$value = getenv($key)) {
-    throw new \InvalidArgumentException(sprintf('Missing required "%s" environment variable.', $key));
+    throw new InvalidArgumentException(sprintf('Missing required "%s" environment variable.', $key));
   }
   $config[$key] = getenv($key);
 }
 
+init();
+
 if (!isset($argv[1])) {
-  throw new \InvalidArgumentException('Usage: php slack.php "your message"');
+  throw new InvalidArgumentException('Usage: php notify.php "your message"');
 }
 
 $metadata = [
   'APP_ENV' => 'Environment',
   'OPENSHIFT_BUILD_NAMESPACE' => 'Namespace',
   'OPENSHIFT_BUILD_NAME' => 'Build name',
-  'OPENSHIFT_BUILD_SOURCE' => 'Project'
+  'OPENSHIFT_BUILD_SOURCE' => 'Project',
 ];
 
 $extra = [];
@@ -129,12 +70,10 @@ foreach ($metadata as $key => $label) {
   if (!$value = getenv($key)) {
     continue;
   }
-  $extra[] = sprintf(">*%s*: %s", $label, $value);
+  $extra[$label] = $value;
 }
 
-$client = new SlackApiClient($config['SLACK_AUTHORIZATION'], $config['SLACK_CHANNEL_ID']);
-$client->send(vsprintf("%s%s\n\n*Project metadata*: \n\n%s", [
-  isset($argv[2]) ? '<!here> ' : '',
-  $argv[1],
-  implode("\n", $extra),
-]));
+if (!empty($extra)) {
+  configureScope(fn (Scope $scope) => $scope->setContext('meta', $extra));
+}
+throw new \DeploymentException($argv[1]);
