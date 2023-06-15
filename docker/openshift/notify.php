@@ -73,6 +73,7 @@ foreach ($metadata as $key => $label) {
   $extra[$label] = $value;
 }
 
-configureScope(fn (Scope $scope) => $scope->setContext('meta', $extra));
-
+if (!empty($extra)) {
+  configureScope(fn (Scope $scope) => $scope->setContext('meta', $extra));
+}
 throw new \DeploymentException($argv[1]);
