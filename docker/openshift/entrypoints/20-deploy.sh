@@ -2,19 +2,9 @@
 
 cd /var/www/html/public
 
-# Sends the given message to a Slack channel.
-function send_notification {
-  php ../docker/openshift/notify.php ${1} ${2} || true
-}
-
-function output_message {
-  echo ${1}
-  send_notification ${1}
-}
-
 function output_error_message {
   echo ${1}
-  send_notification ${1} true
+  php ../docker/openshift/notify.php "${1}" || true
 }
 
 # Make sure we have active Drupal configuration.
