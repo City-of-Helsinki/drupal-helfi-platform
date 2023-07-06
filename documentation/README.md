@@ -10,6 +10,7 @@
 - [Using OpenShift origin client (OC)](/documentation/openshift-oc.md)
 - [Syncing databases between environments](/documentation/openshift-db-sync.md)
 - [Building assets](/documentation/build-assets.md)
+- [Profiling code with Blackfire.io](/documentation/blackfire.md)
 
 ## Testing
 
