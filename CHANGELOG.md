@@ -1,16 +1,20 @@
 # Changelog
 
-## 2023-05-23.1
+## 2023-07-06.1
 
-Added project specific `make` commands and documentation how to use `node` container to build local assets.
-
-See [Building assets](/documentation/build-assets.md) for more information.
+Removed branding navigation configuration as it is deprecated and not used any more.
 
 ## 2023-05-24.1
 
 Added better deployment error handling and support for sending Slack messages for failed deployment.
 
 See [OpenShift](/documentation/openshift.md#handling-failures) documentation for more information.
+
+## 2023-05-23.1
+
+Added project specific `make` commands and documentation how to use `node` container to build local assets.
+
+See [Building assets](/documentation/build-assets.md) for more information.
 
 ## 2023-03-28.1
 
