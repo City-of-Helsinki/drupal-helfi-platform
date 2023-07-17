@@ -42,6 +42,8 @@ echo "Starting cron: $(date)"
 # exec "/crons/update-translations.sh" &
 # Uncomment this to enable content scheduler
 # exec "/crons/content-scheduler.sh" &
+# Uncomment this to enable hearings migration
+# exec "/crons/migrate-hearings.sh" &
 
 while true
 do
