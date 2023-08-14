@@ -15,7 +15,7 @@
         "drupal/helfi_azure_fs": "^1.0",
         "drupal/helfi_drupal_tools": "dev-main",
         "drupal/helfi_platform_config": "^3.0",
-        "drush/drush": "^10.4 || ^11"
+        "drush/drush": "^10.4 || ^11 || ^12"
     },
     "require-dev": {
         "donatj/mock-webserver": "^2.4",

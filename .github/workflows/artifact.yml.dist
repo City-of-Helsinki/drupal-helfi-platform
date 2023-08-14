@@ -5,16 +5,11 @@ on:
   schedule:
     - cron:  '0 0 * * 0'
 name: Build artifacts
-env:
-  DRUPAL_BUILD_FROM_SCRATCH: true
-  SIMPLETEST_DB: "mysql://drupal:drupal@db:3306/drupal"
-  SIMPLETEST_BASE_URL: "http://127.0.0.1:8080"
-  XDEBUG_MODE: off
 jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/city-of-helsinki/drupal-php-docker:8.1-alpine
+      image: ghcr.io/city-of-helsinki/drupal-php-docker:8.2-alpine
 
     services:
       db:
