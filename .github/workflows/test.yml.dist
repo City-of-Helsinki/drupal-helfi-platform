@@ -28,7 +28,7 @@ jobs:
           fetch-depth: 1
 
       - name: Build project
-        run: composer install
+        run: composer install --no-interaction
 
       - name: Scan security updates
         run: drush pm:security
