@@ -25,15 +25,20 @@ Requirements for developing:
 
 ## Commands
 
-| Command       | Description                                                                       |
-| ------------- | --------------------------------------------------------------------------------- |
-| nvm use       | Uses correct Node version chosen for the subtheme compiler                        |
-| npm i         | Install dependencies and link local packages.                                     |
-| npm ci        | Install a project with a clean slate. Use especially in travis like environments. |
-| npm run dev   | Compile styles for development environment and watch file changes.                |
-| npm run build | Build packages for production. Minify CSS/JS. Create icon sprite.                 |
+| Command       | Make command               | Description                                                                       |
+|---------------|----------------------------|-----------------------------------------------------------------------------------|
+| nvm use       | N/A                        | Uses correct Node version chosen for the subtheme compiler                        |
+| npm i         | make install-hdbt-subtheme | Install dependencies and link local packages.                                     |
+| npm ci        | N/A                        | Install a project with a clean slate. Use especially in travis like environments. |
+| npm run dev   | make watch-hdbt-subtheme   | Compile styles for development environment and watch file changes.                |
+| npm run build | make watch-hdbt-subtheme   | Build packages for production. Minify CSS/JS. Create icon sprite.                 |
 
-Setup the developing environment by running
+Consistent Node version defined in `.nvmrc` should be used. For development, use either `nvm` to select the correct
+version or `make` commands that select the version automatically. Run `make` the commands from the table above in the
+project directory of your instance. For more information, see
+[build-assets.md](https://github.com/City-of-Helsinki/drupal-helfi-platform/blob/main/documentation/build-assets.md).
+
+Set up the developing environment with `nvm` by running
 
     nvm use
     npm i
