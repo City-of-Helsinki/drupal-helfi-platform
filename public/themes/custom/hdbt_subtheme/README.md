@@ -31,7 +31,7 @@ Requirements for developing:
 | npm i         | make install-hdbt-subtheme | Install dependencies and link local packages.                                     |
 | npm ci        | N/A                        | Install a project with a clean slate. Use especially in travis like environments. |
 | npm run dev   | make watch-hdbt-subtheme   | Compile styles for development environment and watch file changes.                |
-| npm run build | make watch-hdbt-subtheme   | Build packages for production. Minify CSS/JS. Create icon sprite.                 |
+| npm run build | make build-hdbt-subtheme   | Build packages for production. Minify CSS/JS. Create icon sprite.                 |
 
 Consistent Node version defined in `.nvmrc` should be used. For development, use either `nvm` to select the correct
 version or `make` commands that select the version automatically. Run `make` the commands from the table above in the
