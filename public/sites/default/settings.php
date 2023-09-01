@@ -207,6 +207,13 @@ if ($robots_header_enabled = getenv('DRUPAL_X_ROBOTS_TAG_HEADER')) {
 
 $config['filelog.settings']['rotation']['schedule'] = 'never';
 
+if ($pubsub_endpoint = getenv('AZURE_PUBSUB_ENDPOINT')) {
+  $config['helfi_api_base.pubsub.settings']['endpoint'] = $pubsub_endpoint;
+  $config['helfi_api_base.pubsub.settings']['access_key'] = getenv('AZURE_PUBSUB_ACCESS_KEY');
+  $config['helfi_api_base.pubsub.settings']['hub'] = getenv('AZURE_PUBSUB_HUB');
+  $config['helfi_api_base.pubsub.settings']['group'] = getenv('AZURE_PUBSUB_GROUP');
+}
+
 if (
   ($redis_host = getenv('REDIS_HOST')) &&
   file_exists('modules/contrib/redis/redis.services.yml') &&
