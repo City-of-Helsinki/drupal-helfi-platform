@@ -276,3 +276,13 @@ if ($env = getenv('APP_ENV')) {
     include_once __DIR__ . '/azure.settings.php'; // NOSONAR
   }
 }
+
+/**
+ * Deployment identifier.
+ *
+ * Default 'deployment_identifier' cache key to modified time of 'composer.lock'
+ * file in case it's not already defined.
+ */
+if (empty($settings['deployment_identifier'])) {
+  $settings['deployment_identifier'] = filemtime(__DIR__ . '/../../../composer.lock');
+}
