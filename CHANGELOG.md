@@ -6,6 +6,12 @@ Added `$settings['deployment_identifier']` setting. This setting is used to dete
 needs to be invalidated and rebuilt. This should fix the issue where deployment fails due to changed
 service parameters in contrib modules.
 
+### Required actions
+
+Update your `azure.settings.php` and `settings.php` files from this repository. Optionally you can make the changes manually, see:
+- https://github.com/City-of-Helsinki/drupal-helfi-platform/commit/473e3534594e5f439d1d9bb1e14bf10285da1d11
+- https://github.com/City-of-Helsinki/drupal-helfi-platform/commit/3e368fb78d806c38274737e4eab65c9f20283707
+
 ## 2023-07-06.1
 
 Removed branding navigation configuration as it is deprecated and not used any more.
