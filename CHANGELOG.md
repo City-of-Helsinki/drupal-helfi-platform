@@ -1,5 +1,11 @@
 # Changelog
 
+## 2023-09-07.1
+
+Added `$settings['deployment_identifier']` setting. This setting is used to determine if container
+needs to be invalidated and rebuilt. This should fix the issue where deployment fails due to changed
+service parameters in contrib modules.
+
 ## 2023-07-06.1
 
 Removed branding navigation configuration as it is deprecated and not used any more.
