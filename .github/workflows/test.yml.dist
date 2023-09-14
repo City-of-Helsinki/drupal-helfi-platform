@@ -65,4 +65,5 @@ jobs:
       - name: Run PHPUnit tests
         run: |
           composer test-php public/modules/custom
-          [ -d "tests/" ] && composer test-php tests/ || echo "No DTT tests found. Ignoring..."
+          if [ -d "tests/" ]; then composer test-php tests/; else echo "No DTT tests found. Ignoring..."; fi
+
