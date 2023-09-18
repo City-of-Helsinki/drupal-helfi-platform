@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-09-18
+
+Added support for deleting old revisions automatically. See [https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/a81bbf291be5db7e9cc09cda3033da2398c91167/documentation/revisions.md](documentation).
+
 ## 2023-09-07.1
 
 Added `$settings['deployment_identifier']` setting. This setting is used to determine if container
