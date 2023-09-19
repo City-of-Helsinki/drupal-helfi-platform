@@ -82,22 +82,6 @@ services:
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-varnish.tls=true"
       - "traefik.http.services.${COMPOSE_PROJECT_NAME}-varnish.loadbalancer.server.port=6081"
       - "traefik.docker.network=stonehenge-network"
-  robo:
-    image: ghcr.io/city-of-helsinki/drupal-robo:latest
-    shm_size: '2gb'
-    tty: true
-    volumes:
-      - .:/app:delegated
-    networks:
-      - internal
-      - stonehenge-network
-    depends_on:
-      - app
-    profiles:
-      - testing
-    extra_hosts:
-      - "${DRUPAL_HOSTNAME}:host-gateway"
-      - "varnish-${DRUPAL_HOSTNAME}:host-gateway"
 networks:
   internal:
     external: false
