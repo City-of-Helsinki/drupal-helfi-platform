@@ -32,7 +32,7 @@ drush-locale-update: ## Update translations.
 	$(call step,Update translations...)
 	$(call drush,state:set locale.translation_last_checked 0)
 	$(call drush,locale:check)
-	$(call drush,locale:update)
 	$(call drush,cr)
+  $(call drush,locale:update)
 	$(call step,Import custom translations...)
 	$(call drush,helfi:locale-import helfi_platform_config)
