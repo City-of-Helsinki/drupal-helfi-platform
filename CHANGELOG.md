@@ -1,5 +1,13 @@
 # Changelog
 
+## 2023-09-27
+
+base.sh cron has been updated with a feature which prevents running cron during deployment process.
+
+### Required actions
+
+Change should be manually added to project's base.sh file. See [the actual change to copy](https://github.com/City-of-Helsinki/drupal-helfi-platform/pull/112/files)
+
 ## 2023-09-18
 
 Added support for deleting old revisions automatically. See [documentation](https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/a81bbf291be5db7e9cc09cda3033da2398c91167/documentation/revisions.md).
