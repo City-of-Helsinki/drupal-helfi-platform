@@ -21,7 +21,7 @@ else {
  * @return mixed
  *   The value.
  */
-function drupal_get_env(string|array $variables) : mixed {
+function getenv_multiple(string|array $variables) : mixed {
   if (!is_array($variables)) {
     $variables = [$variables];
   }
@@ -227,7 +227,7 @@ if ($robots_header_enabled = getenv('DRUPAL_X_ROBOTS_TAG_HEADER')) {
   $config['helfi_proxy.settings']['robots_header_enabled'] = (bool) $robots_header_enabled;
 }
 
-$artemis_destination = drupal_get_env(['ARTEMIS_DESTINATION', 'PROJECT_NAME']);
+$artemis_destination = getenv_multiple(['ARTEMIS_DESTINATION', 'PROJECT_NAME']);
 
 if ($artemis_brokers = getenv('ARTEMIS_BROKERS') && $artemis_destination) {
   $settings['stomp']['default'] = [
