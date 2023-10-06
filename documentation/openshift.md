@@ -24,20 +24,14 @@ See the [deployment](/docker/openshift/entrypoints/20-deploy.sh) script for more
 
 ### Handling failures
 
-In case of a failure, an error message is sent to a configured Slack channel. See [notify.php](/docker/openshift/notify.php) script for more documentation.
+In case of a failure, an error message is sent to a configured Sentry instance. See [notify.php](/docker/openshift/notify.php) script for more documentation.
 
-In order to use this feature, you must add `HelfiDev notifications` app (or create your own application) to your Slack channel and define the following environment variables:
-
-```bash
-# You can find this value by right-clicking the channel name and selecting
-# Copy -> Copy link. The last part of the link should be the channel ID.
-SLACK_CHANNEL_ID=your-slack-channel-id
-```
+In order to use this feature, you must define the following environment variables:
 
 ```bash
-# The authorization token for your Slack application.
-# You can get this value by contacting the Hel.fi development team.
-SLACK_AUTHORIZATION=authorization-token
+SENTRY_DSN=your-sentry-dsn
+# Should be same as APP_ENV
+SENTRY_ENVIRONMENT=environment 
 ```
 
 See https://helsinkisolutionoffice.atlassian.net/wiki/spaces/HEL/pages/6785826654/Ymp+rist+muuttujien+lis+ys+Azure+DevOpsissa for more documentation (in Finnish) on how to define environment variables.
