@@ -1,4 +1,4 @@
-# Your Drupal 9 project
+# Your Drupal project
 
 Description of your project.
 
@@ -49,6 +49,10 @@ This will log you inside the app container:
 ```bash
 $ make shell
 ```
+
+## Docker compose profiles
+
+Modify the value of `COMPOSE_PROFILES` environment variable from `.env` file or start the project with `COMPOSE_RROFILES=your-profiles make up`.
 
 ## Documentation
 

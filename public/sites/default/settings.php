@@ -205,6 +205,26 @@ if ($robots_header_enabled = getenv('DRUPAL_X_ROBOTS_TAG_HEADER')) {
   $config['helfi_proxy.settings']['robots_header_enabled'] = (bool) $robots_header_enabled;
 }
 
+if ($artemis_brokers = getenv('ARTEMIS_BROKERS')) {
+  $settings['stomp']['default'] = [
+    'clientId' => getenv('ARTEMIS_CLIENT_ID') ?: 'artemis',
+    'login' => getenv('ARTEMIS_LOGIN'),
+    'passcode' => getenv('ARTEMIS_PASSCODE'),
+    'brokers' => $artemis_brokers,
+    'timeout' => ['read' => 15000],
+    'heartbeat' => [
+      'send' => 12000,
+      'receive' => 0,
+      'observers' => [
+        [
+          'class' => '\Stomp\Network\Observer\HeartbeatEmitter',
+        ],
+      ],
+    ],
+  ];
+  $settings['queue_default'] = 'queue.stomp.default';
+}
+
 $config['filelog.settings']['rotation']['schedule'] = 'never';
 
 if (
