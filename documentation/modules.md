@@ -35,7 +35,7 @@ Very rudimentary MVP. Not developed at the moment.
 
 ## Platform config
 
-This module holds configuration for the Hel.fi platform.
+This module holds the configuration for the Hel.fi platform.
 
 - [Code](https://github.com/City-of-Helsinki/drupal-helfi-platform-config)
 - [Documentation](https://github.com/City-of-Helsinki/drupal-helfi-platform-config/blob/main/README.md)
@@ -46,6 +46,12 @@ Provides various fixes to allow multiple Drupal instances to be served from one 
 
 - [Code](https://github.com/City-of-Helsinki/drupal-module-helfi-proxy)
 - [Documentation](https://github.com/City-of-Helsinki/drupal-module-helfi-proxy/blob/main/README.md)
+
+## STOMP
+
+Provides an integration for Apache Artemis queue service.
+- [Code](https://github.com/City-of-Helsinki/drupal-module-stomp)
+- [Documentation](https://github.com/City-of-Helsinki/drupal-module-stomp/blob/main/README.md)
 
 ## TPR
 

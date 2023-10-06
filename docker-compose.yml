@@ -13,6 +13,7 @@ services:
       STAGE_FILE_PROXY_ORIGIN: "${STAGE_FILE_PROXY_ORIGIN}"
       STAGE_FILE_PROXY_ORIGIN_DIR: "${STAGE_FILE_PROXY_ORIGIN_DIR}"
       APP_ENV: "${APP_ENV:-local}"
+      ELASTIC_PROXY_URL: ${ELASTIC_PROXY_URL}
       DRUPAL_ROUTES: "https://varnish-${DRUPAL_HOSTNAME},https://helfi-proxy.docker.so,http://${COMPOSE_PROJECT_NAME}-varnish"
       DRUPAL_REVERSE_PROXY_ADDRESS: helfi-proxy.docker.so
       DRUSH_OPTIONS_URI: "https://${DRUPAL_HOSTNAME}"
@@ -21,8 +22,8 @@ services:
       # xdebug by default (like /etc/environments, ~/.bashrc, or ~/.zshrc).
       XDEBUG_ENABLE: "${XDEBUG_ENABLE:-false}"
       # DOCKERHOST: host.docker.internal
-      # Use drush server to run functional tests so we don't have to care about
-      # permission issues.
+      # Use drush server to run functional tests, so we don't have to care about
+      # permission or SSL issues.
       SIMPLETEST_BASE_URL: "http://127.0.0.1:8888"
       SIMPLETEST_DB: "mysql://drupal:drupal@db:3306/drupal"
       BROWSERTEST_OUTPUT_BASE_URL: "https://${DRUPAL_HOSTNAME}"
@@ -82,6 +83,53 @@ services:
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-varnish.tls=true"
       - "traefik.http.services.${COMPOSE_PROJECT_NAME}-varnish.loadbalancer.server.port=6081"
       - "traefik.docker.network=stonehenge-network"
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.4.0
+    container_name: "${COMPOSE_PROJECT_NAME}-elastic"
+    environment:
+      - node.name="${COMPOSE_PROJECT_NAME}-elastic"
+      - discovery.seed_hosts=elastic
+      - cluster.name=es-docker-cluster
+      - cluster.initial_master_nodes="${COMPOSE_PROJECT_NAME}-elastic"
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "http.cors.allow-origin=\"*\""
+      - "http.cors.enabled=true"
+      - "http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization"
+      - "http.cors.allow-credentials=true"
+      - xpack.security.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200-9220:9200
+    networks:
+      - internal
+      - stonehenge-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-elastic.entrypoints=https"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-elastic.rule=Host(`elastic-${DRUPAL_HOSTNAME}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-elastic.tls=true"
+      - "traefik.http.services.${COMPOSE_PROJECT_NAME}-elastic.loadbalancer.server.port=9200"
+      - "traefik.docker.network=stonehenge-network"
+      - "traefik.port=9200"
+    profiles:
+      - search
+  artemis:
+    container_name: "${COMPOSE_PROJECT_NAME}-artemis"
+    image: quay.io/artemiscloud/activemq-artemis-broker
+    ports:
+      - "8161:8161"
+      - "61616:61616"
+      - "5672:5672"
+    environment:
+      AMQ_EXTRA_ARGS: "--nio --user admin --password admin"
+    networks:
+      - internal
+    profiles:
+      - queue
 networks:
   internal:
     external: false
