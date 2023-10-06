@@ -12,6 +12,28 @@ else {
   ini_set('zend.enable_gc', 'Off');
 }
 
+/**
+ * Gets the value of given environment variable.
+ *
+ * @param string|array $variables
+ *   The variables to scan.
+ *
+ * @return mixed
+ *   The value.
+ */
+function drupal_get_env(string|array $variables) : mixed {
+  if (!is_array($variables)) {
+    $variables = [$variables];
+  }
+
+  foreach ($variables as $var) {
+    if ($value = getenv($var)) {
+      return $value;
+    }
+  }
+  return NULL;
+}
+
 if ($simpletest_db = getenv('SIMPLETEST_DB')) {
   $parts = parse_url($simpletest_db);
   putenv(sprintf('DRUPAL_DB_NAME=%s', substr($parts['path'], 1)));
@@ -205,11 +227,14 @@ if ($robots_header_enabled = getenv('DRUPAL_X_ROBOTS_TAG_HEADER')) {
   $config['helfi_proxy.settings']['robots_header_enabled'] = (bool) $robots_header_enabled;
 }
 
-if ($artemis_brokers = getenv('ARTEMIS_BROKERS')) {
+$artemis_destination = drupal_get_env(['ARTEMIS_DESTINATION', 'PROJECT_NAME']);
+
+if ($artemis_brokers = getenv('ARTEMIS_BROKERS') && $artemis_destination) {
   $settings['stomp']['default'] = [
     'clientId' => getenv('ARTEMIS_CLIENT_ID') ?: 'artemis',
     'login' => getenv('ARTEMIS_LOGIN'),
     'passcode' => getenv('ARTEMIS_PASSCODE'),
+    'destination' => sprintf('/queue/%s', $artemis_destination),
     'brokers' => $artemis_brokers,
     'timeout' => ['read' => 15000],
     'heartbeat' => [
