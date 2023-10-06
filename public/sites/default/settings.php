@@ -12,26 +12,29 @@ else {
   ini_set('zend.enable_gc', 'Off');
 }
 
-/**
- * Gets the value of given environment variable.
- *
- * @param string|array $variables
- *   The variables to scan.
- *
- * @return mixed
- *   The value.
- */
-function getenv_multiple(string|array $variables) : mixed {
-  if (!is_array($variables)) {
-    $variables = [$variables];
-  }
 
-  foreach ($variables as $var) {
-    if ($value = getenv($var)) {
-      return $value;
+if (!function_exists('drupal_get_env')) {
+  /**
+   * Gets the value of given environment variable.
+   *
+   * @param string|array $variables
+   *   The variables to scan.
+   *
+   * @return mixed
+   *   The value.
+   */
+  function drupal_get_env(string|array $variables) : mixed {
+    if (!is_array($variables)) {
+      $variables = [$variables];
     }
+
+    foreach ($variables as $var) {
+      if ($value = getenv($var)) {
+        return $value;
+      }
+    }
+    return NULL;
   }
-  return NULL;
 }
 
 if ($simpletest_db = getenv('SIMPLETEST_DB')) {
@@ -227,7 +230,7 @@ if ($robots_header_enabled = getenv('DRUPAL_X_ROBOTS_TAG_HEADER')) {
   $config['helfi_proxy.settings']['robots_header_enabled'] = (bool) $robots_header_enabled;
 }
 
-$artemis_destination = getenv_multiple(['ARTEMIS_DESTINATION', 'PROJECT_NAME']);
+$artemis_destination = drupal_get_env(['ARTEMIS_DESTINATION', 'NON_EXISTENT_TEST']);
 
 if ($artemis_brokers = getenv('ARTEMIS_BROKERS') && $artemis_destination) {
   $settings['stomp']['default'] = [
