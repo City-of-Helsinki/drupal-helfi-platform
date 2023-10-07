@@ -94,6 +94,10 @@ if ($drupal_routes = getenv('DRUPAL_ROUTES')) {
 }
 $routes[] = 'http://127.0.0.1';
 
+if ($simpletest_base_url = getenv('SIMPLETEST_BASE_URL')) {
+  $routes[] = $simpletest_base_url;
+}
+
 if ($drush_options_uri = getenv('DRUSH_OPTIONS_URI')) {
   $routes[] = $drush_options_uri;
 }
