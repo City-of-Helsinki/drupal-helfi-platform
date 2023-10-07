@@ -4,13 +4,50 @@
 
 Tests can be run with `vendor/bin/phpunit -c /app/phpunit.xml.dist /path/to/test`.
 
-### Functional tests
+## Existing site functional tests
 
-Functional tests are run using build-in Drush webserver.
+By default, Drupal Core runs each test in a completely new Drupal instance, which is created from scratch for the test. In other words, none of your configuration and none of your content exists.
 
-The server should be started automatically on local environment, in case it's not, you can run it with something like `drush rs $SIMPLETEST_BASE_URL`.
+You can use the Drupal Test Traits (DTT) library to write tests that are run against an existing database.
 
-### Functional JavaScript tests
+### Installation
+
+1. Install the library using Composer: `composer require weitzman/drupal-test-traits --dev`.
+2. Make sure you have `tests/dtt/src/ExistingSite/` and `tests/dtt/src/ExistingSiteJavascript/` folders under your git root
+3. Register the `Drupal\Tests\dtt\` namespace by adding this to your `composer.json`:
+    ```json
+     "autoload-dev": {
+         "psr-4": {
+             "Drupal\\Tests\\dtt\\": "tests/dtt/src"
+         }
+     }
+    ```
+4. Modify your `phpunit.xml.dist` file by adding these environment variables inside the `<php>` section:
+   ```xml
+    <env name="DTT_MINK_DRIVER_ARGS" value='["chrome", {"chromeOptions":{"w3c": false }}, "http://chromium:4444"]'/>
+    <env name="DTT_API_OPTIONS" value='{"socketTimeout": 360, "domWaitTimeout": 3600000}' />
+    <env name="DTT_API_URL" value="http://chromium:9222"/>
+    <env name="DTT_BASE_URL" value="http://app:8888"/>
+    ```
+   and required `<testsuite>` definitions under `<testsuites>` section:
+    ```xml
+    <testsuite name="existing-site">
+      <directory>./tests/dtt/src/ExistingSite</directory>
+      <directory>./public/modules/custom/*/tests/src/ExistingSite</directory>
+      <directory>./public/modules/contrib/*/tests/src/ExistingSite</directory>
+    </testsuite>
+    <testsuite name="existing-site-javascript">
+      <directory>./tests/dtt/src/ExistingSiteJavascript</directory>
+      <directory>./public/modules/custom/*/tests/src/ExistingSiteJavascript</directory>
+      <directory>./public/modules/contrib/*/tests/src/ExistingSiteJavascript</directory>
+    </testsuite>
+    ```
+
+You can find a couple of example tests in [drupal-helfi-etusivu](https://github.com/City-of-Helsinki/drupal-helfi-etusivu/tree/dev/tests/dtt/src) repository.
+
+See https://gitlab.com/weitzman/drupal-test-traits for more information.
+
+## Functional JavaScript tests
 
 To run Functional JS tests, you must start your local environment with `testing` compose profile.
 
