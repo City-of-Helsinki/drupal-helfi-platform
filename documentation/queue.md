@@ -4,18 +4,7 @@ Apache Artemis is used to manage Drupal queues.
 
 ## Configuration
 
-Add and expose the following environment variables:
-
-```bash
-# This should be something like 'tcp://route-to-artemis:61613'.
-ARTEMIS_BROKERS
-# The username of Artemis service.
-ARTEMIS_LOGIN
-# The password of Artemis service.
-ARTEMIS_PASSCODE
-```
-
-@todo: Figure out where to find these values.
+@todo: Figure out what configuration is required.
 
 ## Running queues
 

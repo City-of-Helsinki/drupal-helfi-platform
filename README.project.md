@@ -50,10 +50,6 @@ This will log you inside the app container:
 $ make shell
 ```
 
-## Docker compose profiles
-
-Modify the value of `COMPOSE_PROFILES` environment variable from `.env` file or start the project with `COMPOSE_RROFILES=your-profiles make up`.
-
 ## Documentation
 
 See [documentatation](https://github.com/City-of-Helsinki/drupal-helfi-platform/tree/main/documentation).

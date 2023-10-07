@@ -3,7 +3,7 @@ Ennen käyttöönottoa
 
 Platform vaatii toimiakseen seuraavanlaisen ympäristön:
 
-*   PHP 8 ja Composer 2.x
+*   PHP 8.1+ ja Composer 2.x
 
 *   [Docker ja Stonehenge](https://github.com/druidfi/guidelines/blob/master/docs/local_dev_env.md)
 

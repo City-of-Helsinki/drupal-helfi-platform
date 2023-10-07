@@ -1,5 +1,14 @@
 # Changelog
 
+## 2023-10-07
+
+Local and CI Docker images no longer ship with chromium/chromium-driver.
+
+### Required actions
+
+- Update `docker-compose.yml`, `phpunit.xml.dist` files from this repository.
+- Start your project using `testing` Docker compose profile. See [documentation](/documentation/local.md) for more information.
+
 ## 2023-09-27
 
 base.sh cron has been updated with a feature which prevents running cron during deployment process.
