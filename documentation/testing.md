@@ -42,10 +42,18 @@ container:
   options: --hostname app
 ```
 
-Then you have to override the `SIMPLETEST_BASE_URL` environment variable to use `app` hostname:
+You have to override the `SIMPLETEST_BASE_URL` environment variable to use `app` hostname:
 
 ```yaml
 SIMPLETEST_BASE_URL: http://app:8888
+```
+
+and start the Drush server using `--dns` flag:
+```yaml
+- name: Start services
+  working-directory: ${{ env.DRUPAL_ROOT }}
+  run: |
+    vendor/bin/drush runserver $SIMPLETEST_BASE_URL --dns > /dev/null 2>&1 &
 ```
 
 You can find a complete example in [City-of-Helsinki/drupal-module-helfi-navigation](https://github.com/City-of-Helsinki/drupal-module-helfi-navigation/blob/main/.github/workflows/ci.yml) module.
