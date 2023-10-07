@@ -22,14 +22,14 @@ You can use the Drupal Test Traits (DTT) library to write tests that are run aga
          }
      }
     ```
-4. Modify your `phpunit.xml.dist` file by adding these environment variables inside the `<php>` section:
+4. Modify your `phpunit.xml.dist` file and add these environment variables inside the `<php>` section:
    ```xml
     <env name="DTT_MINK_DRIVER_ARGS" value='["chrome", {"chromeOptions":{"w3c": false }}, "http://chromium:4444"]'/>
     <env name="DTT_API_OPTIONS" value='{"socketTimeout": 360, "domWaitTimeout": 3600000}' />
     <env name="DTT_API_URL" value="http://chromium:9222"/>
     <env name="DTT_BASE_URL" value="http://app:8888"/>
     ```
-   and required `<testsuite>` definitions under `<testsuites>` section:
+   and these `<testsuite>` definitions under `<testsuites>` section:
     ```xml
     <testsuite name="existing-site">
       <directory>./tests/dtt/src/ExistingSite</directory>
@@ -43,7 +43,7 @@ You can use the Drupal Test Traits (DTT) library to write tests that are run aga
     </testsuite>
     ```
 
-You can find a couple of example tests in [drupal-helfi-etusivu](https://github.com/City-of-Helsinki/drupal-helfi-etusivu/tree/dev/tests/dtt/src) repository.
+You can find a couple of example DTT tests in [drupal-helfi-etusivu](https://github.com/City-of-Helsinki/drupal-helfi-etusivu/tree/dev/tests/dtt/src) repository.
 
 See https://gitlab.com/weitzman/drupal-test-traits for more information.
 
