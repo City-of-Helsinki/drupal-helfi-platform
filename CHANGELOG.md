@@ -8,7 +8,7 @@ Dropped support for PHP 8.0 Docker images. This change requires no actions.
 
 _NOTE_: This is only required if your project has functional javascript tests.
 
-Local and CI Docker images no longer ship with chromium/chromium-driver.
+Local and CI Docker images no longer ship with chromium/chromium-driver packages.
 
 ### Required actions
 
