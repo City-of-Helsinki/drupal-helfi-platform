@@ -234,7 +234,10 @@ if ($robots_header_enabled = getenv('DRUPAL_X_ROBOTS_TAG_HEADER')) {
   $config['helfi_proxy.settings']['robots_header_enabled'] = (bool) $robots_header_enabled;
 }
 
-$artemis_destination = drupal_get_env(['ARTEMIS_DESTINATION', 'NON_EXISTENT_TEST']);
+$artemis_destination = drupal_get_env([
+  'ARTEMIS_DESTINATION',
+  'PROJECT_NAME',
+]);
 
 if ($artemis_brokers = getenv('ARTEMIS_BROKERS') && $artemis_destination) {
   $settings['stomp']['default'] = [
