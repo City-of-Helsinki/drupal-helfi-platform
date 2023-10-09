@@ -1,5 +1,21 @@
 # Changelog
 
+## 2023-10-07.2
+
+Dropped support for PHP 8.0 Docker images. This change requires no actions.
+
+## 2023-10-07.1
+
+_NOTE_: This is only required if your project has functional javascript tests.
+
+Local and CI Docker images no longer ship with chromium/chromium-driver packages.
+
+### Required actions
+
+- Update `docker-compose.yml`, `phpunit.xml.dist` files from this repository.
+- Start your project using `testing` Docker compose profile. See [documentation](/documentation/local.md) for more information.
+- Update your GitHub Actions .yml files. See [documentation/testing.md](/documentation/testing.md#functional-javascript-tests-1) for more information.
+
 ## 2023-09-27
 
 base.sh cron has been updated with a feature which prevents running cron during deployment process.

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="./public/core/tests/bootstrap.php" colors="true"
-  beStrictAboutTestsThatDoNotTestAnything="true"
-  beStrictAboutOutputDuringTests="true"
-  beStrictAboutChangesToGlobalState="true"
-  beStrictAboutCoversAnnotation="false"
-  printerClass="\Drupal\Tests\Listeners\HtmlOutputPrinter"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutChangesToGlobalState="true"
+         beStrictAboutCoversAnnotation="false"
+         failOnRisky="true"
+         failOnWarning="true"
+         failOnSkipped="true"
+         verbose="true"
+         printerClass="\Drupal\Tests\Listeners\HtmlOutputPrinter"
   >
 <php>
   <!-- Set error reporting to E_ALL. -->
@@ -12,11 +16,11 @@
     <!-- Do not limit the amount of memory tests take to run. -->
   <ini name="memory_limit" value="-1"/>
   <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="public/sites/simpletest"/>
-  <env name="MINK_DRIVER_ARGS_WEBDRIVER" value='["chrome", {"browserName":"chrome","chromeOptions":{"w3c": false, "args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:4444"]' />
-  <env name="DTT_MINK_DRIVER_ARGS" value='["chrome", {"chromeOptions":{"w3c": false }}, "http://127.0.0.1:4444"]'/>
+  <env name="MINK_DRIVER_ARGS_WEBDRIVER" value='["chrome", {"browserName":"chrome","chromeOptions":{"w3c": false}}, "http://chromium:4444"]' />
+  <env name="DTT_MINK_DRIVER_ARGS" value='["chrome", {"chromeOptions":{"w3c": false }}, "http://chromium:4444"]'/>
   <env name="DTT_API_OPTIONS" value='{"socketTimeout": 360, "domWaitTimeout": 3600000}' />
-  <env name="DTT_API_URL" value="http://127.0.0.1:9222"/>
-  <env name="DTT_BASE_URL" value="http://127.0.0.1:8888"/>
+  <env name="DTT_API_URL" value="http://chromium:9222"/>
+  <env name="DTT_BASE_URL" value="http://app:8888"/>
 </php>
 <testsuites>
   <testsuite name="unit">

@@ -24,7 +24,7 @@ services:
       # DOCKERHOST: host.docker.internal
       # Use drush server to run functional tests, so we don't have to care about
       # permission or SSL issues.
-      SIMPLETEST_BASE_URL: "http://127.0.0.1:8888"
+      SIMPLETEST_BASE_URL: "http://app:8888"
       SIMPLETEST_DB: "mysql://drupal:drupal@db:3306/drupal"
       BROWSERTEST_OUTPUT_BASE_URL: "https://${DRUPAL_HOSTNAME}"
       DRUPAL_VARNISH_HOST: "${COMPOSE_PROJECT_NAME}-varnish"
@@ -120,16 +120,22 @@ services:
   artemis:
     container_name: "${COMPOSE_PROJECT_NAME}-artemis"
     image: quay.io/artemiscloud/activemq-artemis-broker
-    ports:
-      - "8161:8161"
-      - "61616:61616"
-      - "5672:5672"
     environment:
       AMQ_EXTRA_ARGS: "--nio --user admin --password admin"
+    depends_on:
+      - app
     networks:
       - internal
     profiles:
       - queue
+  chromium:
+    # @todo Update this to newer version once minkphp supports Selenium 4.
+    # @see https://github.com/minkphp/MinkSelenium2Driver/pull/372
+    image: selenium/standalone-chrome:106.0
+    networks:
+      - internal
+    profiles:
+      - testing
 networks:
   internal:
     external: false
