@@ -83,8 +83,6 @@ jobs:
         vendor/bin/drush runserver $SIMPLETEST_BASE_URL --dns > /dev/null 2>&1 &
 ```
 
-and `SIMPLETEST_BASE_URL` must use the `http://app` hostname.
-
 ### Functional JavaScript tests
 
 At the moment, only Chromium 106 is supported due to `minkphp/MinkSelenium2Driver` not supporting Selenium 4 yet. See https://github.com/minkphp/MinkSelenium2Driver/pull/372.
