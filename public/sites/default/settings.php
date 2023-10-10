@@ -131,8 +131,14 @@ if ($blob_storage_name = getenv('AZURE_BLOB_STORAGE_NAME')) {
       'driver' => 'helfi_azure',
       'config' => [
         'name' => $blob_storage_name,
-        'key' => getenv('AZURE_BLOB_STORAGE_KEY'),
-        'token' => getenv('AZURE_BLOB_STORAGE_SAS_TOKEN'),
+        'key' => drupal_get_env([
+          'AZURE_BLOB_STORAGE_KEY',
+          'BLOBSTORAGE_ACCOUNT_KEY',
+        ]),
+        'token' => drupal_get_env([
+          'AZURE_BLOB_STORAGE_SAS_TOKEN',
+          'BLOBSTORAGE_SAS_TOKEN',
+        ]),
         'container' => getenv('AZURE_BLOB_STORAGE_CONTAINER'),
         'endpointSuffix' => 'core.windows.net',
         'protocol' => 'https',
