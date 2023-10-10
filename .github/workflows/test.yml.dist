@@ -31,7 +31,7 @@ jobs:
         run: composer install --no-interaction
 
       - name: Scan security updates
-        run: drush pm:security
+        run: composer audit
 
       - name: Check that subtheme is not built with dev mode
         run: if grep -q 'sourceMappingURL=' -R public/themes/custom/hdbt_subtheme/dist/css; then exit 1; fi
