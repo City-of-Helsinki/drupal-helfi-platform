@@ -49,7 +49,7 @@ See https://gitlab.com/weitzman/drupal-test-traits for more information.
 
 ## Functional JavaScript tests
 
-To run Functional JS tests, you must start your local environment with `testing` compose profile.
+To run Functional JS tests on local environment, you must start your local environment with `testing` compose profile.
 
 You can either modify your project's `.env` file and append `testing` to `COMPOSE_PROFILES` environment variable, or start the project with `COMPOSE_PROFILES=testing make up`.
 
