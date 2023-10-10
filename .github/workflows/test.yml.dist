@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/city-of-helsinki/drupal-php-docker:8.2-alpine
+      options: --hostname app
 
     services:
       db:
