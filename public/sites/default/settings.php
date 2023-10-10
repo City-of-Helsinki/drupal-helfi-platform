@@ -245,16 +245,18 @@ $artemis_destination = drupal_get_env([
   'PROJECT_NAME',
 ]);
 
-if ($artemis_brokers = getenv('ARTEMIS_BROKERS') && $artemis_destination) {
+$artemis_brokers = getenv('ARTEMIS_BROKERS');
+
+if ($artemis_brokers && $artemis_destination) {
   $settings['stomp']['default'] = [
     'clientId' => getenv('ARTEMIS_CLIENT_ID') ?: 'artemis',
-    'login' => getenv('ARTEMIS_LOGIN'),
-    'passcode' => getenv('ARTEMIS_PASSCODE'),
+    'login' => getenv('ARTEMIS_LOGIN') ?: NULL,
+    'passcode' => getenv('ARTEMIS_PASSCODE') ?: NULL,
     'destination' => sprintf('/queue/%s', $artemis_destination),
     'brokers' => $artemis_brokers,
-    'timeout' => ['read' => 15000],
+    'timeout' => ['read' => 12000],
     'heartbeat' => [
-      'send' => 12000,
+      'send' => 20000,
       'receive' => 0,
       'observers' => [
         [
