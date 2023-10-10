@@ -75,12 +75,12 @@ env:
   SIMPLETEST_BASE_URL: http://app:8888
 
 jobs:
-  test:
-  steps:
-    - name: Start services
-      working-directory: ${{ env.DRUPAL_ROOT }}
-      run: |
-        vendor/bin/drush runserver $SIMPLETEST_BASE_URL --dns > /dev/null 2>&1 &
+  tests:
+    steps:
+      - name: Start services
+        working-directory: ${{ env.DRUPAL_ROOT }}
+        run: |
+          vendor/bin/drush runserver $SIMPLETEST_BASE_URL --dns > /dev/null 2>&1 &
 ```
 
 ### Functional JavaScript tests
