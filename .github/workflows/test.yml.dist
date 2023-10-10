@@ -5,6 +5,7 @@ on:
 name: CI
 env:
   SYMFONY_DEPRECATIONS_HELPER: disabled
+  SIMPLETEST_BASE_URL: http://app:8888
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -54,7 +55,7 @@ jobs:
 
       - name: Start services
         run: |
-          drush runserver $SIMPLETEST_BASE_URL > /dev/null 2>&1 &
+          drush runserver $SIMPLETEST_BASE_URL --dns > /dev/null 2>&1 &
 
           # Wait for drush server to start.
           for i in {1..5}; do RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$SIMPLETEST_BASE_URL" || true); if [ "$RESPONSE_CODE" -gt "301" ] || [ "$RESPONSE_CODE" -lt "200" ]; then sleep 2; fi; done
