@@ -49,13 +49,40 @@ See https://gitlab.com/weitzman/drupal-test-traits for more information.
 
 ## Functional JavaScript tests
 
-To run Functional JS tests on local environment, you must start your local environment with `testing` compose profile.
+### Local environment
 
-You can either modify your project's `.env` file and append `testing` to `COMPOSE_PROFILES` environment variable, or start the project with `COMPOSE_PROFILES=testing make up`.
+Make sure your `docker-compose.yml` file contains `artemis` service and the `app` service has `SIMPLETEST_BASE_URL: "http://app:8888"` environment variable:
+```yaml
+services:
+  app:
+    environments:
+      SIMPLETEST_BASE_URL: "http://app:8888"
+  artemis:
+    container_name: "${COMPOSE_PROJECT_NAME}-artemis"
+    image: quay.io/artemiscloud/activemq-artemis-broker
+    environment:
+      AMQ_EXTRA_ARGS: "--nio --user admin --password admin"
+    depends_on:
+      - app
+    networks:
+      - internal
+    profiles:
+      - queue
+  chromium:
+    # @todo Update this to newer version once minkphp supports Selenium 4.
+    # @see https://github.com/minkphp/MinkSelenium2Driver/pull/372
+    image: selenium/standalone-chrome:106.0
+    networks:
+      - internal
+    profiles:
+      - testing
+```
+
+Then start your local environment with `testing` compose profile. You can either modify your project's `.env` file and append `testing` to `COMPOSE_PROFILES` environment variable, or start the project with `COMPOSE_PROFILES=testing make up`.
 
 In order for this to work, the `chromium` container must be able to connect back to `app` container, so `$SIMPLETEST_BASE_URL` must be something that `chromium` container can connect to.
 
-For example `SIMPLETEST_BASE_URL=http://app:8888`, then start the Drush server with `drush rs $SIMPLETEST_BASE_URL --dns`.
+For example, if you use Drush runserver to run tests, you must start the the Drush server with `--dns` flag: `drush rs $SIMPLETEST_BASE_URL --dns`.
 
 ## GitHub Actions
 
