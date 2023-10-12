@@ -1,4 +1,4 @@
-# Local environment
+# Development environment
 
 ## Requirements
 - Docker and Docker compose
