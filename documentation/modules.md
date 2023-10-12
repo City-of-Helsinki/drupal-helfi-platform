@@ -47,12 +47,6 @@ Provides various fixes to allow multiple Drupal instances to be served from one 
 - [Code](https://github.com/City-of-Helsinki/drupal-module-helfi-proxy)
 - [Documentation](https://github.com/City-of-Helsinki/drupal-module-helfi-proxy/blob/main/README.md)
 
-## STOMP
-
-Provides an integration for Apache Artemis queue service.
-- [Code](https://github.com/City-of-Helsinki/drupal-module-stomp)
-- [Documentation](https://github.com/City-of-Helsinki/drupal-module-stomp/blob/main/README.md)
-
 ## TPR
 
 Provides an integration for [Helsinki Service Map](https://www.hel.fi/palvelukarttaws/restpages/index_en.html) and [Helsinki Service Register](https://www.hel.fi/palvelukarttaws/restpages/palvelurekisteri_en.html) services.
