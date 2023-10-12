@@ -17,7 +17,7 @@
 
 [Druidfi tools](https://github.com/druidfi/tools) library provides generic (`make`) commands to ease the development process.
 
-You can list available commands by running `make`. Run `make -n {command}` to see actions behind the given command.
+You can list available commands by running `make help`. Run `make -n {command}` to see actions behind the given command.
 
 ## Docker compose
 
@@ -54,6 +54,6 @@ The production environment can only be accessed through a VPN connection, meanin
 If you need a production database, you can sync the database from production to testing environment and re-run `make fresh`. See
 [Syncing databases between OpenShift environments](/documentation/openshift-db-sync.md) for more information.
 
-The other option is to sync it using VPN running the `oc` tool on your local machine. See:
+The other option is to sync it using VPN and running the `oc` tool on your local machine. See:
 - [OpenShift OC tool](/documentation/openshift-oc.md)
 - [VPN instructions](https://helsinkisolutionoffice.atlassian.net/wiki/spaces/HELFI/pages/7535886371/Maintenance+VPN+Huoltoyhteys)
