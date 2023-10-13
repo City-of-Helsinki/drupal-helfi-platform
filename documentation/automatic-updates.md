@@ -37,7 +37,7 @@ You can see this in action [here](https://github.com/City-of-Helsinki/drupal-hel
 
 Installing Drupal from scratch (with existing configuration) can take a really long time, especially for more complex sites.
 
-We speed things up by creating a “reference” database dump and install Drupal using that dump. The database dump is created by [.github/actions/artifact.yml.dist](/.github/workflows/artifact.yml) Action and stored as workflow artifact using [actions/upload-artifact](https://github.com/actions/upload-artifact).
+We speed things up by creating a “reference” database dump and install Drupal from that dump. The database dump is created by [.github/actions/artifact.yml.dist](/.github/workflows/artifact.yml) Action and stored as workflow artifact using [actions/upload-artifact](https://github.com/actions/upload-artifact).
 
 The database dump is also used by all our automated tests.
 
