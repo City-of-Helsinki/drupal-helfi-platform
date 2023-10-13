@@ -7,6 +7,7 @@
 
 ## Installation
 
+- Make sure you have [Stonehenge](https://github.com/druidfi/stonehenge) up and running
 - Clone the repository
 - Go to Git root
 - Start the project by running `make up`
