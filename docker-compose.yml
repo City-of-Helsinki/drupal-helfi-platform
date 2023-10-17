@@ -21,6 +21,8 @@ services:
       # Optionally, you can add this to your default environments variables to enable or disable
       # xdebug by default (like /etc/environments, ~/.bashrc, or ~/.zshrc).
       XDEBUG_ENABLE: "${XDEBUG_ENABLE:-false}"
+      XDEBUG_CONFIG: "${XDEBUG_CONFIG:-}"
+      PHP_IDE_CONFIG: "${PHP_IDE_CONFIG:-serverName=${DRUPAL_HOSTNAME}}"
       # DOCKERHOST: host.docker.internal
       # Use drush server to run functional tests, so we don't have to care about
       # permission or SSL issues.
