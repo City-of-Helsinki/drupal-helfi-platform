@@ -1,5 +1,34 @@
 # Changelog
 
+## 2023-10-17
+
+The upstream Docker image (`druidfi/drupal-web`) changed the default server name and port and may cause issues with `xdebug`.
+
+The value was previously `app:8080` and is now `{projectname}.docker.so:443`.
+
+### Required actions
+- PHPStorm: Remove or update your existing PHP Servers. The name is now `{projectname}.docker.so` and the port is `443`
+
+### Optional actions
+
+Update your `docker-compose.yml` file to always populate `PHP_IDE_CONFIG` and `XDEBUG_CONFIG` environment variables:
+
+```diff
+diff --git a/docker-compose.yml b/docker-compose.yml
+index c7dc6ba..350294d 100644
+--- a/docker-compose.yml
++++ b/docker-compose.yml
+@@ -21,6 +21,8 @@ services:
+       # Optionally, you can add this to your default environments variables to enable or disable
+       # xdebug by default (like /etc/environments, ~/.bashrc, or ~/.zshrc).
+       XDEBUG_ENABLE: "${XDEBUG_ENABLE:-false}"
++      XDEBUG_CONFIG: "${XDEBUG_CONFIG:-}"
++      PHP_IDE_CONFIG: "${PHP_IDE_CONFIG:-serverName=${DRUPAL_HOSTNAME}}"
+       # DOCKERHOST: host.docker.internal
+       # Use drush server to run functional tests, so we don't have to care about
+       # permission or SSL issues.
+```
+
 ## 2023-10-07.2
 
 Dropped support for PHP 8.0 Docker images. This change requires no actions.
@@ -22,7 +51,7 @@ base.sh cron has been updated with a feature which prevents running cron during 
 
 ### Required actions
 
-Change should be manually added to project's base.sh file. See [the actual change to copy](https://github.com/City-of-Helsinki/drupal-helfi-platform/pull/112/files)
+Change should be manually added to the project's base.sh file. See [the actual change to copy](https://github.com/City-of-Helsinki/drupal-helfi-platform/pull/112/files)
 
 ## 2023-09-18
 
@@ -36,7 +65,7 @@ service parameters in contrib modules.
 
 ### Required actions
 
-Update `azure.settings.php` and `settings.php` files from this repository. Optionally you can make the changes manually, see:
+Update `azure.settings.php` and `settings.php` files from this repository. Optionally, you can make the changes manually, see:
 - https://github.com/City-of-Helsinki/drupal-helfi-platform/commit/473e3534594e5f439d1d9bb1e14bf10285da1d11
 - https://github.com/City-of-Helsinki/drupal-helfi-platform/commit/3e368fb78d806c38274737e4eab65c9f20283707
 
