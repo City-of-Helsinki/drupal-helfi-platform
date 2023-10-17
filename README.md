@@ -1,7 +1,6 @@
 # City-of-Helsinki/drupal-helfi-platform
 
-This is a skeleton repository which will create a new Drupal 9 project for you and setup Docker based development
-environment with Stonehenge.
+This is a skeleton repository which will create a new Drupal 9 project for you and setup Docker based development environment with Stonehenge.
 
 ## Includes
 
@@ -27,7 +26,6 @@ See [CHANGELOG.md](/CHANGELOG.md)
 #### Requirements
 
 - PHP and Composer
-- [Docker and Stonehenge](https://github.com/druidfi/guidelines/blob/master/docs/local_dev_env.md)
 
 #### Create a new project using composer
 
@@ -35,20 +33,9 @@ See [CHANGELOG.md](/CHANGELOG.md)
 $ composer create-project City-of-Helsinki/drupal-helfi-platform:dev-main yoursite --no-interaction --repository https://repository.drupal.hel.ninja/
 ```
 
-Now you need to have Stonehenge up & running. See [Docker and Stonehenge](https://github.com/druidfi/guidelines/blob/master/docs/local_dev_env.md).
+#### Starting the development environment
 
-Start the development environment, build development codebase and install empty site with minimal profile:
-
-```console
-$ make new
-```
-
-Now your site can can be accessed from https://yoursite.docker.so
-
-### Next steps
-
-You can run `make help` to list all available commands for you.
-
+See [Development environment](/documentation/local.md) documentation.
 
 ## Contact
 

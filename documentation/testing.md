@@ -86,7 +86,11 @@ For example, if you use Drush runserver to run tests, you must start the the Dru
 
 ## GitHub Actions
 
-The app container must be started using `--hostname` option: 
+To enable code checks, make sure to rename your `.github/workflows/*.yml.dist` files to `.github/workflows/*.yml`.
+
+### Container settings
+
+The app container must be started using `--hostname` option:
 
 ```yaml
 container:

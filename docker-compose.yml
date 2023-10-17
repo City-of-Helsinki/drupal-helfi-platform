@@ -123,7 +123,7 @@ services:
     container_name: "${COMPOSE_PROJECT_NAME}-artemis"
     image: quay.io/artemiscloud/activemq-artemis-broker
     environment:
-      AMQ_EXTRA_ARGS: "--nio --user admin --password admin"
+      AMQ_EXTRA_ARGS: "--user admin --password admin"
     depends_on:
       - app
     networks:
