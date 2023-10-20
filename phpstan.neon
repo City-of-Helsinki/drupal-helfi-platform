@@ -1,5 +1,8 @@
 parameters:
-  treatPhpDocTypesAsCertain: false
-  excludePaths:
-      - *Test.php
-      - *TestBase.php
+	fileExtensions:
+	    - php
+	    - module
+	    - install
+	level: 9
+	checkMissingIterableValueType: false
+	treatPhpDocTypesAsCertain: false
