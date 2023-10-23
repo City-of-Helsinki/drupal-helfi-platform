@@ -28,6 +28,10 @@ Compose profiles are used to only run services that are actually needed. For exa
 
 Modify the value of `COMPOSE_PROFILES` environment variable from `.env` file or start the project with `COMPOSE_RROFILES=your-profiles make up`.
 
+Currently available profiles:
+- `queue`: Apache Artemis queue service
+- `search`: ElasticSearch service
+
 ### Customizing docker-compose.yml
 
 The default `docker-compose.yml` file is intended to be updated automatically from upstream and should have no customizations.
