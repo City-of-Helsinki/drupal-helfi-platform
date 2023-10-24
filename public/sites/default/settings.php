@@ -121,7 +121,7 @@ if ($reverse_proxy_address = getenv('DRUPAL_REVERSE_PROXY_ADDRESS')) {
   }
   $settings['reverse_proxy'] = TRUE;
   $settings['reverse_proxy_addresses'] = $reverse_proxy_address;
-  $settings['reverse_proxy_trusted_headers'] = Request::HEADER_X_FORWARDED_ALL;
+  $settings['reverse_proxy_trusted_headers'] = Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_HOST | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO;
   $settings['reverse_proxy_host_header'] = 'X_FORWARDED_HOST';
 }
 
