@@ -30,7 +30,7 @@ See [CHANGELOG.md](/CHANGELOG.md)
 #### Create a new project using composer
 
 ```console
-$ composer create-project City-of-Helsinki/drupal-helfi-platform:dev-main yoursite --no-interaction --repository https://repository.drupal.hel.ninja/
+$ composer create-project City-of-Helsinki/drupal-helfi-platform:dev-9.x yoursite --no-interaction --repository https://repository.drupal.hel.ninja/
 ```
 
 #### Starting the development environment
