@@ -4,12 +4,13 @@
 # feature/PROJECT-1234-test-test
 # PROJECT-1234-test-test
 # PROJECT-1234_test_test
+# fixup! (for git rebase --autosquash)
 id=$(echo `git rev-parse --abbrev-ref HEAD` | sed -nE 's|([a-z]+/)?([A-Z]+-[0-9]+)(-.+)?(_.+)?|\2|p')
 COMMIT_MESSAGE=$(cat $1)
 
 # Only prepare commit message if pattern matched and Jira ID was found and
 # message doesn't contain Jira ID already.
-if [[ ! -z $id ]] && [[ $COMMIT_MESSAGE != $id* ]]; then
+if [[ ! -z $id ]] && [[ $COMMIT_MESSAGE != $id* ]] && [[ $COMMIT_MESSAGE != "fixup!"* ]]; then
   # $1 is the name of the file containing the commit message
   # Prepend "ABCD-123: "
   sed -i.bak -E "1s/^/${id}: /" $1
