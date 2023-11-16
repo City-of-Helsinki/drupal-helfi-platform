@@ -11,7 +11,7 @@
         "cweagans/composer-patches": "^1.6.7",
         "drupal/core-composer-scaffold": "^10",
         "drupal/hdbt": "^5.0",
-        "drupal/hdbt_admin": "^2.0",
+        "drupal/hdbt_admin": "^3.0",
         "drupal/helfi_azure_fs": "^1.0",
         "drupal/helfi_drupal_tools": "dev-main",
         "drupal/helfi_platform_config": "^4.0",
