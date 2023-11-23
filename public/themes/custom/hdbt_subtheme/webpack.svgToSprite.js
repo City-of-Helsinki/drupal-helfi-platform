@@ -89,7 +89,7 @@ class svgToSprite {
     // Create styles for the icons.
     compiler.hooks.emit.tapAsync('svgToCss', (compilation, callback) => {
 
-      // Create --hel-icon--{icon name} CSS variables.
+      // Create --hel-icon--{icon name} and [data-hds-icon-start:'{icon name}'] CSS variables.
       let cssVariables = [];
 
       while(this.cssVariables.length) {
@@ -100,19 +100,19 @@ class svgToSprite {
       }
       cssVariables = `:root{${ cssVariables.join(';') }}`;
 
-      // Create .hel-icon--{icon name} or {theme-name}--{icon name} css classes.
+      // Create .hel-icon--{icon name} & [data-hds-icon-start:'{icon name}'] or {theme-name}--{icon name} css classes.
       let cssClasses = '';
       while(this.classes.length) {
         let fullFilename = this.classes.shift();
         let filename = fullFilename.replace(/^.*[\\\/]/, '')
         let name = filename.split('.');
-        cssClasses += `.${this.themeName}-icon--${name[0]}{--url:var(--${this.themeName}-icon--${name[0]})}`;
+        cssClasses += `.${this.themeName}-icon--${name[0]},[data-hds-icon-start='${name[0]}']{--url:var(--${this.themeName}-icon--${name[0]})}`;
       }
 
       // Add a URL as a CSS variable to the hel-icon mask-image.
       // If icons are used elsewhere (f.e. in a separate theme or module) this
       // variable will provide the correct URL for the icon.
-      let hdbtIconUrl = `.${this.themeName}-icon{` +
+      let hdbtIconUrl = `.${this.themeName}-icon,[data-hds-icon-start]::before{` +
         `-webkit-mask-image:var(--url);` +
         `mask-image:var(--url)` +
       `}`;
@@ -165,7 +165,7 @@ class svgToSprite {
 
   // Map files to suitable variables.
   checkForFiles() {
-    glob.sync(this.inputPattern).map((match) => {
+    glob.globSync(this.inputPattern).map((match) => {
       const pathname = path.resolve(match);
       const stats = fs.lstatSync(pathname);
 
