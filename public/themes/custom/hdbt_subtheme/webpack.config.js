@@ -25,7 +25,7 @@ const Entries = () => {
   ];
 
   glob.sync(pattern, {ignore: ignore}).map((item) => {
-    entries[path.parse(item).name] = item }
+    entries[path.parse(item).name] = `./${item}` }
   );
   return entries;
 };
