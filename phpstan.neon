@@ -5,6 +5,7 @@ parameters:
       - install
   paths:
     - ./public/modules/custom
+    - ./public/themes/custom
   excludePaths:
     - vendor
   level: 3
