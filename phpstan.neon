@@ -3,6 +3,7 @@ parameters:
       - php
       - module
       - install
+      - theme
   paths:
     - ./public/modules/custom
     - ./public/themes/custom
