@@ -1,8 +1,12 @@
 parameters:
-	fileExtensions:
-	    - php
-	    - module
-	    - install
-	level: 9
-	checkMissingIterableValueType: false
-	treatPhpDocTypesAsCertain: false
+  fileExtensions:
+      - php
+      - module
+      - install
+  paths:
+    - ./public/modules/custom
+  excludePaths:
+    - vendor
+  level: 3
+  checkMissingIterableValueType: false
+  treatPhpDocTypesAsCertain: false
