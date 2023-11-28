@@ -1,1 +1,64 @@
-# PHPStan&#10&#10## Configuration&#10&#10Copy `phpstan.neon` from the Drupal platform repository: https://github.com/City-of-Helsinki/drupal-helfi-platform/blob/main/phpstan.neon&#10&#10## Usage&#10&#10- Scan `public/modules/custom` and `public/themes/custom` folders: `vendor/bin/phpstan analyze`&#10- Scan a `helfi_*` contrib module: `vendor/bin/phpstan analyze -c public/modules/contrib/helfi_some_module public/modules/contrib/helfi_some_module`&#10&#10## Scan code in GitHub Actions&#10&#10Add something like to your project's action file:&#10&#10```yaml&#10# .github/actions/test.yml&#10- name: Run phpstan&#10  run: vendor/bin/phpstan analyze&#10```&#10&#10or if you're testing a contrib module:&#10&#10```yaml&#10# .github/actions/ci.yml&#10- name: Run phpstan&#10  working-directory: ${{ env.DRUPAL_ROOT }}&#10  run: vendor/bin/phpstan analyze -c $MODULE_FOLDER/phpstan.neon $MODULE_FOLDER&#10```&#10&#10See:&#10- https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/.github/workflows/ci.yml&#10- https://github.com/City-of-Helsinki/drupal-helfi-etusivu/blob/dev/.github/workflows/test.yml&#10&#10## Custom entities&#10&#10If your module defines custom entities, they must be exposed in `phpstan.neon` configuration. For example:&#10&#10```yaml&#10parameters:&#10  drupal:&#10    entityMapping:&#10      global_menu:&#10        class: Drupal\helfi_global_navigation\Entity\GlobalMenu&#10        storage: Drupal\helfi_global_navigation\Entity\Storage\GlobalMenuStorage&#10```&#10&#10You can omit `storage` in case your entity does not define a storage class.&#10&#10## Ignore errors&#10&#10You can either define ignored errors in your `phpstan.neon` file with something like:&#10&#10```yaml&#10parameters:&#10  ignoreErrors:&#10    -&#10      message: '#^An error to ignore#'&#10      path: path/to/file.php&#10```&#10&#10or with `// @phpstan-ignore-next-line` annotation.&#10&#10See https://phpstan.org/user-guide/ignoring-errors for more information.&#10
+# PHPStan
+
+## Configuration
+
+Copy `phpstan.neon` from the Drupal platform repository: https://github.com/City-of-Helsinki/drupal-helfi-platform/blob/main/phpstan.neon
+
+## Usage
+
+- Scan `public/modules/custom` and `public/themes/custom` folders: `vendor/bin/phpstan analyze`
+- Scan a `helfi_*` contrib module: `vendor/bin/phpstan analyze -c public/modules/contrib/helfi_some_module public/modules/contrib/helfi_some_module`
+
+## Scan code in GitHub Actions
+
+Add something like to your project's action file:
+
+```yaml
+# .github/actions/test.yml
+- name: Run phpstan
+  run: vendor/bin/phpstan analyze
+```
+
+or if you're testing a contrib module:
+
+```yaml
+# .github/actions/ci.yml
+- name: Run phpstan
+  working-directory: ${{ env.DRUPAL_ROOT }}
+  run: vendor/bin/phpstan analyze -c $MODULE_FOLDER/phpstan.neon $MODULE_FOLDER
+```
+
+See:
+- https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/.github/workflows/ci.yml
+- https://github.com/City-of-Helsinki/drupal-helfi-etusivu/blob/dev/.github/workflows/test.yml
+
+## Custom entities
+
+If your module defines custom entities, they must be exposed in `phpstan.neon` configuration. For example:
+
+```yaml
+parameters:
+  drupal:
+    entityMapping:
+      global_menu:
+        class: Drupal\helfi_global_navigation\Entity\GlobalMenu
+        storage: Drupal\helfi_global_navigation\Entity\Storage\GlobalMenuStorage
+```
+
+You can omit `storage` in case your entity does not define a storage class.
+
+## Ignore errors
+
+You can either define ignored errors in your `phpstan.neon` file with something like:
+
+```yaml
+parameters:
+  ignoreErrors:
+    -
+      message: '#^An error to ignore#'
+      path: path/to/file.php
+```
+
+or with `// @phpstan-ignore-next-line` annotation.
+
+See https://phpstan.org/user-guide/ignoring-errors for more information.
