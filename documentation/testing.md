@@ -51,23 +51,12 @@ See https://gitlab.com/weitzman/drupal-test-traits for more information.
 
 ### Local environment
 
-Make sure your `docker-compose.yml` file contains `artemis` service and the `app` service has `SIMPLETEST_BASE_URL: "http://app:8888"` environment variable:
+Make sure your `docker-compose.yml` file contains `chromium` service and the `app` service has `SIMPLETEST_BASE_URL: "http://app:8888"` environment variable:
 ```yaml
 services:
   app:
     environments:
       SIMPLETEST_BASE_URL: "http://app:8888"
-  artemis:
-    container_name: "${COMPOSE_PROJECT_NAME}-artemis"
-    image: quay.io/artemiscloud/activemq-artemis-broker
-    environment:
-      AMQ_EXTRA_ARGS: "--nio --user admin --password admin"
-    depends_on:
-      - app
-    networks:
-      - internal
-    profiles:
-      - queue
   chromium:
     # @todo Update this to newer version once minkphp supports Selenium 4.
     # @see https://github.com/minkphp/MinkSelenium2Driver/pull/372
