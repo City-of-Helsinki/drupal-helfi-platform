@@ -10,15 +10,50 @@ The container is run as random UID (non-root) user (like uid `10009900`) that ha
 
 See [City-of-Helsinki/drupal-docker-images](https://github.com/City-of-Helsinki/drupal-docker-images#openshift-drupal-docker-image) for more documentation about the underlying Docker image.
 
+## Deployment preflight checks
+
+Preflight checks can be used to run assertions before deployment tasks are run. If any preflight assertion fails, the deployment will be marked as failed.
+
+See [preflight.php](/docker/openshift/preflight/preflight.php).
+
+### Custom preflight checks
+
+Create a new php file in `docker/openshift/preflight` folder and define `$preflight_checks['additionalFiles']` in your `public/sites/default/*.settings.php` file:
+
+```php
+// The filename/value is relative to docker/openshift/preflight folder.
+$preflight_checks['additionalFiles'][] = 'your-custom-preflight.php';
+```
+
+You can create an exit condition by calling `preflight_failed('Error message');`. For example:
+```php
+<?php
+
+if (my_failed_condition) {
+  preflight_failed('My condition failed with and error code %s', $error_code);
+}
+```
+
+### Defining required environment variables
+
+You can define required environment variables in your `public/sites/default/*.settings.php` files:
+
+```php
+$preflight_checks['environmentVariables'][] = 'MY_REQUIRED_ENV_VARIABLE1';
+$preflight_checks['environmentVariables'][] = 'MY_REQUIRED_ENV_VARIABLE2';
+```
+
 ## Deployment tasks
 
 The deployment tasks are run when a container is first started. Any subsequent containers will check the value of `$OPENSHIFT_BUILD_NAME` to determine if deployment tasks needs to be run.
 
 The tasks:
 
-1. Site is put into maintenance mode.
-2. `drush deploy` is run. See https://www.drush.org/latest/deploycommand/ for documentation about `drush deploy`.
-3. Maintenance mode is disabled.
+1. Run pre-deployment hooks. See [Deploy hooks](https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/documentation/deploy-hooks.md).
+2. Site is put into maintenance mode.
+3. `drush deploy` is run. See https://www.drush.org/latest/deploycommand/ for documentation about `drush deploy`.
+4. Run post-deployment hooks. See [Deploy hooks](https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/documentation/deploy-hooks.md).
+5. Maintenance mode is disabled.
 
 See the [deployment](/docker/openshift/entrypoints/20-deploy.sh) script for more up-to-date information.
 
@@ -31,7 +66,7 @@ In order to use this feature, you must define the following environment variable
 ```bash
 SENTRY_DSN=your-sentry-dsn
 # Should be same as APP_ENV
-SENTRY_ENVIRONMENT=environment 
+SENTRY_ENVIRONMENT=environment
 ```
 
 See https://helsinkisolutionoffice.atlassian.net/wiki/spaces/HEL/pages/6785826654/Ymp+rist+muuttujien+lis+ys+Azure+DevOpsissa for more documentation (in Finnish) on how to define environment variables.

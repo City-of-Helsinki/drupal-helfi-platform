@@ -2,8 +2,8 @@
 
 source /init.sh
 
-if [ ! -d "../docker/openshift/preflight.php" ]; then
-  exit 0
+if [ -f "../docker/openshift/preflight/preflight.php" ]; then
+  echo "Running preflight checks ..."
+  php ../docker/openshift/preflight/preflight.php
 fi
 
-php ../docker/openshift/preflight/preflight.php

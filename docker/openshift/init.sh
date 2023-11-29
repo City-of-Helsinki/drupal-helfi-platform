@@ -20,14 +20,14 @@ function output_error_message {
 
 function deployment_in_progress {
   if [ "$(get_deploy_id)" != "$OPENSHIFT_BUILD_NAME" ]; then
-    return 1
+    return 0
   fi
 
   if [ "$(drush state:get system.maintenance_mode)" = "1" ]; then
-    return 1
+    return 0
   fi
 
-  return 0
+  return 1
 }
 
 if [ ! -d "sites/default/files" ]; then
