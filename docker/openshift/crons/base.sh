@@ -41,7 +41,7 @@ echo "Starting cron: $(date)"
 # exec "/crons/update-translations.sh" &
 # Uncomment this to enable content scheduler
 # exec "/crons/content-scheduler.sh" &
-#
+
 while true
 do
   echo "Running cron: $(date +'%Y-%m-%dT%H:%M:%S%:z')\n"
