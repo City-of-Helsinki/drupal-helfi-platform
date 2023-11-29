@@ -1,25 +1,11 @@
 #!/bin/bash
 
-cd /var/www/html/public
+source /init.sh
 
-function output_error_message {
-  echo ${1}
-  php ../docker/openshift/notify.php "${1}" || true
-}
-
-# Make sure we have active Drupal configuration.
-if [ ! -f "../conf/cmi/system.site.yml" ]; then
-  output_error_message "Container start error: Codebase is not deployed properly. Exiting early."
+function rollback_deployment {
+  output_error_message "Deployment failed: ${1}"
+  set_deploy_id ${2}
   exit 1
-fi
-
-if [ ! -n "$OPENSHIFT_BUILD_NAME" ]; then
-  output_error_message "Container start error: OPENSHIFT_BUILD_NAME is not defined. Exiting early."
-  exit 1
-fi
-
-function get_deploy_id {
-  echo $(drush state:get deploy_id)
 }
 
 # Populate twig caches.
@@ -27,54 +13,42 @@ if [ ! -d "/tmp/twig" ]; then
   drush twig:compile || true
 fi
 
-# Attempt to set deploy ID in case this is the first deploy.
-if [[ -z "$(get_deploy_id)" ]]; then
-  drush state:set deploy_id $OPENSHIFT_BUILD_NAME
-fi
-
-# Exit early if deploy ID is still not set. This usually means either Redis or
-# something else is down.
-if [[ -z "$(get_deploy_id)" ]]; then
-  output_error_message "Container start error: Could not fetch deploy ID. Exiting early."
-  exit 1
-fi
+# Capture the current deploy ID so we can roll back to previous version in case
+# deployment fails.
+CURRENT_DEPLOY_ID=$(get_deploy_id)
 
 # This script is run every time a container is spawned and certain environments might
 # start more than one Drupal container. This is used to make sure we run deploy
 # tasks only once per deploy.
-if [ "$(get_deploy_id)" != "$OPENSHIFT_BUILD_NAME" ]; then
-  drush state:set deploy_id $OPENSHIFT_BUILD_NAME
+if [ "$CURRENT_DEPLOY_ID" != "$OPENSHIFT_BUILD_NAME" ]; then
+  set_deploy_id $OPENSHIFT_BUILD_NAME
 
   if [ $? -ne 0 ]; then
-    output_error_message "Deployment failed: Failed set deploy_id"
-    exit 1
+    rollback_deployment "Failed to set deploy_id" $CURRENT_DEPLOY_ID
   fi
   # Put site in maintenance mode
   drush state:set system.maintenance_mode 1 --input-format=integer
 
   if [ $? -ne 0 ]; then
-    output_error_message "Deployment failed: Failed to enable maintenance_mode"
-    exit 1
+    rollback_deployment "Failed to enable maintenance_mode" $CURRENT_DEPLOY_ID
   fi
-  # Run helfi specific pre-deploy tasks. Allow this to fail in case
-  # the environment is not using the 'helfi_api_base' module.
-  # @see https://github.com/City-of-Helsinki/drupal-module-helfi-api-base
+  # Run pre-deploy tasks.
+  # @see https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/documentation/deploy-hooks.md
   drush helfi:pre-deploy || true
   # Run maintenance tasks (config import, database updates etc)
   drush deploy
 
   if [ $? -ne 0 ]; then
-    output_error_message "Deployment failed: drush deploy failed with {$?} exit code. See logs for more information."
+    rollback_deployment "drush deploy failed with {$?} exit code. See logs for more information." $CURRENT_DEPLOY_ID
     exit 1
   fi
-  # Run helfi specific post deploy tasks. Allow this to fail in case
-  # the environment is not using the 'helfi_api_base' module.
-  # @see https://github.com/City-of-Helsinki/drupal-module-helfi-api-base
+  # Run post-deploy tasks.
+  # @see https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/documentation/deploy-hooks.md
   drush helfi:post-deploy || true
   # Disable maintenance mode
   drush state:set system.maintenance_mode 0 --input-format=integer
 
   if [ $? -ne 0 ]; then
-    output_error_message "Deployment failure: Failed to disable maintenance_mode"
+    rollback_deployment "Failed to disable maintenance_mode" $CURRENT_DEPLOY_ID
   fi
 fi

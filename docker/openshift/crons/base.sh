@@ -1,20 +1,19 @@
 #!/bin/bash
 
+source /init.sh
+
+ATTEMPTS=0
 # Checking if a new deployment is in progress, as we should not run cron while deploying.
-if [ ! -n "$OPENSHIFT_BUILD_NAME" ]; then
-  echo "OPENSHIFT_BUILD_NAME is not defined. Exiting early."
-  exit 1
-fi
-
-while [ "$(drush state:get deploy_id)" != "$OPENSHIFT_BUILD_NAME" ]
+while deployment_in_progress
 do
-  echo "Current deploy_id $OPENSHIFT_BUILD_NAME not found in state. Probably a deployment is in progress - waiting for completion..."
-  sleep 60
-done
+  let ATTEMPTS++
 
-while [ "$(drush state:get system.maintenance_mode)" = "1" ]
-do
-  echo "Maintenance mode on. Probably a deployment is in progress - waiting for completion..."
+  if (( ATTEMPTS > 10 )); then
+    echo "Failed to start a new cron pod - deployment probably failed."
+    exit 1
+  fi
+
+  echo "A deployment is in progress - waiting for completion ..."
   sleep 60
 done
 
@@ -42,7 +41,7 @@ echo "Starting cron: $(date)"
 # exec "/crons/update-translations.sh" &
 # Uncomment this to enable content scheduler
 # exec "/crons/content-scheduler.sh" &
-
+#
 while true
 do
   echo "Running cron: $(date +'%Y-%m-%dT%H:%M:%S%:z')\n"
