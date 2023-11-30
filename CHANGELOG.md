@@ -1,5 +1,9 @@
 # Changelog
 
+## 2023-11-28
+
+Added PHPStan documentation. See [documentation](/documentation/phpstan.md) for more information.
+
 ## 2023-10-31
 
 Removed D9 support. If you still wish to use Drupal 9.x, see [9.x](https://github.com/City-of-Helsinki/drupal-helfi-platform/tree/9.x) branch.

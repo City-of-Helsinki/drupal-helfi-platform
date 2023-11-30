@@ -17,6 +17,7 @@
 ## Testing
 
 [Testing and CI](/documentation/testing.md)
+[PHPstan](/documentation/phpstan.md)
 
 ## Available modules
 
