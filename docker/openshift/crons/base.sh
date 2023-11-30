@@ -2,6 +2,7 @@
 
 source /init.sh
 
+# @todo remove this once https://helsinkisolutionoffice.atlassian.net/browse/PLAENH-1302 is done.
 ATTEMPTS=0
 # Checking if a new deployment is in progress, as we should not run cron while deploying.
 while deployment_in_progress
