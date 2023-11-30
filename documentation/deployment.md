@@ -61,7 +61,7 @@ You can create an exit condition by calling `preflight_failed('Error message');`
 <?php
 
 if (my_failed_condition) {
-  preflight_failed('My condition failed with and error code %s', $error_code);
+  preflight_failed('My condition failed with an error code %s', $error_code);
 }
 ```
 
