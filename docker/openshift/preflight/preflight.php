@@ -61,17 +61,27 @@ function environment_variable_isset(array $items) : bool {
 $class_loader = require_once './../vendor/autoload.php';
 include_once './sites/default/settings.php';
 
-if (!isset($preflight_checks['environmentVariables'], $preflight_checks['additionalFiles'])) {
+if (!isset($preflight_checks['environmentVariables'])) {
+  echo 'No preflight checks found. Skipping ...';
   exit(0); // NOSONAR
 }
 
-foreach ($preflight_checks['additionalFiles'] as $additionalFile) {
-  $fileName = sprintf('../docker/openshift/preflight/%s', $additionalFile);
+$candidates = [
+  (getenv('APP_ENV') ?: 'local') . '.preflight.php',
+  'all.preflight.php',
+];
+
+// Allow additional custom checks to be added.
+// Create a 'all.preflight.php' file for checks that need to be run
+// on all environments and '{env}.preflight.php' for environment-specific
+// checks, for example 'testing.preflight.php'.
+foreach ($candidates as $candidate) {
+  $fileName = sprintf('%s/%s', __DIR__, $candidate);
 
   if (!file_exists($fileName)) {
-    preflight_failed('Failed to load %s', $fileName);
+    continue;
   }
-  include_once $fileName;
+  require_once $fileName;
 }
 
 foreach ($preflight_checks['environmentVariables'] as $item) {
