@@ -10,32 +10,6 @@ The container is run as random UID (non-root) user (like uid `10009900`) that ha
 
 See [City-of-Helsinki/drupal-docker-images](https://github.com/City-of-Helsinki/drupal-docker-images#openshift-drupal-docker-image) for more documentation about the underlying Docker image.
 
-## Deployment tasks
-
-The deployment tasks are run when a container is first started. Any subsequent containers will check the value of `$OPENSHIFT_BUILD_NAME` to determine if deployment tasks needs to be run.
-
-The tasks:
-
-1. Site is put into maintenance mode.
-2. `drush deploy` is run. See https://www.drush.org/latest/deploycommand/ for documentation about `drush deploy`.
-3. Maintenance mode is disabled.
-
-See the [deployment](/docker/openshift/entrypoints/20-deploy.sh) script for more up-to-date information.
-
-### Handling failures
-
-In case of a failure, an error message is sent to a configured Sentry instance. See [notify.php](/docker/openshift/notify.php) script for more documentation.
-
-In order to use this feature, you must define the following environment variables:
-
-```bash
-SENTRY_DSN=your-sentry-dsn
-# Should be same as APP_ENV
-SENTRY_ENVIRONMENT=environment 
-```
-
-See https://helsinkisolutionoffice.atlassian.net/wiki/spaces/HEL/pages/6785826654/Ymp+rist+muuttujien+lis+ys+Azure+DevOpsissa for more documentation (in Finnish) on how to define environment variables.
-
 ## Cron
 
 Crons are run inside a separate cron container and use [docker/openshift/crons/base.sh](/docker/openshift/crons/base.sh) as an entrypoint.
