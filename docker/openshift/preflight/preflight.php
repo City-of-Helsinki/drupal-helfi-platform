@@ -64,7 +64,7 @@ require_once './sites/default/settings.php'; // NOSONAR
 
 if (!isset($preflight_checks['environmentVariables'])) {
   echo 'No preflight checks found. Skipping ...';
-  exit(0);
+  exit(0); // NOSONAR
 }
 
 $candidates = [
@@ -99,5 +99,5 @@ foreach ($preflight_checks['environmentVariables'] as $item) {
 // Fail deployment if any preflight check has failed.
 if ($messages = preflight_messages()) {
   echo implode(PHP_EOL, $messages);
-  exit(1);
+  exit(1); // NOSONAR
 }
