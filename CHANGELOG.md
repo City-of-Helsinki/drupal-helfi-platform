@@ -1,5 +1,46 @@
 # Changelog
 
+## 2023-12-04.2
+
+Deployment changes:
+- Cron rollout now depends on Drupal rollout, meaning the Cron pod will no longer start before deployment is actually done
+- `20-deploy.sh` now uses `public/sites/default/files/deploy.id` file to check if deployment tasks need to be run
+
+### Required actions
+
+Make sure your `docker/openshift/crons/base.sh` entrypoint **does not** have deployment checks anymore:
+
+```bash
+# Checking if a new deployment is in progress, as we should not run cron while deploying.
+if [ ! -n "$OPENSHIFT_BUILD_NAME" ]; then
+  echo "OPENSHIFT_BUILD_NAME is not defined. Exiting early."
+  exit 1
+fi
+
+while [ "$(drush state:get deploy_id)" != "$OPENSHIFT_BUILD_NAME" ]
+do
+  echo "Current deploy_id $OPENSHIFT_BUILD_NAME not found in state. Probably a deployment is in progress - waiting for completion..."
+  sleep 60
+done
+
+while [ "$(drush state:get system.maintenance_mode)" = "1" ]
+do
+  echo "Maintenance mode on. Probably a deployment is in progress - waiting for completion..."
+  sleep 60
+done
+```
+
+## 2023-12-04.1
+
+Added preflight deployment checks. See [Deployment documentation](/documentation/deployment.md#deployment-preflight-checks) for more information.
+
+### Required actions
+
+- Update your `docker/openshift/Dockerfile` file from this repository
+- Copy `docker/openshift/init.sh` and `docker/openshift/init.sh` files from this repository
+
+### Required actions
+
 ## 2023-11-28
 
 Added PHPStan documentation. See [documentation](/documentation/phpstan.md) for more information.
