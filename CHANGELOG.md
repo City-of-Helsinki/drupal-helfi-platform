@@ -37,7 +37,7 @@ Added preflight deployment checks. See [Deployment documentation](/documentation
 ### Required actions
 
 - Update your `docker/openshift/Dockerfile` file from this repository
-- Copy `docker/openshift/init.sh` and `docker/openshift/init.sh` files from this repository
+- Copy `docker/openshift/init.sh`, `docker/entrypoints/10-preflight.sh` and `docker/openshift/preflight/preflight.php` files from this repository
 
 ### Required actions
 
