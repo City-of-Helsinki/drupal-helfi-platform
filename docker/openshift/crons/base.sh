@@ -2,22 +2,6 @@
 
 source /init.sh
 
-# @todo remove this once https://helsinkisolutionoffice.atlassian.net/browse/PLAENH-1302 is done.
-ATTEMPTS=0
-# Checking if a new deployment is in progress, as we should not run cron while deploying.
-while deployment_in_progress
-do
-  let ATTEMPTS++
-
-  if (( ATTEMPTS > 10 )); then
-    echo "Failed to start a new cron pod - deployment probably failed."
-    exit 1
-  fi
-
-  echo "A deployment is in progress - waiting for completion ..."
-  sleep 60
-done
-
 echo "Starting cron: $(date)"
 
 # You can add any additional cron "daemons" here:
