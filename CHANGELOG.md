@@ -1,8 +1,7 @@
 # Changelog
 
-## 2023-12-04.2
+## 2023-12-04.2 - Deployment changes
 
-Deployment changes:
 - Cron rollout now depends on Drupal rollout, meaning the Cron pod will no longer start before deployment is actually done
 - `20-deploy.sh` now uses `public/sites/default/files/deploy.id` file to check if deployment tasks need to be run
 
@@ -30,7 +29,7 @@ do
 done
 ```
 
-## 2023-12-04.1
+## 2023-12-04.1 - Preflight deployment checks
 
 Added preflight deployment checks. See [Deployment documentation](/documentation/deployment.md#deployment-preflight-checks) for more information.
 
