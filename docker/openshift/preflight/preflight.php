@@ -62,11 +62,6 @@ function environment_variable_isset(array $items) : bool {
 $class_loader = require_once './../vendor/autoload.php';
 require_once './sites/default/settings.php'; // NOSONAR
 
-if (!isset($preflight_checks['environmentVariables'])) {
-  echo 'No preflight checks found. Skipping ...';
-  exit(0); // NOSONAR
-}
-
 $candidates = [
   (getenv('APP_ENV') ?: 'local') . '.preflight.php',
   'all.preflight.php',
@@ -85,17 +80,19 @@ foreach ($candidates as $candidate) {
   require_once $fileName; // NOSONAR
 }
 
-foreach ($preflight_checks['environmentVariables'] as $item) {
-  // Allow conditional environment variables. For example,
-  // ENV_VAR1|ENV_VAR2 will be treated as (ENV_VAR1 or ENV_VAR2) and
-  // will only fail if neither one is defined.
-  $parts = explode('|', $item);
+if (isset($preflight_checks['environmentVariables'])) {
+  foreach ($preflight_checks['environmentVariables'] as $item) {
+    // Allow conditional environment variables. For example,
+    // ENV_VAR1|ENV_VAR2 will be treated as (ENV_VAR1 or ENV_VAR2) and
+    // will only fail if neither one is defined.
+    $parts = explode('|', $item);
 
-  if (!environment_variable_isset($parts)) {
-    preflight_failed('Environment variable %s is not set.', implode(', ', $parts));
+    if (!environment_variable_isset($parts)) {
+      preflight_failed('Environment variable %s is not set.', implode(', ', $parts));
+    }
   }
-}
 
+}
 // Fail deployment if any preflight check has failed.
 if ($messages = preflight_messages()) {
   echo implode(PHP_EOL, $messages);
