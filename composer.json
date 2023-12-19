@@ -33,7 +33,9 @@
     },
     "conflict": {
         "drupal/drupal": "*",
-        "drupal/core": "<10.1 || >=10.2"
+        "drupal/core": ">=10.2",
+        "drupal/core-composer-scaffold": ">=10.2",
+        "drupal/core-dev": ">=10.2"
     },
     "config": {
         "optimize-autoloader": true,
