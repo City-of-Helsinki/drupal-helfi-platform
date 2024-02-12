@@ -2,9 +2,9 @@ version: '3.7'
 
 services:
   app:
-    hostname: "${DRUPAL_HOSTNAME}"
     container_name: "${COMPOSE_PROJECT_NAME}-app"
     image: "${DRUPAL_IMAGE}"
+    hostname: "${COMPOSE_PROJECT_NAME}"
     volumes:
       - .:/app:delegated
     depends_on:
