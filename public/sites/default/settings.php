@@ -169,6 +169,17 @@ $config['helfi_api_base.environment_resolver.settings']['environment_name'] = ge
 $config['helfi_api_base.environment_resolver.settings']['project_name'] = getenv('PROJECT_NAME');
 
 if ($varnish_host = getenv('DRUPAL_VARNISH_HOST')) {
+  if (!isset($config['system.performance']['cache']['page']['max_age'])) {
+    $config['system.performance']['cache']['page']['max_age'] = 86400;
+  }
+  $varnish_backend = parse_url($drush_options_uri, PHP_URL_HOST);
+
+  if (getenv('APP_ENV') === 'local') {
+    // Varnish backend is something like varnish-helfi-kymp.docker.so on
+    // local env.
+    $varnish_backend = 'varnish-' . $varnish_backend;
+  }
+
   // settings.php doesn't know about existing configuration yet so we can't
   // just append new headers to an already existing headers array here.
   // If you have configured any extra headers in your purge settings
@@ -188,7 +199,7 @@ if ($varnish_host = getenv('DRUPAL_VARNISH_HOST')) {
       ],
       [
         'field' => 'Host',
-        'value' => 'varnish-helfi-kymp.docker.so',
+        'value' => $varnish_backend,
       ],
     ],
     'varnish_purge_all' => [
@@ -204,10 +215,6 @@ if ($varnish_host = getenv('DRUPAL_VARNISH_HOST')) {
 
     if ($varnish_port = getenv('DRUPAL_VARNISH_PORT')) {
       $config['varnish_purger.settings.' . $name]['port'] = $varnish_port;
-    }
-
-    if (!isset($config['system.performance']['cache']['page']['max_age'])) {
-      $config['system.performance']['cache']['page']['max_age'] = 86400;
     }
   }
 
