@@ -169,9 +169,9 @@ $config['helfi_api_base.environment_resolver.settings']['environment_name'] = ge
 $config['helfi_api_base.environment_resolver.settings']['project_name'] = getenv('PROJECT_NAME');
 
 if ($varnish_host = getenv('DRUPAL_VARNISH_HOST')) {
-  if (!isset($config['system.performance']['cache']['page']['max_age'])) {
-    $config['system.performance']['cache']['page']['max_age'] = 86400;
-  }
+  // Cache everything for 1 year by default.
+  $config['system.performance']['cache']['page']['max_age'] = 31536000;
+
   $varnish_backend = parse_url($drush_options_uri, PHP_URL_HOST);
 
   if (getenv('APP_ENV') === 'local') {
