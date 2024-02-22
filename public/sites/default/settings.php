@@ -220,13 +220,13 @@ if ($varnish_host = getenv('DRUPAL_VARNISH_HOST')) {
     foreach ($headers as $header) {
       $config['varnish_purger.settings.' . $name]['headers'][] = $header;
     }
-  }
 
-  if ($varnish_purge_key = getenv('VARNISH_PURGE_KEY')) {
-    $config['varnish_purger.settings.' . $name]['headers'][] = [
-      'field' => 'X-VC-Purge-Key',
-      'value' => $varnish_purge_key,
-    ];
+    if ($varnish_purge_key = getenv('VARNISH_PURGE_KEY')) {
+      $config['varnish_purger.settings.' . $name]['headers'][] = [
+        'field' => 'X-VC-Purge-Key',
+        'value' => $varnish_purge_key,
+      ];
+    }
   }
 }
 
