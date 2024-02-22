@@ -76,7 +76,7 @@ services:
     container_name: "${COMPOSE_PROJECT_NAME}-varnish"
     image: druidfi/varnish:6-drupal
     environment:
-      VARNISH_BACKEND_HOST: "app"
+      VARNISH_BACKEND_HOST: "${COMPOSE_PROJECT_NAME}-app"
       VARNISH_CACHE_STATIC_FILES: "1"
     depends_on:
       - app
