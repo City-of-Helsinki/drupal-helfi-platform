@@ -151,20 +151,6 @@ if ($blob_storage_name = getenv('AZURE_BLOB_STORAGE_NAME')) {
 }
 
 
-if ($varnish_host = getenv('DRUPAL_VARNISH_HOST')) {
-  $config['varnish_purger.settings.default']['hostname'] = $varnish_host;
-  $config['varnish_purger.settings.varnish_purge_all']['hostname'] = $varnish_host;
-
-  if (!isset($config['system.performance']['cache']['page']['max_age'])) {
-    $config['system.performance']['cache']['page']['max_age'] = 86400;
-  }
-}
-
-if ($varnish_port = getenv('DRUPAL_VARNISH_PORT')) {
-  $config['varnish_purger.settings.default']['port'] = $varnish_port;
-  $config['varnish_purger.settings.varnish_purge_all']['port'] = $varnish_port;
-}
-
 if ($navigation_authentication_key = getenv('DRUPAL_NAVIGATION_API_KEY')) {
   $config['helfi_navigation.api']['key'] = $navigation_authentication_key;
 }
@@ -182,34 +168,66 @@ if ($github_repository = getenv('GITHUB_REPOSITORY')) {
 $config['helfi_api_base.environment_resolver.settings']['environment_name'] = getenv('APP_ENV');
 $config['helfi_api_base.environment_resolver.settings']['project_name'] = getenv('PROJECT_NAME');
 
-// settings.php doesn't know about existing configuration yet so we can't
-// just append new headers to an already existing headers array here.
-// If you have configured any extra headers in your purge settings
-// you must add them in your all.settings.php as well.
-// @todo Replace this with config override service?
-$config['varnish_purger.settings.default']['headers'] = [
-  [
-    'field' => 'Cache-Tags',
-    'value' => '[invalidation:expression]',
-  ],
-];
+if ($varnish_host = getenv('DRUPAL_VARNISH_HOST')) {
+  // Cache everything for 1 year by default.
+  $config['system.performance']['cache']['page']['max_age'] = 31536000;
 
-$config['varnish_purger.settings.varnish_purge_all']['headers'] = [
-  [
-    'field' => 'X-VC-Purge-Method',
-    'value' => 'regex',
-  ],
-];
+  $varnish_backend = parse_url($drush_options_uri, PHP_URL_HOST);
 
-if ($varnish_purge_key = getenv('VARNISH_PURGE_KEY')) {
-  $config['varnish_purger.settings.default']['headers'][] = [
-    'field' => 'X-VC-Purge-Key',
-    'value' => $varnish_purge_key,
+  if (getenv('APP_ENV') === 'local') {
+    // Varnish backend is something like varnish-helfi-kymp.docker.so on
+    // local env.
+    $varnish_backend = 'varnish-' . $varnish_backend;
+  }
+
+  // settings.php doesn't know about existing configuration yet so we can't
+  // just append new headers to an already existing headers array here.
+  // If you have configured any extra headers in your purge settings
+  // you must add them in your all.settings.php as well.
+  // @todo Replace this with config override service?
+  $varnishConfiguration = [
+    'default' => [
+      [
+        'field' => 'Cache-Tags',
+        'value' => '[invalidation:expression]',
+      ],
+    ],
+    'assets' => [
+      [
+        'field' => 'X-VC-Purge-Method',
+        'value' => 'regex',
+      ],
+      [
+        'field' => 'Host',
+        'value' => $varnish_backend,
+      ],
+    ],
+    'varnish_purge_all' => [
+      [
+        'field' => 'X-VC-Purge-Method',
+        'value' => 'regex',
+      ],
+    ],
   ];
-  $config['varnish_purger.settings.varnish_purge_all']['headers'][] = [
-    'field' => 'X-VC-Purge-Key',
-    'value' => $varnish_purge_key,
-  ];
+
+  foreach ($varnishConfiguration as $name => $headers) {
+    $config['varnish_purger.settings.' . $name]['hostname'] = $varnish_host;
+
+    if ($varnish_port = getenv('DRUPAL_VARNISH_PORT')) {
+      $config['varnish_purger.settings.' . $name]['port'] = $varnish_port;
+    }
+
+    foreach ($headers as $header) {
+      $config['varnish_purger.settings.' . $name]['headers'][] = $header;
+    }
+
+    if ($varnish_purge_key = getenv('VARNISH_PURGE_KEY')) {
+      $config['varnish_purger.settings.' . $name]['headers'][] = [
+        'field' => 'X-VC-Purge-Key',
+        'value' => $varnish_purge_key,
+      ];
+    }
+  }
 }
 
 if ($stage_file_proxy_origin = getenv('STAGE_FILE_PROXY_ORIGIN')) {
