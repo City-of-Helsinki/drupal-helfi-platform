@@ -84,6 +84,13 @@ See [Events that trigger workflows](https://docs.github.com/en/actions/using-wor
 
 ## Developing
 
+### Testing update-config.yml changes
+
+- Modify `.github/workflows/update-config.yml` file and commit changes to a new branch
+- Run `Update config` action manually on GitHub (Actions -> Update config -> Run workflow) and select your newly created branch in `Use workflow from` field
+
+This will run the Update config action using code from the selected branch and create a pull request from `update-config` branch against the selected branch.
+
 ### Automatically trigger config update on all whitelisted projects
 
 If you want your custom module's releases to trigger update bot on all whitelisted projects, you can use [drupal-repository](https://github.com/City-of-Helsinki/drupal-repository) webhook server to trigger the `config_change` dispatch event.
