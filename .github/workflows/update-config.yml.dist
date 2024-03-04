@@ -3,6 +3,8 @@ on:
   repository_dispatch:
     types: [config_change]
 name: Update config
+env:
+  GH_TOKEN: ${{ github.token }}
 jobs:
   update-config:
     runs-on: ubuntu-latest
@@ -21,10 +23,7 @@ jobs:
           - 3306:3306
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
-
+      - uses: actions/checkout@v4
       - name: Download latest dump
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -41,16 +40,43 @@ jobs:
           # Update platform
           drush helfi:tools:update-platform
 
+      - name: Check module versions
+        id: module-status
+        run: |
+          MODE="delete"
+          drush helfi:tools:check-composer-versions $GITHUB_WORKSPACE/composer.lock --format=markdown_table >> $GITHUB_STEP_SUMMARY && EXIT_CODE=$? || EXIT_CODE=$?
+          if [ "$EXIT_CODE" -eq 3 ]; then
+            MODE="upsert"
+            echo "  " >> $GITHUB_STEP_SUMMARY
+            echo ":warning: Failed to install the latest version of the packages listed above" >> $GITHUB_STEP_SUMMARY
+            echo "  " >> $GITHUB_STEP_SUMMARY
+            echo "Please run \`composer why-not drupal/package_name package_version\` to see why." >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "MODE=$MODE" >> $GITHUB_OUTPUT
+          cat $GITHUB_STEP_SUMMARY > /tmp/pr-message.txt
+
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v6
         with:
-          committer: GitHub <noreply@github.com>
-          author: actions-bot <actions-bot@users.noreply.github.com>
           commit-message: Update configuration
           title: Automatic update
           labels: auto-update
           body: |
             - Updated active configuration.
             - Updated platform
-
           branch: update-configuration
+
+      - name: Attempt to find PR
+        env:
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+        id: find-pr
+        run: echo "number=$(gh pr list --base ${BRANCH_NAME} --head update-configuration --json number --jq '.[].number')" >> $GITHUB_OUTPUT
+
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2
+        if: ${{ steps.find-pr.outputs.number != '' }}
+        with:
+          comment_tag: status
+          mode: ${{ steps.module-status.outputs.MODE }}
+          filePath: /tmp/pr-message.txt
+          pr_number: ${{ steps.find-pr.outputs.number }}
