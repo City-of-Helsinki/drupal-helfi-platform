@@ -43,6 +43,9 @@
             "cweagans/composer-patches": true,
             "drupal/core-composer-scaffold": true,
             "phpstan/extension-installer": true
+        },
+        "audit": {
+            "abandoned": "report"
         }
     },
     "extra": {
