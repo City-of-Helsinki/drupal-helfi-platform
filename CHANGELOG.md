@@ -5,6 +5,7 @@
 The `druidfi/tools` package now defaults to `compose.yaml` file instead of `docker-compose.yml`.
 
 ### Required actions
+- Run `make self-update`
 - Rename or symlink `docker-compose.yml` file to `compose.yaml`
 
 ## 2024-02-05 - Migrate from MariaDB to MySQL 8
