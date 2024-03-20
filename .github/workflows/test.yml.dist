@@ -25,9 +25,17 @@ jobs:
           - 3306:3306
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
+      - uses: actions/checkout@v4
+
+      - name: Make sure configuration was exported in correct language (en or und)
+        run: |
+          OUTPUT=$(grep -oP '^langcode: \b(?!(?:en|und)\b)\w+' conf -R || true)
+
+          if [ ! -z "$OUTPUT" ]; then
+            echo "Found configuration that does not match the pattern 'langcode: (en|und)':" >> $GITHUB_STEP_SUMMARY
+            echo "$OUTPUT" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
 
       - name: Build project
         run: composer install --no-interaction

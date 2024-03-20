@@ -23,9 +23,7 @@ jobs:
           - 3306:3306
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
+      - uses: actions/checkout@v4
 
       - name: Build project
         run: composer install --no-interaction
