@@ -90,7 +90,7 @@ services:
       - "traefik.http.services.${COMPOSE_PROJECT_NAME}-varnish.loadbalancer.server.port=6081"
       - "traefik.docker.network=stonehenge-network"
   elastic:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.4.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.0
     container_name: "${COMPOSE_PROJECT_NAME}-elastic"
     environment:
       - node.name="${COMPOSE_PROJECT_NAME}-elastic"
