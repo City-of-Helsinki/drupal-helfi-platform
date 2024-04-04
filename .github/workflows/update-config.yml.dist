@@ -31,6 +31,12 @@ jobs:
         run: |
           gh run download -n latest.sql
 
+      - name: Prepare setup
+        run: |
+          # We install Drupal from existing dump, so locale_install() hook
+          # is never fired. Make sure the translations folder exists.
+          mkdir -p public/sites/default/files/translations -p
+
       - name: Build project
         run: |
           composer install --no-interaction
