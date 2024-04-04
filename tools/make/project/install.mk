@@ -35,6 +35,7 @@ drush-helfi-enable-modules: ## Enable modules and base configurations.
 PHONY += drush-locale-update
 drush-locale-update: ## Update translations.
 	$(call step,Update translations...)
+	@mkdir -p public/sites/default/files/translations
 	$(call drush,state:set locale.translation_last_checked 0)
 	$(call drush,locale:check)
 	$(call drush,locale:update)
