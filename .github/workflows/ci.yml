@@ -4,7 +4,7 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/city-of-helsinki/drupal-php-docker:8.2-alpine
+      image: ghcr.io/city-of-helsinki/drupal-php-docker:8.3-alpine
 
     services:
       db:
@@ -19,8 +19,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
 
       - name: Build project
         run: composer install --no-interaction
