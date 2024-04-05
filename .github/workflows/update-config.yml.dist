@@ -4,13 +4,12 @@ on:
     types: [config_change]
 name: Update config
 env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GH_TOKEN: ${{ github.token }}
 jobs:
   update-config:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/city-of-helsinki/drupal-php-docker:8.3-alpine
-
     services:
       db:
         image: mysql:8
@@ -26,6 +25,8 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Download latest dump
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh run download -n latest.sql
 
@@ -78,7 +79,6 @@ jobs:
           commit-message: Update configuration
           title: Automatic update
           labels: auto-update
-          token: ${{ secrets.GITHUB_TOKEN }}
           body: |
             - Updated active configuration.
             - Updated platform
