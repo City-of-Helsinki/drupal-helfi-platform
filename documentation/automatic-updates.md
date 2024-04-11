@@ -73,7 +73,7 @@ If you wish to receive automatic updates every time we publish a release to any 
 
 To get your project whitelisted you can either contact us directly or:
 
-- Fork [City-of-Helsinki/drupal-repository](https://github.com/City-of-Helsinki/drupal-repository) and add your project's repository to: https://github.com/City-of-Helsinki/drupal-repository/blob/3.x/console.php#L13
+- Fork [City-of-Helsinki/drupal-repository](https://github.com/City-of-Helsinki/drupal-repository) and add your project's repository to: https://github.com/City-of-Helsinki/drupal-repository/blob/3.x/config.php#L100
 - Create a pull request
 
 ### Scheduled updates
