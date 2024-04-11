@@ -26,6 +26,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set browsertest output folder
+        run: |
+          echo "BROWSERTEST_OUTPUT_DIRECTORY=$GITHUB_WORKSPACE/public/sites/simpletest" >> $GITHUB_ENV
+
       - name: Make sure configuration was exported in correct language (en or und)
         run: |
           OUTPUT=$(grep -oP '^langcode: \b(?!(?:en|und)\b)\w+' conf -R || true)
@@ -75,3 +79,10 @@ jobs:
           composer test-php public/modules/custom
           if [ -d "tests/" ]; then composer test-php tests/; else echo "No DTT tests found. Ignoring..."; fi
 
+      - name: Create an artifact from test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: results
+          path: ${{ env.BROWSERTEST_OUTPUT_DIRECTORY }}
+          retention-days: 1

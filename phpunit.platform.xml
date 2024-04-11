@@ -11,7 +11,6 @@
   <ini name="error_reporting" value="32767"/>
     <!-- Do not limit the amount of memory tests take to run. -->
   <ini name="memory_limit" value="-1"/>
-  <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="public/sites/simpletest"/>
   <env name="MINK_DRIVER_ARGS_WEBDRIVER" value='["chrome", {"browserName":"chrome","chromeOptions":{"w3c": false, "args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:4444"]' />
 </php>
 <testsuites>
