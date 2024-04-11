@@ -49,70 +49,65 @@ See https://gitlab.com/weitzman/drupal-test-traits for more information.
 
 ## Functional JavaScript tests
 
-### Local environment
+At the moment, only Chromium 106 is supported due to `minkphp/MinkSelenium2Driver` not supporting Selenium 4 yet. See https://github.com/minkphp/MinkSelenium2Driver/pull/372.
 
-Make sure your `docker-compose.yml` file contains `chromium` service and the `app` service has `SIMPLETEST_BASE_URL: "http://app:8888"` environment variable:
-```yaml
-services:
-  app:
-    environments:
-      SIMPLETEST_BASE_URL: "http://app:8888"
-  chromium:
-    # @todo Update this to newer version once minkphp supports Selenium 4.
-    # @see https://github.com/minkphp/MinkSelenium2Driver/pull/372
-    image: selenium/standalone-chrome:106.0
-    networks:
-      - internal
-    profiles:
-      - testing
+Modify your `phpunit.xml.dist` and add `MINK_DRIVER_ARGS_WEBDRIVER` environment variable:
+
+```xml
+<env name="MINK_DRIVER_ARGS_WEBDRIVER" value='["chrome", {"browserName":"chrome","chromeOptions":{"w3c": false}}, "http://chromium:4444"]' />
 ```
 
-Then start your local environment with `testing` compose profile. You can either modify your project's `.env` file and append `testing` to `COMPOSE_PROFILES` environment variable, or start the project with `COMPOSE_PROFILES=testing make up`.
+### Running functional javascript tests in local environment
+
+1. Make sure your `docker-compose.yml` file contains `chromium` service and the `app` service has `SIMPLETEST_BASE_URL: "http://app:8888"` environment variable:
+    ```yaml
+    services:
+      app:
+        environments:
+          SIMPLETEST_BASE_URL: "http://app:8888"
+      chromium:
+        # @todo Update this to newer version once minkphp supports Selenium 4.
+        # @see https://github.com/minkphp/MinkSelenium2Driver/pull/372
+        image: selenium/standalone-chrome:106.0
+        networks:
+          - internal
+        profiles:
+          - testing
+    ```
+2. Start your local environment with `testing` compose profile. You can either modify your project's `.env` file and append `testing` to `COMPOSE_PROFILES` environment variable, or start the project with `COMPOSE_PROFILES=testing make up`.
 
 In order for this to work, the `chromium` container must be able to connect back to `app` container, so `$SIMPLETEST_BASE_URL` must be something that `chromium` container can connect to.
 
 For example, if you use Drush runserver to run tests, you must start the the Drush server with `--dns` flag: `drush rs $SIMPLETEST_BASE_URL --dns`.
 
-## GitHub Actions
+## Running functional javascript tests in GitHub Actions
 
-To enable code checks, make sure to rename your `.github/workflows/*.yml.dist` files to `.github/workflows/*.yml`.
+1. The app container must be started using `--hostname` option:
+    ```yaml
+      container:
+        image: ghcr.io/city-of-helsinki/drupal-php-docker:${{ matrix.php-versions }}-alpine
+        options: --hostname app
+    ```
 
-### Container settings
-
-The app container must be started using `--hostname` option:
-
-```yaml
-container:
-  image: ghcr.io/city-of-helsinki/drupal-php-docker:${{ matrix.php-versions }}-alpine
-  options: --hostname app
-```
-
-You have to override the `SIMPLETEST_BASE_URL` environment variable to use `app` hostname and start the Drush server using `--dns` flag:
-
-```yaml
-# .github/workflows/yourworkflow.yml
-env:
-  SIMPLETEST_BASE_URL: http://app:8888
-
-jobs:
-  tests:
-    steps:
-      - name: Start services
-        working-directory: ${{ env.DRUPAL_ROOT }}
-        run: |
-          vendor/bin/drush runserver $SIMPLETEST_BASE_URL --dns > /dev/null 2>&1 &
-```
-
-### Functional JavaScript tests
-
-At the moment, only Chromium 106 is supported due to `minkphp/MinkSelenium2Driver` not supporting Selenium 4 yet. See https://github.com/minkphp/MinkSelenium2Driver/pull/372.
-
-Add `chromium` service to your actions yml:
-
-```yaml
-services:
-  chromium:
-    image: selenium/standalone-chrome:106.0
-```
+2. Add `chromium` service to your actions yml:
+     ```yaml
+    services:
+      chromium:
+        image: selenium/standalone-chrome:106.0
+     ```
+3. You have to override the `SIMPLETEST_BASE_URL` environment variable to use `app` hostname and start the Drush server using `--dns` flag:
+    ```yaml
+    # .github/workflows/yourworkflow.yml
+    env:
+      SIMPLETEST_BASE_URL: http://app:8888
+    
+    jobs:
+      tests:
+        steps:
+          - name: Start services
+            working-directory: ${{ env.DRUPAL_ROOT }}
+            run: |
+              vendor/bin/drush runserver $SIMPLETEST_BASE_URL --dns > /dev/null 2>&1 &
+    ```
 
 You can find a complete example in [City-of-Helsinki/drupal-module-helfi-navigation](https://github.com/City-of-Helsinki/drupal-module-helfi-navigation/blob/main/.github/workflows/ci.yml) module.

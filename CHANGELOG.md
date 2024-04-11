@@ -1,5 +1,36 @@
 # Changelog
 
+## 2024-03-20 - Renamed docker-compose.yml file to compose.yaml
+
+The `druidfi/tools` package now defaults to `compose.yaml` file instead of `docker-compose.yml`.
+
+### Required actions
+- Run `make self-update`
+- Rename or symlink `docker-compose.yml` file to `compose.yaml`
+
+## 2024-02-05 - Migrate from MariaDB to MySQL 8
+
+Local and CI environments were migrated to use MySQL 8 to match the test/production environment.
+
+**_IMPORTANT_**: This change will destroy your local database. Please make sure to backup your old database if you still wish to use it!
+
+### Required actions
+
+- Update the `docker-compose.yml` file from this repository
+- Update `.github/workflows/` YAML files to use MySQL 8
+- Update local docker images (`docker compose pull`)
+- Re/start the project (`make stop && make up`)
+
+### Optional actions
+
+These steps are only required if you wish to save your old local database.
+
+- Export the old database (`drush sql-dump --result-file=/app/dump.sql`)
+- Update `docker-compose.yml` file from this repository
+- Re/start the project `make stop && make up`
+- Re-import the old database `$(drush sql:connect) < dump.sql`
+
+
 ## 2023-12-04.2 - Deployment changes
 
 - Cron rollout now depends on Drupal rollout, meaning the Cron pod will no longer start before deployment is actually done

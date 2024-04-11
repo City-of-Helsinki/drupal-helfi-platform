@@ -14,6 +14,8 @@ The tasks:
 
 See the [deployment](/docker/openshift/entrypoints/20-deploy.sh) script for more up-to-date information.
 
+_Important note_: Deployment tasks must be completed within 10 minutes.
+
 ## Handling failures
 
 - todo

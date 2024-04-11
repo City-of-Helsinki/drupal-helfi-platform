@@ -4,6 +4,8 @@ source /init.sh
 
 if [ -f "../docker/openshift/preflight/preflight.php" ]; then
   echo "Running preflight checks ..."
-  php ../docker/openshift/preflight/preflight.php
+  if ! php ../docker/openshift/preflight/preflight.php; then
+    exit 1
+  fi
 fi
 

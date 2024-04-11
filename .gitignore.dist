@@ -13,7 +13,10 @@ public/sites/simpletest/
 
 # Ignore the folder created by PhpStorm
 .idea/*
+
+# Ignore local settings
 public/sites/default/local.settings.php
+public/sites/default/local.services.yml
 
 *.sql
 *.env.local

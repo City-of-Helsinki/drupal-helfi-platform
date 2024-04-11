@@ -10,12 +10,12 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/city-of-helsinki/drupal-php-docker:8.2-alpine
+      image: ghcr.io/city-of-helsinki/drupal-php-docker:8.3-alpine
       options: --hostname app
 
     services:
       db:
-        image: mariadb
+        image: mysql:8
         env:
           MYSQL_USER: drupal
           MYSQL_PASSWORD: drupal
@@ -23,11 +23,22 @@ jobs:
           MYSQL_ROOT_PASSWORD: drupal
         ports:
           - 3306:3306
-
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
+      - uses: actions/checkout@v4
+
+      - name: Set browsertest output folder
+        run: |
+          echo "BROWSERTEST_OUTPUT_DIRECTORY=$GITHUB_WORKSPACE/public/sites/simpletest" >> $GITHUB_ENV
+
+      - name: Make sure configuration was exported in correct language (en or und)
+        run: |
+          OUTPUT=$(grep -oP '^langcode: \b(?!(?:en|und)\b)\w+' conf -R || true)
+
+          if [ ! -z "$OUTPUT" ]; then
+            echo "Found configuration that does not match the pattern 'langcode: (en|und)':" >> $GITHUB_STEP_SUMMARY
+            echo "$OUTPUT" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
 
       - name: Build project
         run: composer install --no-interaction
@@ -68,3 +79,10 @@ jobs:
           composer test-php public/modules/custom
           if [ -d "tests/" ]; then composer test-php tests/; else echo "No DTT tests found. Ignoring..."; fi
 
+      - name: Create an artifact from test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: results
+          path: ${{ env.BROWSERTEST_OUTPUT_DIRECTORY }}
+          retention-days: 1

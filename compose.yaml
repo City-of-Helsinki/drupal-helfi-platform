@@ -1,10 +1,8 @@
-version: '3.7'
-
 services:
   app:
-    hostname: "${DRUPAL_HOSTNAME}"
     container_name: "${COMPOSE_PROJECT_NAME}-app"
     image: "${DRUPAL_IMAGE}"
+    hostname: "${COMPOSE_PROJECT_NAME}"
     volumes:
       - .:/app:delegated
     depends_on:
@@ -14,7 +12,7 @@ services:
       STAGE_FILE_PROXY_ORIGIN_DIR: "${STAGE_FILE_PROXY_ORIGIN_DIR}"
       APP_ENV: "${APP_ENV:-local}"
       ELASTIC_PROXY_URL: ${ELASTIC_PROXY_URL:-""}
-      DRUPAL_ROUTES: "https://varnish-${DRUPAL_HOSTNAME},https://helfi-proxy.docker.so,http://${COMPOSE_PROJECT_NAME}-varnish"
+      DRUPAL_ROUTES: "https://varnish-${DRUPAL_HOSTNAME},https://helfi-proxy.docker.so,http://${COMPOSE_PROJECT_NAME}-varnish,http://${COMPOSE_PROJECT_NAME}"
       DRUPAL_REVERSE_PROXY_ADDRESS: helfi-proxy.docker.so
       DRUSH_OPTIONS_URI: "https://${DRUPAL_HOSTNAME}"
       # To enable xdebug, run `export XDEBUG_ENABLE=true` before (re)starting your project.
@@ -27,8 +25,8 @@ services:
       # Use drush server to run functional tests, so we don't have to care about
       # permission or SSL issues.
       SIMPLETEST_BASE_URL: "http://app:8888"
-      SIMPLETEST_DB: "mysql://drupal:drupal@db:3306/drupal"
       BROWSERTEST_OUTPUT_BASE_URL: "https://${DRUPAL_HOSTNAME}"
+      BROWSERTEST_OUTPUT_DIRECTORY: "/app/public/sites/default/files/simpletest"
       DRUPAL_VARNISH_HOST: "${COMPOSE_PROJECT_NAME}-varnish"
       DRUPAL_VARNISH_PORT: 6081
       REDIS_HOST: redis
@@ -54,16 +52,19 @@ services:
       - internal
   db:
     container_name: "${COMPOSE_PROJECT_NAME}-db"
-    image: druidfi/mariadb:10.11-drupal
+    image: mysql:8
     command:
       - --max_allowed_packet=512M
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_swedish_ci
     environment:
-      MARIADB_AUTO_UPGRADE: "1"
-      MARIADB_INITDB_SKIP_TZINFO: "1"
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+      MYSQL_INITDB_SKIP_TZINFO: 1
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
     volumes:
-      - db_data:/var/lib/mysql
+      - db_volume:/var/lib/mysql
     ports:
       - 3306
     networks:
@@ -73,6 +74,7 @@ services:
     image: druidfi/varnish:6-drupal
     environment:
       VARNISH_BACKEND_HOST: "${COMPOSE_PROJECT_NAME}-app"
+      VARNISH_CACHE_STATIC_FILES: "1"
     depends_on:
       - app
     networks:
@@ -145,7 +147,7 @@ networks:
     external: true
 
 volumes:
-  db_data:
+  db_volume:
   ssh:
     name: stonehenge-ssh
     external: true
