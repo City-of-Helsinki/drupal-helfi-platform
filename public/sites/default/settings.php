@@ -283,7 +283,8 @@ if ($artemis_brokers && $artemis_destination) {
       ],
     ],
   ];
-  $settings['queue_default'] = 'queue.stomp.default';
+  // You must configure all queues manually in 'all.settings.php' file.
+  // @see https://github.com/City-of-Helsinki/drupal-helfi-platform/blob/main/documentation/queue.md
 }
 
 $config['filelog.settings']['rotation']['schedule'] = 'never';
