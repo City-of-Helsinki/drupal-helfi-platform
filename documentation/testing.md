@@ -100,7 +100,7 @@ For example, if you use Drush runserver to run tests, you must start the the Dru
     # .github/workflows/yourworkflow.yml
     env:
       SIMPLETEST_BASE_URL: http://app:8888
-    
+
     jobs:
       tests:
         steps:
@@ -111,3 +111,7 @@ For example, if you use Drush runserver to run tests, you must start the the Dru
     ```
 
 You can find a complete example in [City-of-Helsinki/drupal-module-helfi-navigation](https://github.com/City-of-Helsinki/drupal-module-helfi-navigation/blob/main/.github/workflows/ci.yml) module.
+
+## Visual regression testing
+
+See [City-of-Helsinki/drupal-hdbt](https://github.com/City-of-Helsinki/drupal-hdbt?tab=readme-ov-file#visual-regression-testing) for an example.
