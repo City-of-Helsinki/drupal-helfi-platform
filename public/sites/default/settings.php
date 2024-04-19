@@ -327,8 +327,8 @@ if (
 }
 
 if (file_exists('modules/contrib/helfi_api_base/monolog.services.yml') && class_exists('\Drupal\monolog\MonologServiceProvider')) {
-  $GLOBALS['conf']['container_service_providers'][] = '\Drush\Drupal\DrushLoggerServiceProvider';
-  $GLOBALS['conf']['container_service_providers'][] = '\Drupal\monolog\MonologServiceProvider';
+  $conf['container_service_providers'][] = '\Drush\Drupal\DrushLoggerServiceProvider';
+  $conf['container_service_providers'][] = '\Drupal\monolog\MonologServiceProvider';
   $settings['container_yamls'][] = 'modules/contrib/monolog/monolog.services.yml';
   $settings['container_yamls'][] = 'modules/contrib/helfi_api_base/monolog.services.yml';
 }
