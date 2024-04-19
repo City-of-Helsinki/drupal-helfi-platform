@@ -326,11 +326,12 @@ if (
   $settings['container_yamls'][] = 'modules/contrib/redis/redis.services.yml';
 }
 
+// Register monolog services manually, so we can enable the monolog module.
 if (file_exists('modules/contrib/helfi_api_base/monolog.services.yml') && class_exists('\Drupal\monolog\MonologServiceProvider')) {
   $conf['container_service_providers'][] = '\Drush\Drupal\DrushLoggerServiceProvider';
   $conf['container_service_providers'][] = '\Drupal\monolog\MonologServiceProvider';
   $settings['container_yamls'][] = 'modules/contrib/monolog/monolog.services.yml';
-  $settings['container_yamls'][] = 'modules/contrib/helfi_api_base/monolog.services.yml';
+  $settings['container_yamls'][] = 'modules/contrib/helfi_api_base/helfi_api_base.services.yml';
 }
 
 $settings['is_azure'] = FALSE;
