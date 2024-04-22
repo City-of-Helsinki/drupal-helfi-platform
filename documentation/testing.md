@@ -131,7 +131,7 @@ Run tests against reference images: `node backstop/backstop.js test`.
 
 The workflow works something like this:
 
-1. The reference images are generated on commit to `main` branch and stored as Actions artifact.
+1. The reference images are generated on commit to `dev` branch and stored as Actions artifact.
 2. Opening a pull request will then download the artifact, extract the images as reference, run tests against said reference images and compare what has changed.
 3. The HTML test result is uploaded to GitHub Pages, so you can visually preview the changes.
 4. Merging the pull request will mark the changes as “approved” and generate new reference images.
