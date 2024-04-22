@@ -1,7 +1,7 @@
 SF_FRESH_TARGETS := up build sf-cw sf-about sf-open
 FIX_TARGETS += fix-symfony
 LINT_PHP_TARGETS += lint-symfony
-CLEAN_FOLDERS += $(COMPOSER_JSON_PATH)/var
+CS_FIXER_INSTALLED := $(shell test -f $(COMPOSER_JSON_PATH)/vendor/bin/php-cs-fixer && echo yes || echo no)
 
 PHONY += encore-dev
 encore-dev: ## Do Encore development build
@@ -49,21 +49,30 @@ fresh: ## Build fresh development environment
 
 PHONY += fix-symfony
 fix-symfony: ## Fix Symfony code style
-	$(call step,Fix Symfony code style in ./src ...\n)
-	@docker run --rm -it -v $(CURDIR)/src:/app/src:rw,consistent druidfi/qa:php-$(call get_php_version) bash -c "php-cs-fixer -vvvv fix src"
+	$(call step,Fix Symfony code style...\n)
+	$(call cs_symfony,fix --ansi src)
 
 PHONY += lint-symfony
-lint-symfony: VOLUMES := $(CURDIR)/src:/app/src:rw,consistent
 lint-symfony: ## Lint Symfony code style
 	$(call step,Lint Symfony code style...\n)
-	@docker run --rm -it -v $(VOLUMES) druidfi/qa:php-$(call get_php_version) bash -c "phpcs ."
+	$(call cs_symfony,fix --dry-run --diff --ansi --verbose src)
 
 ifeq ($(RUN_ON),docker)
 define sf_console
-	$(call docker_run_cmd,bin/console $(1))
+	$(call docker_compose_exec,bin/console $(1))
 endef
 else
 define sf_console
-	@bin/console
+	@bin/console $(1)
+endef
+endif
+
+ifeq ($(CS_FIXER_INSTALLED),yes)
+define cs_symfony
+$(call docker_compose_exec,vendor/bin/php-cs-fixer $(1))
+endef
+else
+define cs_symfony
+$(call warn,PHP CS Fixer is not installed!)
 endef
 endif
