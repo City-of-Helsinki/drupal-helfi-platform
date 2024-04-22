@@ -1,0 +1,175 @@
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    paths-ignore:
+      - '**.md'
+  push:
+    branches:
+      - dev
+
+name: Visual regression tests
+
+# The concurrency group is used to make sure only one visual regression test
+# can be run at a time. Running multiple tests in parallel can cause a race
+# condition with GitHub Pages deployments.
+# Due to GitHub's limitation, only one test suite can be queued and run at
+# a time; any additional run will be canceled automatically and must be
+# re-started manually.
+concurrency:
+  group: visual-regression
+
+jobs:
+  tests:
+    # Don't run tests against Draft pull requests.
+    if: github.event.pull_request.draft == false
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update
+        run:  sudo apt update
+
+      - name: Install and start Stonehenge
+        run: |
+          git clone -b 4.x https://github.com/druidfi/stonehenge.git ~/stonehenge
+          cd ~/stonehenge && make up
+
+      - name: Build project
+        run: composer install
+
+        # Store the files folder in cache, so we don't have to install Drupal from
+        # scratch every time.
+        # You can force new re-installation by manually deleting the Actions cache.
+      - name: Restore files folder
+        id: drupal-cache
+        uses: actions/cache@v4
+        with:
+          path: public/sites/default/files
+          key: drupal-cache
+
+      - name: Prepare Drupal setup
+        run: |
+          mkdir public/sites/default/files/styles -p && \
+          chmod 777 public/sites/default -R
+
+        # Start the project using Docker compose and wait until the database server
+        # is up.
+      - name: Start the project
+        run: |
+          docker compose up -d --wait
+          # Wait for Drupal to respond.
+          for i in {1..5}; do docker compose exec app bash \
+            -c "drush sqlq 'SHOW TABLES;' -q" && break || sleep 5; done
+
+        # Install the site from existing dump if the cache restoration was successful.
+      - name: Install Drupal from existing dump
+        if: steps.drupal-cache.outputs.cache-hit == 'true'
+        run: |
+          docker compose exec app bash -c "mysql \
+            --user=drupal \
+            --password=drupal \
+            --database=drupal \
+            --host=db \
+            --port=3306 -A < /app/public/sites/default/files/latest.sql"
+          docker compose exec app bash -c "drush deploy"
+
+        # Install the site from scratch using existing configuration if we failed
+        # to restore the cache.
+        # Dump the database into the files folder, so we can speed up the
+        # installation process and install Drupal using that dump from now on.
+      - name: Install Drupal from scratch
+        if: steps.drupal-cache.outputs.cache-hit != 'true'
+        run: |
+          docker compose exec app bash -c "drush si --existing-config -y"
+          docker compose exec app bash -c "drush sql-dump --result-file=/app/public/sites/default/files/latest.sql"
+
+        # You can change the Node.js version by creating a '.nvmrc' file in
+        # your Git root with Node.js version in it.
+      - name: Setup Node.js dependencies
+        run: |
+          export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          nvm install && npm install
+
+        # Reference images are stored as Actions artifact, attempt to restore
+        # the images.
+      - name: Restore bitmaps
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: ${{ env.THEME_FOLDER }}
+        run: gh run download -n bitmaps -D public/sites/backstop/bitmaps_reference || true
+
+        # Generate new reference images if:
+        # - Something is merged into the dev branch.
+        # - Reference images do not exist yet
+        # - Pull request has 'recreate-reference-images' label.
+      - name: Evaluate if we should re-create reference images
+        id: evaluate-reference-images
+        if: |
+          contains( github.event.pull_request.labels.*.name, 'recreate-reference-images') ||
+          hashFiles('public/sites/backstop/bitmaps_reference/') != '' ||
+          github.ref == 'refs/heads/dev'
+        run: echo 'generate-references=true >> $GITHUB_ENV
+
+        # Generate new reference images every time something is merged into the
+        # dev branch.
+        # This works as an 'approval' mechanism, meaning anything in the dev
+        # branch is known to be good.
+        # The reference images are stored as Actions artifact, and we attempt
+        # to download and use them if possible.
+        # In case no reference images exist, new ones will be generated.
+      - name: Generate reference images
+        if: steps.evaluate-reference-images.outputs.generate-references == true
+        run: node backstop/backstop.js reference
+
+      - uses: actions/upload-artifact@v4
+        if: steps.evaluate-reference-images.outputs.generate-references == true
+        with:
+          name: bitmaps
+          path: public/sites/backstop/bitmaps_reference
+          overwrite: true
+          compression-level: 0
+
+      - name: Run tests
+        id: run-tests
+        # Skip tests if we generated reference images since the tests should never fail.
+        if: steps.evaluate-reference-images.outputs.generate-references != true
+        run: |
+          if ! node backstop/backstop.js test; then
+            echo "result=:warning: Visual regression found! Please check if this change is wanted or accidental. " >> $GITHUB_OUTPUT
+          else
+            echo "result=✅ Tests passed!" >> $GITHUB_OUTPUT
+          fi
+          echo "report_url=You can check the output here: https://city-of-helsinki.github.io/${{ github.event.repository.name }}/pull/${{ github.event.pull_request.number }}/html_report/" >> $GITHUB_OUTPUT
+
+        # Deploy the HTML report as GitHub Pages, so we can easily compare the
+        # results.
+        # You might want to use an external repository to store the test results
+        # to prevent your repository from blowing up in size.
+        # @see https://github.com/peaceiris/actions-gh-pages?tab=readme-ov-file#%EF%B8%8F-deploy-to-external-repository-external_repository
+      - name: Deploy to PR preview
+        uses: peaceiris/actions-gh-pages@v4
+        if: steps.evaluate-reference-images.outputs.generate-references != true
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: public/sites/backstop/
+          destination_dir: pull/${{github.event.number}}
+
+      - name: Update comment
+        if: steps.evaluate-reference-images.outputs.generate-references != true
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          comment_tag: status
+          pr_number: ${{ github.event.number }}
+          message: "${{join(steps.run-tests.outputs.*, '  ')}}"
+
+      - name: Export container logs
+        run: docker compose logs app > /tmp/container.log
+
+      - name: Upload container logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: container-log
+          path: /tmp/container.log
+          retention-days: 1
