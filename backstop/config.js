@@ -20,6 +20,21 @@ module.exports = (hostname) => {
       'height': 450
     },
     {
+      'label': 'Breakpoint_S',
+      'width': 576,
+      'height': 630
+    },
+    {
+      'label': 'Breakpoint_M',
+      'width': 768,
+      'height': 920
+    },
+    {
+      'label': 'Breakpoint_L',
+      'width': 992,
+      'height': 650
+    },
+    {
       'label': 'Breakpoint_XL',
       'width': 1024,
       'height': 580

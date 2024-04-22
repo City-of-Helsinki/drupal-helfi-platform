@@ -5,7 +5,7 @@ on:
       - '**.md'
   push:
     branches:
-      - main
+      - dev
 
 name: Visual regression tests
 
@@ -100,7 +100,7 @@ jobs:
         run: gh run download -n bitmaps -D public/sites/backstop/bitmaps_reference || true
 
         # Generate new reference images if:
-        # - Something is merged into the main branch.
+        # - Something is merged into the dev branch.
         # - Reference images do not exist yet
         # - Pull request has 'recreate-reference-images' label.
       - name: Evaluate if we should re-create reference images
@@ -108,12 +108,12 @@ jobs:
         if: |
           contains( github.event.pull_request.labels.*.name, 'recreate-reference-images') ||
           hashFiles('public/sites/backstop/bitmaps_reference/') != '' ||
-          github.ref == 'refs/heads/main'
+          github.ref == 'refs/heads/dev'
         run: echo 'generate-references=true >> $GITHUB_ENV
 
         # Generate new reference images every time something is merged into the
-        # main branch.
-        # This works as an 'approval' mechanism, meaning anything in the main
+        # dev branch.
+        # This works as an 'approval' mechanism, meaning anything in the dev
         # branch is known to be good.
         # The reference images are stored as Actions artifact, and we attempt
         # to download and use them if possible.
@@ -145,18 +145,18 @@ jobs:
         # Deploy the HTML report as GitHub Pages, so we can easily compare the
         # results.
         # You might want to use an external repository to store the test results
-        # to prevent your main repository from blowing up in size.
+        # to prevent your repository from blowing up in size.
         # @see https://github.com/peaceiris/actions-gh-pages?tab=readme-ov-file#%EF%B8%8F-deploy-to-external-repository-external_repository
       - name: Deploy to PR preview
         uses: peaceiris/actions-gh-pages@v4
-        if: github.ref != 'refs/heads/main'
+        if: steps.evaluate-reference-images.outputs.generate-references != true
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: public/sites/backstop/
           destination_dir: pull/${{github.event.number}}
 
       - name: Update comment
-        if: github.ref != 'refs/heads/main'
+        if: steps.evaluate-reference-images.outputs.generate-references != true
         uses: thollander/actions-comment-pull-request@v2
         with:
           comment_tag: status
