@@ -109,7 +109,7 @@ jobs:
           contains( github.event.pull_request.labels.*.name, 'recreate-reference-images') ||
           hashFiles('public/sites/backstop/bitmaps_reference/') != '' ||
           github.ref == 'refs/heads/dev'
-        run: echo 'generate-references=true >> $GITHUB_ENV
+        run: echo "generate-references=true" >> $GITHUB_ENV
 
         # Generate new reference images every time something is merged into the
         # dev branch.
@@ -119,11 +119,11 @@ jobs:
         # to download and use them if possible.
         # In case no reference images exist, new ones will be generated.
       - name: Generate reference images
-        if: steps.evaluate-reference-images.outputs.generate-references == true
+        if: steps.evaluate-reference-images.outputs.generate-references == 'true'
         run: node backstop/backstop.js reference
 
       - uses: actions/upload-artifact@v4
-        if: steps.evaluate-reference-images.outputs.generate-references == true
+        if: steps.evaluate-reference-images.outputs.generate-references == 'true'
         with:
           name: bitmaps
           path: public/sites/backstop/bitmaps_reference
@@ -133,7 +133,7 @@ jobs:
       - name: Run tests
         id: run-tests
         # Skip tests if we generated reference images since the tests should never fail.
-        if: steps.evaluate-reference-images.outputs.generate-references != true
+        if: steps.evaluate-reference-images.outputs.generate-references != 'true'
         run: |
           if ! node backstop/backstop.js test; then
             echo "result=:warning: Visual regression found! Please check if this change is wanted or accidental. " >> $GITHUB_OUTPUT
@@ -149,14 +149,14 @@ jobs:
         # @see https://github.com/peaceiris/actions-gh-pages?tab=readme-ov-file#%EF%B8%8F-deploy-to-external-repository-external_repository
       - name: Deploy to PR preview
         uses: peaceiris/actions-gh-pages@v4
-        if: steps.evaluate-reference-images.outputs.generate-references != true
+        if: steps.evaluate-reference-images.outputs.generate-references != 'true'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: public/sites/backstop/
           destination_dir: pull/${{github.event.number}}
 
       - name: Update comment
-        if: steps.evaluate-reference-images.outputs.generate-references != true
+        if: steps.evaluate-reference-images.outputs.generate-references != 'true'
         uses: thollander/actions-comment-pull-request@v2
         with:
           comment_tag: status
