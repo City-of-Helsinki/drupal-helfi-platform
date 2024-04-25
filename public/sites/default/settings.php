@@ -234,7 +234,7 @@ $stage_file_proxy_dir = getenv('STAGE_FILE_PROXY_ORIGIN_DIR');
 
 if ($stage_file_proxy_origin || $stage_file_proxy_dir) {
   $config['stage_file_proxy.settings']['origin'] = $stage_file_proxy_origin ?: 'https://stplattaprod.blob.core.windows.net';
-  $config['stage_file_proxy.settings']['origin_dir'] = getenv('STAGE_FILE_PROXY_ORIGIN_DIR');
+  $config['stage_file_proxy.settings']['origin_dir'] = $stage_file_proxy_dir;
   $config['stage_file_proxy.settings']['hotlink'] = FALSE;
   $config['stage_file_proxy.settings']['use_imagecache_root'] = FALSE;
 }
