@@ -51,8 +51,8 @@ jobs:
 
       - name: Run PHPCS
         run: |
-          vendor/bin/phpcs public/modules/custom/ --ignore="*.js,*.css" --extensions=php,module,install --standard=Drupal,DrupalPractice
-          vendor/bin/phpcs public/themes/custom/ --ignore="*.js,*.css" --extensions=php,theme --standard=Drupal,DrupalPractice
+          vendor/bin/phpcs public/modules/custom/
+          vendor/bin/phpcs public/themes/custom/
 
       - name: Run phpstan
         run: vendor/bin/phpstan analyze
