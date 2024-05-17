@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Skip deployment script if ENV var is true
+if [ "$SKIP_DEPLOY_SCRIPTS" = "true" ]; then
+    echo "SKIP_DEPLOY_SCRIPTS is true. Skipping the steps."
+    return
+fi
+
 source /init.sh
 
 function rollback_deployment {
@@ -36,10 +42,9 @@ if [ "$CURRENT_DEPLOY_ID" != "$OPENSHIFT_BUILD_NAME" ]; then
   # @see https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/documentation/deploy-hooks.md
   drush helfi:pre-deploy || true
   # Run maintenance tasks (config import, database updates etc)
-  drush deploy
-
+  OUTPUT=$(sh -c '(drush deploy); exit $?' 2>&1)
   if [ $? -ne 0 ]; then
-    rollback_deployment "drush deploy failed with {$?} exit code. See logs for more information." $CURRENT_DEPLOY_ID
+    rollback_deployment "drush deploy failed with {$?} exit code. ${OUTPUT}" $CURRENT_DEPLOY_ID
     exit 1
   fi
   # Run post-deploy tasks.
