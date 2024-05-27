@@ -105,6 +105,12 @@ services:
       - "traefik.http.services.nginx.loadbalancer.server.port=8080"
       - "traefik.http.routers.nginx.tls=true"
       - "traefik.docker.network=stonehenge-network"
+      - "traefik.http.middlewares.cors-header.headers.accesscontrolallowmethods=GET,OPTIONS,POST"
+      - "traefik.http.middlewares.cors-header.headers.accesscontrolallowheaders=*"
+      - "traefik.http.middlewares.cors-header.headers.accesscontrolalloworiginlist=*"
+      - "traefik.http.middlewares.cors-header.headers.accesscontrolmaxage=100"
+      - "traefik.http.middlewares.cors-header.headers.addvaryheader=true"
+      - "traefik.http.routers.nginx.middlewares=cors-header"
     depends_on:
       - elastic
     profiles:
