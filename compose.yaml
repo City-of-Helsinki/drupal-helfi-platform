@@ -100,17 +100,17 @@ services:
       - internal
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.nginx.entrypoints=https"
-      - "traefik.http.routers.nginx.rule=Host(`elastic-proxy-${DRUPAL_HOSTNAME}`)"
-      - "traefik.http.services.nginx.loadbalancer.server.port=8080"
-      - "traefik.http.routers.nginx.tls=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-elastic-proxy.entrypoints=https"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-elastic-proxy.rule=Host(`elastic-proxy-${DRUPAL_HOSTNAME}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-elastic-proxy.tls=true"
+      - "traefik.http.services.${COMPOSE_PROJECT_NAME}-elastic-proxy.loadbalancer.server.port=8080"
       - "traefik.docker.network=stonehenge-network"
       - "traefik.http.middlewares.cors-header.headers.accesscontrolallowmethods=GET,OPTIONS,POST"
       - "traefik.http.middlewares.cors-header.headers.accesscontrolallowheaders=*"
       - "traefik.http.middlewares.cors-header.headers.accesscontrolalloworiginlist=*"
       - "traefik.http.middlewares.cors-header.headers.accesscontrolmaxage=100"
       - "traefik.http.middlewares.cors-header.headers.addvaryheader=true"
-      - "traefik.http.routers.nginx.middlewares=cors-header"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-elastic-proxy.middlewares=cors-header"
     depends_on:
       - elastic
     profiles:
