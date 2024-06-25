@@ -1,5 +1,11 @@
 # Changelog
 
+## 2024-06-26 - Removed hal & rdf modules
+
+HAL & RDF were deprecated just before D10 and were added to Drupal-platform's composer.json for compatibility reasons.
+Both modules are now removed from drupal-platform and must be added to project's root composer.json if necessary.
+
+
 ## 2024-03-20 - Renamed docker-compose.yml file to compose.yaml
 
 The `druidfi/tools` package now defaults to `compose.yaml` file instead of `docker-compose.yml`.
