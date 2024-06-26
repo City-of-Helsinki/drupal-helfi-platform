@@ -35,7 +35,9 @@
         "drupal/drupal": "*",
         "drupal/core": ">=10.3",
         "drupal/core-composer-scaffold": ">=10.3",
-        "drupal/core-dev": ">=10.3"
+        "drupal/core-dev": ">=10.3",
+        "drupal/helfi_platform_config": ">=4.4",
+        "drupal/helfi_proxy": ">=3.3"
     },
     "config": {
         "optimize-autoloader": true,
