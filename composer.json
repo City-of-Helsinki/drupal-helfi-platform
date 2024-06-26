@@ -14,7 +14,7 @@
         "drupal/hdbt_admin": "^3.0",
         "drupal/helfi_azure_fs": "^2.0",
         "drupal/helfi_drupal_tools": "dev-main",
-        "drupal/helfi_platform_config": "dev-UHF-9493",
+        "drupal/helfi_platform_config": "^4.0",
         "drush/drush": "^12"
     },
     "require-dev": {
