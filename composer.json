@@ -32,10 +32,7 @@
         "weitzman/drupal-test-traits": "^2.0"
     },
     "conflict": {
-        "drupal/drupal": "*",
-        "drupal/core": ">=10.3",
-        "drupal/core-composer-scaffold": ">=10.3",
-        "drupal/core-dev": ">=10.3"
+        "drupal/drupal": "*"
     },
     "config": {
         "optimize-autoloader": true,
