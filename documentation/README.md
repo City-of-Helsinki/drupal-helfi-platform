@@ -1,5 +1,13 @@
 # Documentation
 
+## Available modules
+
+[Available modules](/documentation/modules.md)
+
+## Automatic platform updates
+
+[Automatic updates](/documentation/automatic-updates.md)
+
 ## Development and local environment
 
 - [Local environment](/documentation/local.md)
@@ -14,20 +22,16 @@
 - [Syncing databases between environments](/documentation/openshift-db-sync.md)
 - [Building assets](/documentation/build-assets.md)
 - [Queue service](/documentation/queue.md)
+- [Search](/documentation/search.md)
+
+## Projects
+
+[List of all projects](/documentation/projects.md)
+
 
 ## Testing
 
 [Testing and CI](/documentation/testing.md)
 [PHPstan](/documentation/phpstan.md)
 
-## Available modules
 
-[Available modules](/documentation/modules.md)
-
-## Projects
-
-[List of all projects](/documentation/projects.md)
-
-## Automatic platform updates
-
-[Automatic updates](/documentation/automatic-updates.md)
