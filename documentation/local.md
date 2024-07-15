@@ -34,7 +34,7 @@ Currently available profiles:
 
 ### Customizing docker-compose.yml
 
-The default `docker-compose.yml` file is intended to be updated automatically from upstream and should have no customizations.
+The default `compose.yaml` file is intended to be updated automatically from upstream and should have no customizations.
 
 You can create a `docker-compose.override.yml` file to add or override existing features.
 
