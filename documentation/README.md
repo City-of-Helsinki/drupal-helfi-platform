@@ -2,11 +2,11 @@
 
 ## Available modules
 
-[Available modules](/documentation/modules.md)
+- [Available modules](/documentation/modules.md)
 
 ## Automatic platform updates
 
-[Automatic updates](/documentation/automatic-updates.md)
+- [Automatic updates](/documentation/automatic-updates.md)
 
 ## Development and local environment
 
@@ -26,12 +26,12 @@
 
 ## Projects
 
-[List of all projects](/documentation/projects.md)
+- [List of all projects](/documentation/projects.md)
 
 
 ## Testing
 
-[Testing and CI](/documentation/testing.md)
-[PHPstan](/documentation/phpstan.md)
+- [Testing and CI](/documentation/testing.md)
+- [PHPstan](/documentation/phpstan.md)
 
 
