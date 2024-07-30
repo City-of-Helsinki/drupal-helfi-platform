@@ -12,6 +12,7 @@
 
 - [Local environment](/documentation/local.md)
 - [Profiling code with Blackfire.io](/documentation/blackfire.md)
+- [Profiling code with Xdebug profiler](/documentation/xdebug-profiler.md)
 
 ## Infrastructure
 
@@ -33,5 +34,3 @@
 
 - [Testing and CI](/documentation/testing.md)
 - [PHPstan](/documentation/phpstan.md)
-
-
