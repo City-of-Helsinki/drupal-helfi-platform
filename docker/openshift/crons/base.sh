@@ -18,6 +18,8 @@ echo "Starting cron: $(date)"
 # done
 # @endcode
 
+# Enable drush cron
+exec "/crons/cron.sh" &
 # Uncomment this to enable TPR migration cron
 #exec "/crons/migrate-tpr.sh" &
 # Uncomment this to enable linked events migrations cron
@@ -31,8 +33,14 @@ echo "Starting cron: $(date)"
 
 while true
 do
-  echo "Running cron: $(date +'%Y-%m-%dT%H:%M:%S%:z')\n"
-  drush cron
-  # Sleep for 10 minutes.
-  sleep 600
+  # Rudimentary process supervisor:
+  # Waits for the next process to terminate. The parent
+  # process is killed if any subprocess exists with failure.
+  # OpenShift should then restart the cron pod.
+  wait -n
+  exit_code=$?
+  if [[ "$exit_code" -ne 0 ]]; then
+    output_error_message "Subprocess failed with exit code $exit_code"
+    exit 1
+  fi
 done

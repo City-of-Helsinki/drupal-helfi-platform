@@ -2,14 +2,9 @@
 
 echo "Running PubSub daemon: $(date +'%Y-%m-%dT%H:%M:%S%:z')"
 
-i=0
-# Attempt to start this service five times.
-until [ $i -gt 5 ]
+while true
 do
-  drush helfi:azure:pubsub-listen
-
-  if [[ "$?" -ne 0 ]]; then
-    ((i=i+1))
-    sleep 10
-  fi
+  # PubSub process exists with success return code after
+  # certain number of messages and should then be restarted.
+  drush helfi:azure:pubsub-listen || exit 1
 done
