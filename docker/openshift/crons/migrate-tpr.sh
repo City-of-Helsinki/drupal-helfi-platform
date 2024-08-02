@@ -1,5 +1,11 @@
 #!/bin/bash
 
+source /init.sh
+
+if ! is_drupal_module_enabled "helfi_tpr"; then
+  exit 0
+fi
+
 while true
 do
   # Allow migrations to be run every 3 hours and reset stuck migrations every 12 hours.

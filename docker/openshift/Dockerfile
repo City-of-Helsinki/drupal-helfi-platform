@@ -10,6 +10,8 @@ COPY docker/openshift/entrypoints/ /entrypoints
 RUN chmod +x /entrypoints/*
 
 COPY docker/openshift/init.sh /
+COPY docker/openshift/cron-entrypoint.sh /usr/local/bin/cron-entrypoint
+RUN chmod +x /usr/local/bin/cron-entrypoint
 
 # Copy cron scripts
 RUN mkdir /crons
