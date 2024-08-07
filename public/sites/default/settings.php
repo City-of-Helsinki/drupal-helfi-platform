@@ -350,6 +350,7 @@ $preflight_checks = [
     'DRUPAL_DB_NAME',
     'DRUPAL_DB_PASS',
     'DRUPAL_DB_HOST',
+    'TFA_ENCRYPTION_KEY',
   ],
   'additionalFiles' => [],
 ];
