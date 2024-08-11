@@ -31,7 +31,7 @@ function deployment_in_progress {
 }
 
 function is_drupal_module_enabled {
-  if drush pm-list --status=Enabled --filter=${1} --format=json | jq '. == []'; then
+  if drush pm-list --status=Enabled --filter=${1} --format=json | jq --exit-status '. == []' > /dev/null; then
     return 1
   fi
 
