@@ -10,13 +10,12 @@ COPY docker/openshift/entrypoints/ /entrypoints
 RUN chmod +x /entrypoints/*
 
 COPY docker/openshift/init.sh /
-COPY docker/openshift/cron-entrypoint.sh /usr/local/bin/cron-entrypoint
-RUN chmod +x /usr/local/bin/cron-entrypoint
 
 # Copy cron scripts
 RUN mkdir /crons
 COPY docker/openshift/crons/ /crons
-RUN chmod +x /crons/*
+COPY docker/openshift/cron-entrypoint.sh /usr/local/bin/cron-entrypoint
+RUN chmod +x /crons/* /usr/local/bin/cron-entrypoint
 
 # Copy nginx overrides.
 COPY docker/openshift/custom.locations /etc/nginx/conf.d/custom.locations
