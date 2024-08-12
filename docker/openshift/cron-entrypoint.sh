@@ -17,10 +17,11 @@ echo "Starting cron: $(date)"
 # @endcode
 
 for cron in /crons/*.sh; do
-  if [ "${cron##*/}" == "base.sh" ]; then
-    # Skip legacy base.sh script if it exists.
+  # Skip legacy base.sh script if it exists.
+  # Skip Kubernetes hooks that are stored in crons directory.
+  if [[ "${cron##*/}" == "base.sh" ]] || [[ "${cron##*/}" == *-hook.sh ]]; then
     continue
-  elif [ -r "$cron" ]; then
+  elif [[ -r "$cron" ]]; then
     echo "Starting $cron"
     exec "$cron" &
   fi
