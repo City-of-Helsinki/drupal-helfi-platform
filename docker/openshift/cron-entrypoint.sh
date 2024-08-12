@@ -36,7 +36,7 @@ do
   wait -n
   exit_code=$?
   if [[ "$exit_code" -ne 0 ]]; then
-    output_error_message "Subprocess failed with exit code $exit_code"
+    output_error_message "Cron subprocess failed with exit code $exit_code"
     exit 1
   fi
 done
