@@ -12,7 +12,7 @@ TBD
 
 ## Local development
 
-Make sure your `docker-compose.yml` files is up-to-date.
+Make sure your `compose.yaml` files is up-to-date.
 
 Modify your project's `.env` file, add `COMPOSE_PROFILES=queue` and (re)start your project: `make stop && make up`.
 
