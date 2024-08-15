@@ -37,7 +37,6 @@ $settings['stomp']['all'] = [
 $settings['queue_default'] = 'queue.stomp.all';
 ```
 
-### Running queues
+### List queues
 
 - List available queues: `drush queue:list`
-- Run a queue: `drush queue:run {queue}`
