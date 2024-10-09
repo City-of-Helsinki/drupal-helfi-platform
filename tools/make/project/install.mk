@@ -1,9 +1,9 @@
 ifeq ($(DRUPAL_CONF_EXISTS),yes)
-	DRUPAL_NEW_TARGETS := up build drush-si drush-cr drush-locale-update drush-helfi-locale-import drush-uli
+	DRUPAL_NEW_TARGETS := up build drush-si drush-cr drush-locale-update drush-helfi-locale-import drush-unblock-uli
 else
-	DRUPAL_NEW_TARGETS := up build drush-si drush-helfi-enable-modules drush-locale-update drush-helfi-locale-import drush-uli
+	DRUPAL_NEW_TARGETS := up build drush-si drush-helfi-enable-modules drush-locale-update drush-helfi-locale-import drush-unblock-uli
 endif
-DRUPAL_POST_INSTALL_TARGETS := drush-locale-update drush-deploy drush-helfi-locale-import drush-uli
+DRUPAL_POST_INSTALL_TARGETS := drush-locale-update drush-deploy drush-helfi-locale-import drush-unblock-uli
 
 OC_LOGIN_TOKEN ?= $(shell bash -c 'read -s -p "You must obtain an API token by visiting https://oauth-openshift.apps.arodevtest.hel.fi/oauth/token/request (Token):" token; echo $$token')
 
@@ -46,3 +46,12 @@ drush-helfi-locale-import:  ## Update translations from helfi platform config.
 	$(call step,Import helfi platform config translations...)
 	$(call drush,helfi:locale-import helfi_platform_config)
 	$(call drush,cr)
+
+PHONY += drush-unblock-uli
+drush-unblock-uli: DRUPAL_UID ?= 1
+drush-unblock-uli: DRUPAL_DESTINATION ?= admin/reports/status
+drush-unblock-uli: ## Get login link
+	$(call step,Unblocking user...\n)
+	$(call drush,user:unblock$(if $(DRUPAL_UID), --uid=$(DRUPAL_UID), --uid=1))
+	$(call step,Login to your site with:\n)
+	$(call drush,uli$(if $(DRUPAL_UID), --uid=$(DRUPAL_UID),) $(DRUPAL_DESTINATION))
