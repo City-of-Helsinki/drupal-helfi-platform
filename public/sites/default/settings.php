@@ -385,6 +385,9 @@ if ($env = getenv('APP_ENV')) {
   }
 }
 
+// Supported values: https://github.com/Seldaek/monolog/blob/main/doc/01-usage.md#log-levels.
+$settings['helfi_api_base.log_level'] = getenv('LOG_LEVEL') ?: (getenv('APP_ENV') === 'production' ? 'info' : 'debug');
+
 /**
  * Deployment identifier.
  *
