@@ -43,7 +43,13 @@ The database dump is also used by all our automated tests.
 
 ## Adding update bot to your project
 
-### Artifact action
+### 1. Add required secrets
+
+You must define a repository secret called `AUTOMATIC_UPDATE_TOKEN`.
+
+Go to your repository's Settings -> Secrets and variables -> Actions and add a secret called `AUTOMATIC_UPDATE_TOKEN`. The value can be found from [Confluence](https://helsinkisolutionoffice.atlassian.net/wiki/spaces/HEL/pages/8354005224/Tunnusten+salasanojen+ja+muiden+avainten+jakaminen) under `AUTOMATIC_UPDATE_TOKEN` section.
+
+### 2. Enable Artifact action
 
 Enable the `artifact` action by adding [.github/workflows/artifact.yml](/.github/workflows/artifact.yml.dist) file to your repository. *NOTE*: `.github/workflows/artifact.yml.dist` might already exist, if it does then you can just rename it to `artifact.yml`.
 
@@ -57,7 +63,7 @@ This will generate an SQL-dump based on your site's current configuration and sa
 
 The action will be run automatically once a week after you first run it.
 
-### Update config action
+### 3. Enable Update config action
 
 Enable the `update-config` action by adding [.github/workflows/update-config.yml](/.github/workflows/update-config.yml.dist) file to your repository. *NOTE*: `.github/workflows/update-config.yml.dist` might already exist, if it does then you can just rename it to `update-config.yml`.
 
