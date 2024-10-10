@@ -45,9 +45,9 @@ The database dump is also used by all our automated tests.
 
 ### 1. Add required secrets
 
-You must define a repository secret called `AUTOMATIC_UPDATE_TOKEN`.
+Go to your repository's Settings -> Secrets and variables -> Actions.
 
-Go to your repository's Settings -> Secrets and variables -> Actions and add a secret called `AUTOMATIC_UPDATE_TOKEN`. The value can be found from [Confluence](https://helsinkisolutionoffice.atlassian.net/wiki/spaces/HEL/pages/8354005224/Tunnusten+salasanojen+ja+muiden+avainten+jakaminen) under `AUTOMATIC_UPDATE_TOKEN` section.
+Add a secret called `AUTOMATIC_UPDATE_TOKEN`. The value can be found from [Confluence](https://helsinkisolutionoffice.atlassian.net/wiki/spaces/HEL/pages/8354005224/Tunnusten+salasanojen+ja+muiden+avainten+jakaminen) under `AUTOMATIC_UPDATE_TOKEN` section.
 
 ### 2. Enable Artifact action
 
