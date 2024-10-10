@@ -1,6 +1,6 @@
 # Profiling code with Xdebug PHP Profiler
 
-Create a modified xdebug.ini to your project's root:
+Create a modified `xdebug.ini` to your project's root:
 ```ini
 zend_extension=/usr/lib/php83/modules/xdebug.so
 xdebug.mode=profile
@@ -43,9 +43,14 @@ index 99f55b27..27580975 100644
        - .:/app:delegated
 ```
 
+Create a new folder `xdebug` to your project's on local machine:
+```bash
+mkdir xdebug
+```
+
 Build the image with the dockerfile and start up the project 
 ```bash
-docker compose up --wait --remove-orphans --build`
+docker compose up --wait --remove-orphans --build
 ```
 
 Load the page you want to profile and check that the log files start to appear in project's `xdebug` folder.
