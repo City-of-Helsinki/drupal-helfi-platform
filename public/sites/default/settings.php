@@ -389,6 +389,11 @@ if ($env = getenv('APP_ENV')) {
 $default_log_level = getenv('APP_ENV') === 'production' ? 'info' : 'debug';
 $settings['helfi_api_base.log_level'] = getenv('LOG_LEVEL') ?: $default_log_level;
 
+// Turn sentry JS error tracking on if SENTRY_DSN_PUBLIC is defined.
+if (getenv('SENTRY_DSN_PUBLIC')) {
+  $config['raven.settings']['javascript_error_handler'] = TRUE;
+}
+
 /**
  * Deployment identifier.
  *
