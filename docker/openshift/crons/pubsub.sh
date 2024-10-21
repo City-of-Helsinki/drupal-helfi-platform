@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ -z "$DRUPAL_PUBSUB_VAULT" ]; then
+  echo "PubSub is not configured, exiting."
+  exit 0
+fi
+
 echo "Running PubSub daemon: $(date +'%Y-%m-%dT%H:%M:%S%:z')"
 
 while true
