@@ -16,7 +16,7 @@ Crons are run inside a separate cron container and use [docker/openshift/cron-en
 
 The cron container is run using the same image as the Drupal container and should contain everything your normal container does.
 
-Any scripts placed in repository's `docker/openshift/crons` folder will be copied automatically to `/crons` folder inside the cron container. The entrypoint executes all scripts in `/crons` directory and will die if any of the scripts fail, so that if any of the scripts fail, the whole container exists with a failure. OpenShift automatically restarts failed cron container.
+Any scripts placed in repository's `docker/openshift/crons` folder will be copied automatically to `/crons` folder inside the cron container. The entrypoint executes all scripts in `/crons` directory and will die if any of the scripts fail, so that if any of the scripts fail, the whole container exits with a failure. OpenShift automatically restarts failed cron container.
 
 The scripts are not restarted if they exit gracefully, meaning they must be run inside an infinite loop. You can use `sleep XX` to define how often a certain task should be run.
 
