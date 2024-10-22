@@ -25,7 +25,7 @@ This made the whole automatic update process pretty useless since we always had 
 
 We use GitHub Actions to automate database update/config export process. See [.github/workflows/update-config.yml](/.github/workflows/update-config.yml.dist).
 
-In the simplest terms it just:
+In the simplest terms, all it does is:
 
 1. Install Drupal: `drush site-install --existing-config`
 2. Flush caches and re-import configuration to make sure everything is up-to-date: `drush cr`, `drush config:import`.
