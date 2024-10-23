@@ -56,3 +56,5 @@ docker compose up --wait --remove-orphans --build
 Load the page you want to profile and check that the log files start to appear in project's `xdebug` folder.
 
 Use [qcachegrind](https://formulae.brew.sh/formula/qcachegrind) (for Mac) or [kcachegrind](https://kcachegrind.github.io/) (for Linux) to open the log files in a GUI. 
+
+**Notice!** You don't need to run anything like `XDEBUG_ENABLE=true make up` or turn on the phpstorm debugger. These will only slow down the profiler.
