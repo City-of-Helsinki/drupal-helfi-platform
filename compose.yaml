@@ -163,7 +163,7 @@ services:
   chromium:
     # @todo Update this to newer version once minkphp supports Selenium 4.
     # @see https://github.com/minkphp/MinkSelenium2Driver/pull/372
-    image: selenium/standalone-chrome:106.0
+    image: seleniarm/standalone-chromium:106.0
     networks:
       - internal
     profiles:
