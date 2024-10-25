@@ -15,7 +15,7 @@
         "drupal/helfi_azure_fs": "^2.0",
         "drupal/helfi_drupal_tools": "dev-main",
         "drupal/helfi_platform_config": "^4.0",
-        "drush/drush": "^13"
+        "drush/drush": "^12 || ^13"
     },
     "require-dev": {
         "dg/bypass-finals": "^1.5",
