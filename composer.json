@@ -95,6 +95,12 @@
             "Drupal\\Tests\\dtt\\": "tests/dtt/src"
         }
     },
+    "autoload": {
+        "psr-4": {
+            "Drush\\Style\\": "vendor/drush/drush/src-symfony-compatibility/v6/Style",
+            "Drush\\Symfony\\": "vendor/drush/drush/src-symfony-compatibility/v6/Symfony"
+        }
+    },
     "repositories": [
         {
             "type": "composer",
