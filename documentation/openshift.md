@@ -12,14 +12,13 @@ See [City-of-Helsinki/drupal-docker-images](https://github.com/City-of-Helsinki/
 
 ## Cron
 
-Crons are run inside a separate cron container and use [docker/openshift/crons/base.sh](/docker/openshift/crons/base.sh) as an entrypoint.
+Crons are run inside a separate cron container and use [docker/openshift/cron-entrypoint.sh](/docker/openshift/cron-entrypoint.sh) as an entrypoint.
 
 The cron container is run using the same image as the Drupal container and should contain everything your normal container does.
 
-The entrypoint is run only once and the container will die as soon as the "main" loop is finished, meaning that all scripts must be run inside an infinite loop. You can use `sleep XX` to define how often a certain task should be run.
+Any scripts placed in repository's `docker/openshift/crons` folder will be copied automatically to `/crons` folder inside the cron container. The entrypoint executes all scripts in `/crons` directory and will die if any of the scripts fail, so that if any of the scripts fail, the whole container exits with a failure. OpenShift automatically restarts failed cron container.
 
-Any scripts placed in repository's `docker/openshift/crons` folder will be copied automatically
-to `/crons` folder inside the cron container, but won't be run automatically.
+The scripts are not restarted if they exit gracefully, meaning they must be run inside an infinite loop. You can use `sleep XX` to define how often a certain task should be run.
 
 ### Running a custom cron
 
@@ -39,4 +38,16 @@ do
 done
 ```
 
-then add `exec "/crons/your-custom-cron-script.sh" &` to `docker/openshift/crons/base.sh` to run it.
+The scripts should check any preconditions and exit gracefully if they should not be run in some environments. For example, you can use `is_drupal_module_enabled` function from [`docker/openshift/init.sh`](/docker/openshift/init.sh) and exit if required modules are not enabled.
+
+```bash
+#!/bin/bash
+
+source /init.sh
+
+if ! is_drupal_module_enabled "helfi_react_search"; then
+  exit 0
+fi
+
+...
+```

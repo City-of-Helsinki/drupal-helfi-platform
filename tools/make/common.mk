@@ -1,9 +1,10 @@
 ARTIFACT_INCLUDE_EXISTS := $(shell test -f conf/artifact/include && echo yes || echo no)
 ARTIFACT_EXCLUDE_EXISTS := $(shell test -f conf/artifact/exclude && echo yes || echo no)
 ARTIFACT_CMD := tar -hczf artifact.tar.gz
-DUMP_SQL_FILENAME := dump.sql
+DUMP_SQL_FILENAME ?= dump.sql
 DUMP_SQL_EXISTS := $(shell test -f $(DUMP_SQL_FILENAME) && echo yes || echo no)
 SSH_OPTS ?= -o LogLevel=ERROR -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+CLEAN_EXCLUDE := .idea $(DUMP_SQL_FILENAME) .env.local
 
 ifeq ($(ARTIFACT_EXCLUDE_EXISTS),yes)
 	ARTIFACT_CMD := $(ARTIFACT_CMD) --exclude-from=conf/artifact/exclude
@@ -19,7 +20,7 @@ PHONY += artifact
 # This command can always be run on host
 artifact: RUN_ON := host
 artifact: ## Make tar.gz package from the current build
-	$(call step,Create artifact...)
+	$(call step,Create artifact...\n)
 	@$(ARTIFACT_CMD)
 
 PHONY += build
@@ -39,15 +40,14 @@ build-production:
 	@$(MAKE) build ENV=production
 
 PHONY += clean
-clean: ## Clean folders
-	$(call step,Clean folders:$(NO_COLOR)$(CLEAN_FOLDERS))
-	@rm -rf $(CLEAN_FOLDERS)
-	$(call step,Do Git clean\n)
-	@git clean -fdx -e .idea -e $(WEBROOT)/sites/default/files
+clean: ## Cleanup
+	$(call step,Cleanup loaded files...\n)
+	@rm -rf vendor
+	@git clean -fdx $(foreach item,$(CLEAN_EXCLUDE),-e $(item))
 
 PHONY += self-update
 self-update: ## Self-update makefiles from druidfi/tools
-	$(call step,Update makefiles from druidfi/tools)
+	$(call step,Update makefiles from druidfi/tools\n)
 	@bash -c "$$(curl -fsSL $(UPDATE_SCRIPT_URL))"
 
 PHONY += shell-%
@@ -69,7 +69,7 @@ gh-download-dump: GH_FLAGS += $(if $(GH_REPO),-R $(GH_REPO),)
 gh-download-dump: ## Download database dump from repository artifacts
 	$(call step,Download database dump from repository artifacts\n)
 ifeq ($(DUMP_SQL_EXISTS),no)
-	$(call run,gh run download $(strip $(GH_FLAGS)),Downloaded dump.sql,Failed)
+	$(call run,gh run download $(strip $(GH_FLAGS)),Downloaded $(DUMP_SQL_FILENAME),Failed)
 else
-	@echo "There is already dump.sql"
+	@echo "There is already $(DUMP_SQL_FILENAME)"
 endif

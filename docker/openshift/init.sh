@@ -30,6 +30,14 @@ function deployment_in_progress {
   return 1
 }
 
+function is_drupal_module_enabled {
+  if drush pm-list --status=Enabled --filter=${1} --format=json | jq --exit-status '. == []' > /dev/null; then
+    return 1
+  fi
+
+  return 0
+}
+
 if [ ! -d "sites/default/files" ]; then
   output_error_message "Container start error: Public file folder does not exist. Exiting early."
   exit 1

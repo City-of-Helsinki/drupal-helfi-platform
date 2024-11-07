@@ -229,24 +229,30 @@ if ($varnish_host = getenv('DRUPAL_VARNISH_HOST')) {
     }
   }
 }
+$stage_file_proxy_origin = getenv('STAGE_FILE_PROXY_ORIGIN');
+$stage_file_proxy_dir = getenv('STAGE_FILE_PROXY_ORIGIN_DIR');
 
-if ($stage_file_proxy_origin = getenv('STAGE_FILE_PROXY_ORIGIN')) {
-  $config['stage_file_proxy.settings']['origin'] = $stage_file_proxy_origin;
-  $config['stage_file_proxy.settings']['origin_dir'] = getenv('STAGE_FILE_PROXY_ORIGIN_DIR') ?: 'test';
+if ($stage_file_proxy_origin || $stage_file_proxy_dir) {
+  $config['stage_file_proxy.settings']['origin'] = $stage_file_proxy_origin ?: 'https://stplattaprod.blob.core.windows.net';
+  $config['stage_file_proxy.settings']['origin_dir'] = $stage_file_proxy_dir;
   $config['stage_file_proxy.settings']['hotlink'] = FALSE;
   $config['stage_file_proxy.settings']['use_imagecache_root'] = FALSE;
 }
 
-// Map API accounts. The value should be a base64 encoded JSON string.
-// @see https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/documentation/api-accounts.md.
-if ($api_accounts = getenv('DRUPAL_API_ACCOUNTS')) {
-  $config['helfi_api_base.api_accounts']['accounts'] = json_decode(base64_decode($api_accounts), TRUE);
+if ($drupal_pubsub_vault = getenv('DRUPAL_PUBSUB_VAULT')) {
+  $config['helfi_api_base.api_accounts']['vault'][] = [
+    'id' => 'pubsub',
+    'plugin' => 'json',
+    'data' => trim($drupal_pubsub_vault),
+  ];
 }
 
-// Map vault accounts. The value should be a base64 encoded JSON string.
-// @see https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/documentation/api-accounts.md.
-if ($vault_accounts = getenv('DRUPAL_VAULT_ACCOUNTS')) {
-  $config['helfi_api_base.api_accounts']['vault'] = json_decode(base64_decode($vault_accounts), TRUE);
+if ($drupal_navigation_vault = getenv('DRUPAL_NAVIGATION_VAULT')) {
+  $config['helfi_api_base.api_accounts']['vault'][] = [
+    'id' => 'helfi_navigation',
+    'plugin' => 'authorization_token',
+    'data' => trim($drupal_navigation_vault),
+  ];
 }
 
 // Override session suffix when present.
@@ -329,6 +335,11 @@ if (
 
 $settings['is_azure'] = FALSE;
 
+if ($tfa_key = getenv('TFA_ENCRYPTION_KEY')) {
+  $config['key.key.tfa']['key_provider_settings']['key_value'] = $tfa_key;
+  $config['key.key.tfa']['key_provider_settings']['base64_encoded'] = TRUE;
+}
+
 /**
  * Deployment preflight checks.
  *
@@ -340,6 +351,7 @@ $preflight_checks = [
     'DRUPAL_DB_NAME',
     'DRUPAL_DB_PASS',
     'DRUPAL_DB_HOST',
+    'TFA_ENCRYPTION_KEY',
   ],
   'additionalFiles' => [],
 ];
@@ -374,6 +386,15 @@ if ($env = getenv('APP_ENV')) {
   }
 }
 
+// Supported values: https://github.com/Seldaek/monolog/blob/main/doc/01-usage.md#log-levels.
+$default_log_level = getenv('APP_ENV') === 'production' ? 'info' : 'debug';
+$settings['helfi_api_base.log_level'] = getenv('LOG_LEVEL') ?: $default_log_level;
+
+// Turn sentry JS error tracking on if SENTRY_DSN_PUBLIC is defined.
+if (getenv('SENTRY_DSN_PUBLIC')) {
+  $config['raven.settings']['javascript_error_handler'] = TRUE;
+}
+
 /**
  * Deployment identifier.
  *
@@ -383,4 +404,3 @@ if ($env = getenv('APP_ENV')) {
 if (empty($settings['deployment_identifier'])) {
   $settings['deployment_identifier'] = filemtime(__DIR__ . '/../../../composer.lock');
 }
-

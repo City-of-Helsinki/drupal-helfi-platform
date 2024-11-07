@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "webpack --progress --mode=development --config  webpack.config.js --watch",
     "build": "webpack --progress --mode=production --config webpack.config.js",
-    "preinstall": "npx browserslist@latest --update-db",
+    "preinstall": "npx update-browserslist-db@latest",
     "lint": "lint-staged",
     "lint:js": "eslint --fix src/"
   },
@@ -30,7 +30,7 @@
     "css-loader": "^6.5.0",
     "es6-promise": "^4.1.1",
     "eslint": "^8.52.0",
-    "eslint-import-resolver-webpack": "0.13.8",
+    "eslint-import-resolver-webpack": "0.13.9",
     "eslint-plugin-import": "^2.25.3",
     "expose-loader": "^4.0.0",
     "glob": "^10.0.0",

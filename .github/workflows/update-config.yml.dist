@@ -24,6 +24,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check if required secrets are set
+        env:
+          AUTOMATIC_UPDATE_TOKEN: ${{ secrets.AUTOMATIC_UPDATE_TOKEN }}
+        if: env.AUTOMATIC_UPDATE_TOKEN == ''
+        run: exit 1
+
       - name: Download latest dump
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -77,6 +83,7 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           commit-message: Update configuration
+          token: ${{ secrets.AUTOMATIC_UPDATE_TOKEN }}
           title: Automatic update
           labels: auto-update
           body: |
