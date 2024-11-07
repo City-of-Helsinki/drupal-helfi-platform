@@ -158,6 +158,7 @@ services:
       - app
     networks:
       - internal
+      - stonehenge-network
     profiles:
       - queue
   chromium:
