@@ -394,6 +394,17 @@ if (getenv('SENTRY_DSN_PUBLIC')) {
   $config['raven.settings']['javascript_error_handler'] = TRUE;
 }
 
+// Elasticsearch settings.
+if (getenv('ELASTICSEARCH_URL')) {
+  $config['search_api.server.default']['backend_config']['connector_config']['url'] = getenv('ELASTICSEARCH_URL');
+
+  if (getenv('ELASTIC_USER') && getenv('ELASTIC_PASSWORD')) {
+    $config['search_api.server.default']['backend_config']['connector'] = 'basicauth';
+    $config['search_api.server.default']['backend_config']['connector_config']['username'] = getenv('ELASTIC_USER');
+    $config['search_api.server.default']['backend_config']['connector_config']['password'] = getenv('ELASTIC_PASSWORD');
+  }
+}
+
 /**
  * Deployment identifier.
  *
