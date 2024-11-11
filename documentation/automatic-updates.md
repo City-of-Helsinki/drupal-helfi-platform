@@ -112,3 +112,8 @@ We use Github account called `hel-platta-automation` to trigger the dispatch eve
 
 See https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event.
 
+### Changing Personal Access Token (PAT) used to create Automatic updates PRs
+
+Automatic updates Pull request is triggered using a custom Github bot account to allow us to run other Workflows against the PR.
+
+Go to your repository's Settings -> Secrets and variables -> Actions. Modify `AUTOMATIC_UPDATE_TOKEN` with the new PAT. The value can be found from [Confluence](https://helsinkisolutionoffice.atlassian.net/wiki/spaces/HEL/pages/8354005224/Tunnusten+salasanojen+ja+muiden+avainten+jakaminen) under `AUTOMATIC_UPDATE_TOKEN` section.
