@@ -10,5 +10,6 @@ fi
 
 while true
 do
- drush stomp:worker helfi_navigation_menu_queue --items-limit 100
+  # Restart process every 12 hours.
+  drush stomp:worker helfi_navigation_menu_queue --lease-time 43200
 done

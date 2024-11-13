@@ -18,11 +18,11 @@ Create a bash script for each queue:
 # docker/openshift/crons/yourqueue.sh
 #!/bin/sh
 
-(while true
+while true
 do
-# Replace helfi_api_base_revision with the queue name.
- drush stomp:worker helfi_api_base_revision --items-limit 100
-done) &
+  # Replace helfi_api_base_revision with the queue name.
+  drush stomp:worker helfi_api_base_revision --items-limit 100
+done
 ```
 
 Add `exec /crons/yourqueue.sh &` to `docker/openshift/crons/base.sh`.
