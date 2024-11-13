@@ -8,7 +8,7 @@ Configure each queue in `all.settings.php`:
 
 ```php
 <?php
-$settings['queue_helfi_navigation_menu_queue'] = 'queue.stomp.default';
+$settings['queue_{your_queue_name}'] = 'queue.stomp.default';
 ```
 
 ## Running queues
@@ -29,9 +29,7 @@ Add `exec /crons/yourqueue.sh &` to `docker/openshift/crons/base.sh`.
 
 ## Local development
 
-Make sure your Docker `compose.yaml` file is up-to-date.
-
-Modify your project's `.env` file, add `COMPOSE_PROFILES=queue` and (re)start the project: `make stop && make up`.
+Only Etusivu has Artemis service running, so you must have Etusivu instance is up and running.
 
 Add something like this to your `local.settings.php` file:
 ```php
@@ -39,7 +37,7 @@ $settings['stomp']['default'] = [
   'clientId' => 'artemis',
   'login' => 'artemis',
   'passcode' => 'artemis',
-  'brokers' => 'tcp://artemis:61613',
+  'brokers' => 'tcp://helfi-etusivu-artemis:61616',
   'timeout' => ['read' => 15000],
   'heartbeat' => [
     'send' => 12000,
