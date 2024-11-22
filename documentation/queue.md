@@ -21,7 +21,8 @@ Create a bash script for each queue:
 while true
 do
   # Replace helfi_api_base_revision with the queue name.
-  drush stomp:worker helfi_api_base_revision --items-limit 100
+  # Setting --lease-time 43200 restarts the process every 12 hours.
+  drush stomp:worker helfi_api_base_revision --lease-time 43200
 done
 ```
 
@@ -29,7 +30,9 @@ Add `exec /crons/yourqueue.sh &` to `docker/openshift/crons/base.sh`.
 
 ## Local development
 
-Only Etusivu has Artemis service running, so you must have Etusivu instance is up and running.
+Only Etusivu has Artemis service running by default. Make sure Etusivu instance is up and running.
+
+Define `queue` Docker compose profile if you wish to manage your own Artemis instance. See [Compose profiles](/documentation/local.md#compose-profiles) documentation for more information.
 
 Add something like this to your `local.settings.php` file:
 ```php
@@ -49,6 +52,9 @@ $settings['stomp']['default'] = [
     ],
   ],
 ];
+// Define queues here. You can get list of available queues with `drush queue:list`
+// The queue is never processed unless you manually run the queue command.
+$settings['queue_{your_queue_name}'] = 'queue.stomp.default';
 ```
 
 ### Running queues
