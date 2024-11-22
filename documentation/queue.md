@@ -40,6 +40,7 @@ $settings['stomp']['default'] = [
   'clientId' => 'artemis',
   'login' => 'artemis',
   'passcode' => 'artemis',
+  // Use 'tcp://artemis:61616' if you're running your own Artemis instance.
   'brokers' => 'tcp://helfi-etusivu-artemis:61616',
   'timeout' => ['read' => 15000],
   'heartbeat' => [
