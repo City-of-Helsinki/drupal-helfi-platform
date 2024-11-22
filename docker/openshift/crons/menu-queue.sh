@@ -1,5 +1,7 @@
 #!/bin/sh
 
+source /init.sh
+
 if [ -z "$AMQ_BROKERS" ]; then
   exit 0
 fi
