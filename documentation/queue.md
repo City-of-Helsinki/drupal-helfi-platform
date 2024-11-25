@@ -26,8 +26,6 @@ do
 done
 ```
 
-Add `exec /crons/yourqueue.sh &` to `docker/openshift/crons/base.sh`.
-
 ## Local development
 
 Only Etusivu has Artemis service running by default. Make sure Etusivu instance is up and running.
