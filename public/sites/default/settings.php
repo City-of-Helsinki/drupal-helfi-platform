@@ -260,24 +260,18 @@ if ($session_suffix = getenv('DRUPAL_SESSION_SUFFIX')) {
   $config['helfi_proxy.settings']['session_suffix'] = $session_suffix;
 }
 
-if ($robots_header_enabled = getenv('DRUPAL_X_ROBOTS_TAG_HEADER')) {
-  $config['helfi_proxy.settings']['robots_header_enabled'] = (bool) $robots_header_enabled;
-}
-
-$artemis_destination = drupal_get_env([
-  'ARTEMIS_DESTINATION',
+$amq_destination = drupal_get_env([
   'PROJECT_NAME',
 ]);
+$amq_brokers = getenv('AMQ_BROKERS');
 
-$artemis_brokers = getenv('ARTEMIS_BROKERS');
-
-if ($artemis_brokers && $artemis_destination) {
+if ($amq_brokers && $amq_destination) {
   $settings['stomp']['default'] = [
-    'clientId' => getenv('ARTEMIS_CLIENT_ID') ?: 'artemis',
-    'login' => getenv('ARTEMIS_LOGIN') ?: NULL,
-    'passcode' => getenv('ARTEMIS_PASSCODE') ?: NULL,
-    'destination' => sprintf('/queue/%s', $artemis_destination),
-    'brokers' => $artemis_brokers,
+    'clientId' => getenv('AMQ_CLIENT_ID') ?: 'client_ ' . $amq_destination,
+    'login' => getenv('AMQ_USER') ?: NULL,
+    'passcode' => getenv('AMQ_PASSWORD') ?: NULL,
+    'destination' => sprintf('/queue/%s', $amq_destination),
+    'brokers' => $amq_brokers,
     'timeout' => ['read' => 12000],
     'heartbeat' => [
       'send' => 20000,
@@ -289,7 +283,17 @@ if ($artemis_brokers && $artemis_destination) {
       ],
     ],
   ];
-  $settings['queue_default'] = 'queue.stomp.default';
+
+  $queues = [
+    'helfi_navigation_menu_queue',
+    'helfi_api_base_revision',
+  ];
+  foreach ($queues as $queue) {
+    $settings['queue_service_' . $queue] = 'queue.stomp.default';
+  }
+  // You must configure project specific queues manually in 'all.settings.php'
+  // file.
+  // @see https://github.com/City-of-Helsinki/drupal-helfi-platform/blob/main/documentation/queue.md
 }
 
 $config['filelog.settings']['rotation']['schedule'] = 'never';
