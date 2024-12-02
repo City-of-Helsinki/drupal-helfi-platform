@@ -359,6 +359,27 @@ $preflight_checks = [
   'additionalFiles' => [],
 ];
 
+// Elasticsearch server config.
+if (getenv('ELASTICSEARCH_URL')) {
+  $config['search_api.server.default']['backend_config']['connector_config']['url'] = getenv('ELASTICSEARCH_URL');
+
+  if (getenv('ELASTIC_USER') && getenv('ELASTIC_PASSWORD')) {
+    $config['search_api.server.default']['backend_config']['connector'] = 'helfi_connector';
+    $config['search_api.server.default']['backend_config']['connector_config']['username'] = getenv('ELASTIC_USER');
+    $config['search_api.server.default']['backend_config']['connector_config']['password'] = getenv('ELASTIC_PASSWORD');
+  }
+}
+
+
+// Supported values: https://github.com/Seldaek/monolog/blob/main/doc/01-usage.md#log-levels.
+$default_log_level = getenv('APP_ENV') === 'production' ? 'info' : 'debug';
+$settings['helfi_api_base.log_level'] = getenv('LOG_LEVEL') ?: $default_log_level;
+
+// Turn sentry JS error tracking on if SENTRY_DSN_PUBLIC is defined.
+if (getenv('SENTRY_DSN_PUBLIC')) {
+  $config['raven.settings']['javascript_error_handler'] = TRUE;
+}
+
 // Environment specific overrides.
 if (file_exists(__DIR__ . '/all.settings.php')) {
   // phpcs:ignore
@@ -387,15 +408,6 @@ if ($env = getenv('APP_ENV')) {
     // phpcs:ignore
     include_once __DIR__ . '/azure.settings.php'; // NOSONAR
   }
-}
-
-// Supported values: https://github.com/Seldaek/monolog/blob/main/doc/01-usage.md#log-levels.
-$default_log_level = getenv('APP_ENV') === 'production' ? 'info' : 'debug';
-$settings['helfi_api_base.log_level'] = getenv('LOG_LEVEL') ?: $default_log_level;
-
-// Turn sentry JS error tracking on if SENTRY_DSN_PUBLIC is defined.
-if (getenv('SENTRY_DSN_PUBLIC')) {
-  $config['raven.settings']['javascript_error_handler'] = TRUE;
 }
 
 /**
