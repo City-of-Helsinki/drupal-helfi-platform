@@ -289,7 +289,7 @@ if ($amq_brokers && $amq_destination) {
     'helfi_api_base_revision',
   ];
   foreach ($queues as $queue) {
-    $settings['queue_service_' . $queue] = 'queue.stomp.default';
+    // $settings['queue_service_' . $queue] = 'queue.stomp.default';
   }
   // You must configure project specific queues manually in 'all.settings.php'
   // file.
