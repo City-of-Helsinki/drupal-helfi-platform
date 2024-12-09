@@ -170,6 +170,10 @@ services:
       SE_SESSION_REQUEST_TIMEOUT: "10"
     depends_on:
       - app
+    networks:
+      - internal
+    profiles:
+      - testing
 
 networks:
   internal:
