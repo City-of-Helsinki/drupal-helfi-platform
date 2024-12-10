@@ -15,11 +15,11 @@
   <ini name="error_reporting" value="32767"/>
     <!-- Do not limit the amount of memory tests take to run. -->
   <ini name="memory_limit" value="-1"/>
-  <env name="MINK_DRIVER_ARGS_WEBDRIVER" value='["chrome", {"browserName":"chrome","chromeOptions":{"w3c": false}}, "http://chromium:4444"]' />
-  <env name="DTT_MINK_DRIVER_ARGS" value='["chrome", {"chromeOptions":{"w3c": false }}, "http://chromium:4444"]'/>
+  <env name="MINK_DRIVER_ARGS_WEBDRIVER" value='["chrome", {"browserName":"chrome", "goog:chromeOptions":{"w3c": true, "args":["--no-sandbox", "--ignore-certificate-errors", "--allow-insecure-localhost", "--headless", "--dns-prefetch-disable"]}}, "http://chromium:4444"]' />
+  <env name="DTT_MINK_DRIVER_ARGS" value='["chrome", {"browserName":"chrome", "goog:chromeOptions":{"w3c": true, "args":["--no-sandbox","--ignore-certificate-errors", "--allow-insecure-localhost", "--headless", "--dns-prefetch-disable"]}}, "http://chromium:4444"]'/>
   <env name="DTT_API_OPTIONS" value='{"socketTimeout": 360, "domWaitTimeout": 3600000}' />
   <env name="DTT_API_URL" value="http://chromium:9222"/>
-  <env name="DTT_BASE_URL" value="http://app:8888"/>
+  <env name="DTT_BASE_URL" value="https://app"/>
 </php>
 <testsuites>
   <testsuite name="unit">
