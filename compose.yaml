@@ -8,6 +8,7 @@ services:
     depends_on:
       - db
     environment:
+      WEBROOT: /app/public
       STAGE_FILE_PROXY_ORIGIN: "${STAGE_FILE_PROXY_ORIGIN}"
       STAGE_FILE_PROXY_ORIGIN_DIR: "${STAGE_FILE_PROXY_ORIGIN_DIR}"
       APP_ENV: "${APP_ENV:-local}"
@@ -24,7 +25,6 @@ services:
       # DOCKERHOST: host.docker.internal
       # Use drush server to run functional tests, so we don't have to care about
       # permission or SSL issues.
-      SIMPLETEST_BASE_URL: "https://app"
       BROWSERTEST_OUTPUT_BASE_URL: "https://${DRUPAL_HOSTNAME}"
       BROWSERTEST_OUTPUT_DIRECTORY: "/app/public/sites/default/files/simpletest"
       DRUPAL_VARNISH_HOST: "${COMPOSE_PROJECT_NAME}-varnish"
