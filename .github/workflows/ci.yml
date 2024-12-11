@@ -4,7 +4,7 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/city-of-helsinki/drupal-web:8.3-dev
+      image: ghcr.io/city-of-helsinki/drupal-web:8.3
       options: --hostname app --user 1001
     services:
       db:
