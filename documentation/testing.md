@@ -4,6 +4,16 @@
 
 Tests can be run with `vendor/bin/phpunit -c /app/phpunit.xml.dist /path/to/test`.
 
+## Running tests on GitHub Actions
+
+### Project tests
+
+See [Platform repository](/.github/workflows/test.yml.dist) for an example.
+
+## # Module tests
+
+See [drupal/helfi_api_base](https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/.github/workflows/ci.yml) module for an example.
+
 ## Existing site functional tests
 
 By default, Drupal Core runs each test in a completely new Drupal instance, which is created from scratch for the test. In other words, none of your configuration and none of your content exists.
