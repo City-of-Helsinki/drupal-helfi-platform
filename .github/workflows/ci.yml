@@ -24,7 +24,7 @@ jobs:
         # we have to start services manually.
       - name: Start services
         env:
-          WEBROOT: ${{ env.GITHUB_WORKSPACE }}/public
+          WEBROOT: ${{ github.workspace }}/public
         run: entrypoint &
 
       - name: Build project
