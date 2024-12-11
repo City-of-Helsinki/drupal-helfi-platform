@@ -6,7 +6,6 @@ jobs:
     container:
       image: ghcr.io/city-of-helsinki/drupal-web:8.3-dev
       options: --hostname app --user 1001
-
     services:
       db:
         image: mysql:8
@@ -25,7 +24,7 @@ jobs:
         # we have to start services manually.
       - name: Start services
         env:
-          WEBROOT: ${{ env.GITHUB_WORKSPACE }}
+          WEBROOT: ${{ env.GITHUB_WORKSPACE }}/public
         run: entrypoint &
 
       - name: Build project
