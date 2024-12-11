@@ -7,7 +7,7 @@ if [ ! -n "$OC_PROJECT_NAME" ]; then
   exit 1;
 fi
 
-oc login --token=${1} --server=https://api.arodevtest.hel.fi:6443 --insecure-skip-tls-verify
+oc login --token=${1} --server=https://api.arodevtest.hel.fi:6443
 oc project ${OC_PROJECT_NAME}
 
 OC_POD_NAME=$(oc get pods -o name | grep drupal-cron | grep -v deploy)
