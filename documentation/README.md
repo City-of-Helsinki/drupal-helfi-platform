@@ -19,7 +19,6 @@
 - [Deployment](/documentation/deployment.md)
 - [Logging](/documentation/logging.md)
 - [OpenShift](/documentation/openshift.md)
-- [Using OpenShift origin client (OC)](/documentation/openshift-oc.md)
 - [Syncing databases between environments](/documentation/openshift-db-sync.md)
 - [Building assets](/documentation/build-assets.md)
 - [Queue service](/documentation/queue.md)
