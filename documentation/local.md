@@ -46,8 +46,6 @@ By default, `make fresh` attempts to install site using `dump.sql` file in your 
 
 ### Syncing database from testing environment
 
-Your container must have `oc` tool build-in. This is included by default when using the default `ghcr.io/city-of-helsinki/drupal-web` Docker images.
-
 Add/modify `OC_PROJECT_NAME` environment variable in your project's `.env` file. The value should be the same as the name shown in OpenShift project list, for example `hki-kanslia-random-project`.
 
 Make sure you have no `dump.sql` in your Git root and run `make fresh`. The command will sync database dump from your testing environment.
@@ -60,5 +58,4 @@ If you need a production database, you can sync the database from production to 
 [Syncing databases between OpenShift environments](/documentation/openshift-db-sync.md) for more information.
 
 The other option is to sync it using VPN and running the `oc` tool on your local machine. See:
-- [OpenShift OC tool](/documentation/openshift-oc.md)
 - [VPN instructions](https://helsinkisolutionoffice.atlassian.net/wiki/spaces/HELFI/pages/7535886371/Maintenance+VPN+Huoltoyhteys)

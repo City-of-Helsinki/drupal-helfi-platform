@@ -10,18 +10,14 @@ OC_LOGIN_TOKEN ?= $(shell bash -c 'read -s -p "You must obtain an API token by v
 SYNC_TARGETS := drush-sync-db
 
 ifneq ($(DUMP_SQL_EXISTS),yes)
-SYNC_TARGETS := oc-login oc-sync
+SYNC_TARGETS := oc-sync
 endif
-
-PHONY += oc-login
-oc-login:
-	$(call drush,helfi:oc:login $(OC_LOGIN_TOKEN))
 
 PHONY += oc-sync
 oc-sync:
-	$(call drush,helfi:oc:get-dump)
+	docker run --env-file .env -it --rm -v .:/app --name helfi-oc ghcr.io/city-of-helsinki/drupal-oc-cli:latest sh -c "chmod +x /app/tools/make/project/db-sync.sh && /app/tools/make/project/db-sync.sh $(OC_LOGIN_TOKEN)"
 	$(call drush,sql-query --file=${DOCKER_PROJECT_ROOT}/$(DUMP_SQL_FILENAME),SQL dump imported)
-	$(call drush,helfi:oc:sanitize-database)
+	$(call drush,sql-query \"UPDATE file_managed SET uri = REPLACE(uri, 'azure://', 'public://');\",Sanitized Azure URIs)
 	$(call drush,cr)
 	$(call drush,cim -y)
 	$(call drush,cr)

@@ -8,6 +8,7 @@ services:
     depends_on:
       - db
     environment:
+      WEBROOT: /app/public
       STAGE_FILE_PROXY_ORIGIN: "${STAGE_FILE_PROXY_ORIGIN}"
       STAGE_FILE_PROXY_ORIGIN_DIR: "${STAGE_FILE_PROXY_ORIGIN_DIR}"
       APP_ENV: "${APP_ENV:-local}"
@@ -24,7 +25,6 @@ services:
       # DOCKERHOST: host.docker.internal
       # Use drush server to run functional tests, so we don't have to care about
       # permission or SSL issues.
-      SIMPLETEST_BASE_URL: "http://app:8888"
       BROWSERTEST_OUTPUT_BASE_URL: "https://${DRUPAL_HOSTNAME}"
       BROWSERTEST_OUTPUT_DIRECTORY: "/app/public/sites/default/files/simpletest"
       DRUPAL_VARNISH_HOST: "${COMPOSE_PROJECT_NAME}-varnish"
@@ -160,13 +160,21 @@ services:
     profiles:
       - queue
   chromium:
-    # @todo Update this to newer version once minkphp supports Selenium 4.
-    # @see https://github.com/minkphp/MinkSelenium2Driver/pull/372
-    image: seleniarm/standalone-chromium:106.0
+    image: selenium/standalone-chromium
+    environment:
+      SE_NODE_OVERRIDE_MAX_SESSIONS: "true"
+      SE_NODE_MAX_SESSIONS: "16"
+      SE_START_XVFB: "false"
+      SE_START_VNC: "false"
+      SE_SESSION_RETRY_INTERVAL: "1"
+      SE_SESSION_REQUEST_TIMEOUT: "10"
+    depends_on:
+      - app
     networks:
       - internal
     profiles:
       - testing
+
 networks:
   internal:
     external: false
