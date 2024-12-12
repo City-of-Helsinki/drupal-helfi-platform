@@ -17,8 +17,9 @@ if [ ! -n "$OC_POD_NAME" ]; then
   exit 1
 fi
 
+oc rsh $OC_POD_NAME rm -f /tmp/dump.sql
 oc rsh $OC_POD_NAME drush sql:dump --structure-tables-key=common \
-  --extra-dump="--no-tablespaces --hex-blob" \
+  --extra-dump='--no-tablespaces --hex-blob' \
   --result-file=/tmp/dump.sql
 
 oc rsync $OC_POD_NAME:/tmp/dump.sql /app
