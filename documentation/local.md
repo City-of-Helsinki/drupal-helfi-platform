@@ -59,3 +59,46 @@ If you need a production database, you can sync the database from production to 
 
 The other option is to sync it using VPN and running the `oc` tool on your local machine. See:
 - [VPN instructions](https://helsinkisolutionoffice.atlassian.net/wiki/spaces/HELFI/pages/7535886371/Maintenance+VPN+Huoltoyhteys)
+
+## Testing production setup on local
+
+Modify your `compose.yaml` file with something like:
+
+```diff
+diff --git a/compose.yaml b/compose.yaml
+--- a/compose.yaml
++++ b/compose.yaml
+@@ -1,14 +1,13 @@
+ services:
+   app:
+     container_name: "${COMPOSE_PROJECT_NAME}-app"
+-    image: "${DRUPAL_IMAGE}"
++    build:
++      context: .
++      dockerfile: docker/openshift/Dockerfile
+     hostname: "${COMPOSE_PROJECT_NAME}"
+-    volumes:
+-      - .:/app:delegated
+     depends_on:
+       - db
+     environment:
+-      WEBROOT: /app/public
++      SIMPLETEST_DB: mysql://drupal:drupal@db:3306/drupal
++      OPENSHIFT_BUILD_NAME: some-build-id
+```
+
+Disable preflight checks in `docker/openshift/entrypoints/10-preflight.sh`:
+```diff
+diff --git a/docker/openshift/entrypoints/10-preflight.sh b/docker/openshift/entrypoints/10-preflight.sh
+--- a/docker/openshift/entrypoints/10-preflight.sh
++++ b/docker/openshift/entrypoints/10-preflight.sh
+@@ -5,7 +5,7 @@
+ if [ -f "../docker/openshift/preflight/preflight.php" ]; then
+   echo "Running preflight checks ..."
+   if ! php ../docker/openshift/preflight/preflight.php; then
+-    exit 1
+   fi
+ fi
+```
+
+Run `docker compose build` and `make stop up`.
