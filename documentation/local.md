@@ -31,6 +31,7 @@ Modify the value of `COMPOSE_PROFILES` environment variable from `.env` file or 
 Currently available profiles:
 - `queue`: Apache Artemis queue service
 - `search`: ElasticSearch service
+- `varnish`: Varnish service. Provides `varnish-yourproject.docker.so` address.
 
 ### Customizing docker-compose.yml
 
