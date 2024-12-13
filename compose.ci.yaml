@@ -1,0 +1,6 @@
+services:
+  app:
+    user: "1001:1001"
+    environment:
+      SYMFONY_DEPRECATIONS_HELPER: disabled
+      BROWSERTEST_OUTPUT_DIRECTORY: /app/results

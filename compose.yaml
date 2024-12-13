@@ -87,6 +87,8 @@ services:
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-varnish.tls=true"
       - "traefik.http.services.${COMPOSE_PROJECT_NAME}-varnish.loadbalancer.server.port=6081"
       - "traefik.docker.network=stonehenge-network"
+    profiles:
+      - varnish
   elastic-proxy:
     container_name: "${COMPOSE_PROJECT_NAME}-elastic-proxy"
     image: nginxinc/nginx-unprivileged:alpine-perl

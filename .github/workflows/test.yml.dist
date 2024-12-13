@@ -3,38 +3,11 @@ on:
   push:
     branches: ['main', 'dev']
 name: CI
-env:
-  SYMFONY_DEPRECATIONS_HELPER: disabled
 jobs:
   tests:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/city-of-helsinki/drupal-web:8.3
-      options: --hostname app --user 1001
-
-    services:
-      db:
-        image: mysql:8
-        env:
-          MYSQL_USER: drupal
-          MYSQL_PASSWORD: drupal
-          MYSQL_DATABASE: drupal
-          MYSQL_ROOT_PASSWORD: drupal
-        ports:
-          - 3306:3306
     steps:
       - uses: actions/checkout@v4
-
-        # Actions worker overrides the default entrypoint with "tail -f /dev/null", so
-        # we have to start services manually.
-      - name: Start services
-        env:
-          WEBROOT: ${{ github.workspace }}/public
-        run: entrypoint &
-
-      - name: Set browsertest output folder
-        run: |
-          echo "BROWSERTEST_OUTPUT_DIRECTORY=$GITHUB_WORKSPACE/public/sites/simpletest" >> $GITHUB_ENV
 
       - name: Make sure configuration was exported in correct language (en or und)
         run: |
@@ -46,22 +19,36 @@ jobs:
             exit 1
           fi
 
+      - name: Install and start Stonehenge
+        run: |
+          git clone -b 5.x https://github.com/druidfi/stonehenge.git ~/stonehenge
+          cd ~/stonehenge && make up
+
+        # This must be done after we start Stonehenge.
+      - name: Setup Docker compose environment variables
+        run: |
+          echo "COMPOSE_FILE=compose.yaml:compose.ci.yaml" >> $GITHUB_ENV
+          echo "COMPOSE_PROFILES=" >> $GITHUB_ENV
+
+      - name: Start project
+        run: make up
+
       - name: Build project
-        run: composer install --no-interaction
+        run: docker compose exec app bash -c "composer install --no-interaction"
 
       - name: Scan security updates
-        run: composer audit
+        run: docker compose exec app bash -c "composer audit"
 
       - name: Check that subtheme is not built with dev mode
-        run: if grep -q 'sourceMappingURL=' -R public/themes/custom/hdbt_subtheme/dist/css; then exit 1; fi
+        run: docker compose exec app bash -c "if grep -q 'sourceMappingURL=' -R public/themes/custom/hdbt_subtheme/dist/css; then exit 1; fi"
 
       - name: Run PHPCS
         run: |
-          vendor/bin/phpcs public/modules/custom/
-          vendor/bin/phpcs public/themes/custom/
+          docker compose exec app bash -c "vendor/bin/phpcs public/modules/custom/"
+          docker compose exec app bash -c "vendor/bin/phpcs public/themes/custom/"
 
       - name: Run phpstan
-        run: vendor/bin/phpstan analyze
+        run: docker compose exec app bash -c "vendor/bin/phpstan analyze"
 
       - name: Download latest dump
         env:
@@ -70,22 +57,26 @@ jobs:
 
       - name: Install Drupal
         run: |
-          mysql --user=drupal --password=drupal --database=drupal --host=db --port=3306 -A < latest.sql
-          drush deploy
-
-      - name: Start services
-        run: |
-          for i in {1..5}; do RESPONSE_CODE=$(curl -k -s -o /dev/null -w "%{http_code}" "$SIMPLETEST_BASE_URL" || true); if [ "$RESPONSE_CODE" -gt "301" ] || [ "$RESPONSE_CODE" -lt "200" ]; then sleep 2; fi; done
+          docker compose exec app bash -c "mysql --user=drupal --password=drupal --database=drupal --host=db --port=3306 -A < latest.sql"
+          docker compose exec app bash -c "drush deploy"
 
       - name: Run PHPUnit tests
         run: |
-          composer test-php public/modules/custom
-          if [ -d "tests/" ]; then composer test-php tests/; else echo "No DTT tests found. Ignoring..."; fi
+          docker compose exec app bash -c "mkdir -p /app/results"
+
+          if [ -d "tests/" ]; then
+            docker compose exec app bash -c "composer test-php tests/"
+          fi
+          docker compose exec app bash -c "composer test-php public/modules/custom"
+
+      - name: Export logs
+        if: always()
+        run: docker compose logs app > results/service.log
 
       - name: Create an artifact from test report
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: results
-          path: ${{ env.BROWSERTEST_OUTPUT_DIRECTORY }}
+          path: results/
           retention-days: 1

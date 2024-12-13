@@ -8,32 +8,32 @@ name: Build artifacts
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/city-of-helsinki/drupal-web:8.3
-
-    services:
-      db:
-        image: mysql:8
-        env:
-          MYSQL_USER: drupal
-          MYSQL_PASSWORD: drupal
-          MYSQL_DATABASE: drupal
-          MYSQL_ROOT_PASSWORD: drupal
-        ports:
-          - 3306:3306
-
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install and start Stonehenge
+        run: |
+          git clone -b 5.x https://github.com/druidfi/stonehenge.git ~/stonehenge
+          cd ~/stonehenge && make up
+
+        # This must be done after we start Stonehenge.
+      - name: Setup Docker compose environment variables
+        run: |
+          echo "COMPOSE_FILE=compose.yaml:compose.ci.yaml" >> $GITHUB_ENV
+
+      - name: Start project
+        run: make up
+
       - name: Build project
-        run: composer install --no-interaction
+        run: docker compose exec app bash -c "composer install --no-interaction"
 
       - name: Setup drupal and save database dump
         run: |
-          drush si -y && drush cr
-          drush si --existing-config -y
-          drush cim -y
-          drush sql-dump --result-file=${GITHUB_WORKSPACE}/latest.sql
+          docker compose exec app bash -c "drush si -y && drush cr"
+          docker compose exec app bash -c "drush si --existing-config -y"
+          docker compose exec app bash -c "drush cr"
+          docker compose exec app bash -c "drush cim -y"
+          docker compose exec app bash -c "drush sql-dump --result-file=/app/latest.sql"
 
       - name: Upload latest database dump
         uses: actions/upload-artifact@v4
