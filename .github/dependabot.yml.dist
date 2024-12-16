@@ -1,0 +1,18 @@
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+version: 2
+updates:
+  - package-ecosystem: "composer" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+    allow:
+      # Update only direct dependencies. This reduces spam since most
+      # indirect dependencies are handles by update-config workflow.
+      - dependency-type: "direct"
+    ignore:
+      # Updated by update-config workflow
+      - dependency-name: "drupal/helfi_*"
+      - dependency-name: "drupal/hdbt*"
+      # Updated separately
+      - dependency-name: "drupal/core*"
