@@ -118,7 +118,7 @@ services:
     profiles:
       - search
   elastic:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
     container_name: "${COMPOSE_PROJECT_NAME}-elastic"
     environment:
       - node.name="${COMPOSE_PROJECT_NAME}-elastic"
