@@ -15,7 +15,7 @@ endif
 
 PHONY += oc-sync
 oc-sync:
-	docker run --env-file .env -it --rm -v .:/app --name helfi-oc ghcr.io/city-of-helsinki/drupal-oc-cli:latest sh -c "chmod +x /app/tools/make/project/db-sync.sh && /app/tools/make/project/db-sync.sh $(OC_LOGIN_TOKEN)"
+	@docker run --env-file .env -it --rm -v $(shell pwd):/app --name helfi-oc ghcr.io/city-of-helsinki/drupal-oc-cli:latest sh -c "chmod +x /app/tools/make/project/db-sync.sh && /app/tools/make/project/db-sync.sh $(OC_LOGIN_TOKEN)"
 	$(call drush,sql-query --file=${DOCKER_PROJECT_ROOT}/$(DUMP_SQL_FILENAME),SQL dump imported)
 	$(call drush,sql-query \"UPDATE file_managed SET uri = REPLACE(uri, 'azure://', 'public://');\",Sanitized Azure URIs)
 	$(call drush,cr)
