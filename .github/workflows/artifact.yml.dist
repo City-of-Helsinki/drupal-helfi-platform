@@ -7,37 +7,4 @@ on:
 name: Build artifacts
 jobs:
   build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install and start Stonehenge
-        run: |
-          git clone -b 5.x https://github.com/druidfi/stonehenge.git ~/stonehenge
-          cd ~/stonehenge && make up
-
-        # This must be done after we start Stonehenge.
-      - name: Setup Docker compose environment variables
-        run: |
-          echo "COMPOSE_FILE=compose.yaml:compose.ci.yaml" >> $GITHUB_ENV
-
-      - name: Start project
-        run: make up
-
-      - name: Build project
-        run: docker compose exec app bash -c "composer install --no-interaction"
-
-      - name: Setup drupal and save database dump
-        run: |
-          docker compose exec app bash -c "drush si -y && drush cr"
-          docker compose exec app bash -c "drush si --existing-config -y"
-          docker compose exec app bash -c "drush cr"
-          docker compose exec app bash -c "drush cim -y"
-          docker compose exec app bash -c "drush sql-dump --result-file=/app/latest.sql"
-
-      - name: Upload latest database dump
-        uses: actions/upload-artifact@v4
-        with:
-          name: latest.sql
-          path: latest.sql
-          retention-days: 10
+    uses: city-of-helsinki/drupal-gh-actions/.github/workflows/build-artifact.yml@main
