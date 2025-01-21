@@ -120,7 +120,7 @@
         "lint-php": "vendor/bin/phpcs --standard=Drupal --extensions=php,inc,test,info,module,install",
         "copy-commit-message-script": "make copy-commit-message-script",
         "post-create-project-cmd": [
-            "make cast-spell",
+            "make init-project",
             "@copy-commit-message-script"
         ],
         "post-install-cmd": [
