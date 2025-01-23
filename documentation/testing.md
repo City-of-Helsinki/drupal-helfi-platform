@@ -1,4 +1,4 @@
-# Testing
+# Testing & code quality
 
 ## Drupal tests
 
@@ -219,3 +219,24 @@ jobs:
             git push
           fi
 ```
+
+## Code quality
+
+[SonarQube / Sonarcloud](https://sonarcloud.io/organizations/city-of-helsinki/projects) is used to scan code quality and coverage.
+
+### Setup code coverage
+
+1. Go to your project's Administration -> Analysis method on SonarQube Cloud and uncheck `Automatic Analysis` checkbox
+2. Add `sonar-project.properties` to your project root:
+    ```bash
+    # Go to SonarQube -> Information and add Project Key here
+    sonar.projectKey=City-of-Helsinki_drupal-helfi-kymp
+    # List src/ and tests/ folders of all your custom modules here.
+    # The value is relative to Git root. Use src/ and tests/ for module tests.
+    sonar.sources=public/modules/custom/helfi_kymp_content/src,public/modules/custom/helfi_kymp_plans/src
+    sonar.tests=public/modules/custom/helfi_kymp_content/tests,public/modules/custom/helfi_kymp_plans/tests
+    # Don't change these
+    sonar.organization=city-of-helsinki
+    sonar.php.coverage.reportPaths=coverage.xml
+    ```
+3. Make sure your GitHub Action uses the organization wide `sonarcloud_token` secret (`secrets.SONAR_TOKEN`)

@@ -31,5 +31,5 @@
 
 ## Testing
 
-- [Testing and CI](/documentation/testing.md)
+- [Testing, Code quality and CI](/documentation/testing.md)
 - [PHPstan](/documentation/phpstan.md)
