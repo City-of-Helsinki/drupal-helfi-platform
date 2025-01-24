@@ -226,7 +226,8 @@ jobs:
 
 ### Setup code coverage
 
-1. Go to your project's Administration -> Analysis method on SonarQube Cloud and uncheck `Automatic Analysis` checkbox
+1. Go to your project's Administration -> Analysis Method on SonarQube Cloud and uncheck `Automatic Analysis` checkbox
+   - If you don't see the "Analysis Method" option, click "Restore Access" link under Administration menu
 2. Add `sonar-project.properties` to your project root:
     ```bash
     # Go to SonarQube -> Information and add Project Key here
