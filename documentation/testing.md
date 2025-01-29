@@ -232,12 +232,10 @@ jobs:
     ```bash
     # Go to SonarQube -> Information and add Project Key here
     sonar.projectKey=City-of-Helsinki_drupal-helfi-kymp
-    # List src/ and tests/ folders of all your custom modules here.
-    # The value is relative to Git root. Use src/ and tests/ for module tests.
-    sonar.sources=public/modules/custom/helfi_kymp_content/src,public/modules/custom/helfi_kymp_plans/src
-    sonar.tests=public/modules/custom/helfi_kymp_content/tests,public/modules/custom/helfi_kymp_plans/tests
-    # Don't change these
     sonar.organization=city-of-helsinki
     sonar.php.coverage.reportPaths=coverage.xml
+    sonar.sources=public/modules/custom
+    sonar.inclusions=public/modules/custom/*/src/**/*
+    sonar.test.inclusions=public/modules/custom/*/tests/src/**/*
     ```
 3. Make sure your GitHub Action uses the organization wide `sonarcloud_token` secret (`secrets.SONAR_TOKEN`)
