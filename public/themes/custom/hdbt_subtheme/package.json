@@ -9,7 +9,7 @@
     "dev": "webpack --progress --mode=development --config  webpack.config.js --watch",
     "build": "npm run lint -s && webpack --progress --mode=production --config webpack.config.js",
     "preinstall": "npx update-browserslist-db@latest",
-    "lint:scss": "npx postcss src/scss/**/*.scss --syntax postcss-scss --use css-declaration-sorter --replace --no-map",
+    "lint:scss": "npx postcss src/scss/**/* --syntax postcss-scss --use css-declaration-sorter --replace --no-map",
     "lint:js": "eslint --fix src/js/ --no-error-on-unmatched-pattern",
     "lint": "npm run lint:scss && npm run lint:js"
   },
