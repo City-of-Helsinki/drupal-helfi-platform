@@ -1,0 +1,76 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "extends": [
+    "airbnb-base",
+    "prettier",
+    "plugin:import/recommended"
+  ],
+  "plugins": [
+    "jsdoc"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
+  "globals": {
+    "Drupal": true,
+    "drupalSettings": true,
+    "drupalTranslations": true,
+    "jQuery": true,
+    "_": true,
+    "Cookies": true,
+    "Backbone": true,
+    "Modernizr": true,
+    "Popper": true,
+    "Shepherd": true,
+    "Sortable": true,
+    "once": true,
+    "CKEDITOR": true,
+    "tabbable": true
+  },
+  "rules": {
+    "arrow-spacing": ["warn", { "before": true, "after": true }],
+    "comma-spacing": ["warn", { "before": false, "after": true }],
+    "consistent-return": ["off"],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+    "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
+    "max-nested-callbacks": ["warn", 5],
+    "no-plusplus": [
+      "warn",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "no-param-reassign": ["off"],
+    "no-prototype-builtins": ["off"],
+    "no-unused-vars": ["warn"],
+    "no-underscore-dangle": ["off"],
+    "no-whitespace-before-property": "warn",
+    "object-curly-spacing": ["error", "always"],
+    "operator-linebreak": [
+      "error",
+      "after",
+      { "overrides": { "?": "ignore", ":": "ignore" } }
+    ],
+    "prefer-arrow-callback":["off"],
+    "quotes": ["warn", "single"],
+    "semi": ["error", "always"],
+    "space-in-parens": ["warn", "never"],
+    "space-before-function-paren": ["error", "never"],
+    "valid-jsdoc": [
+      "warn",
+      {
+        "prefer": {
+          "returns": "return",
+          "property": "prop"
+        },
+        "requireReturn": false
+      }
+    ]
+  }
+}
