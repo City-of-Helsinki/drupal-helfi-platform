@@ -5,17 +5,15 @@ COPY / /var/www/html/
 WORKDIR /var/www/html
 RUN composer install --no-progress --profile --prefer-dist --no-interaction --no-dev --optimize-autoloader
 
-# Copy ALL deploy scripts
+# Copy custom entrypoints.
+# @see https://github.com/City-of-Helsinki/drupal-docker-images/tree/main/openshift/drupal
+RUN mkdir -p /crons /entrypoints /deploy
 COPY docker/openshift/entrypoints/ /entrypoints
-RUN chmod +x /entrypoints/*
+COPY docker/openshift/crons/ /crons
+COPY docker/openshift/deploy /deploy
+RUN chmod +x /entrypoints/* /deploy/* /crons/*
 
 COPY docker/openshift/init.sh /
-
-# Copy cron scripts
-RUN mkdir /crons
-COPY docker/openshift/crons/ /crons
-COPY docker/openshift/cron-entrypoint.sh /usr/local/bin/cron-entrypoint
-RUN chmod +x /crons/* /usr/local/bin/cron-entrypoint
 
 # Copy nginx overrides.
 COPY docker/openshift/custom.locations /etc/nginx/conf.d/custom.locations

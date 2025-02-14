@@ -1,4 +1,5 @@
 #!/bin/bash
+# NOTE: This script is being phased out in favor of new deployment job pod.
 
 # Skip deployment script if ENV var is true
 if [ "$SKIP_DEPLOY_SCRIPTS" = "true" ]; then
