@@ -10,17 +10,23 @@ The container is run as random UID (non-root) user (like uid `10009900`) that ha
 
 See [City-of-Helsinki/drupal-docker-images](https://github.com/City-of-Helsinki/drupal-docker-images#openshift-drupal-docker-image) for more documentation about the underlying Docker image.
 
-## Cron
+## Deployment tasks
 
-Crons are run inside a separate cron container and use [docker/openshift/cron-entrypoint.sh](/docker/openshift/cron-entrypoint.sh) as an entrypoint.
+Deployment tasks are run inside a separate job pod and uses [/usr/local/bin/drush-deploy-entrypoint](https://github.com/City-of-Helsinki/drupal-docker-images/blob/main/openshift/drupal/files/usr/local/bin/drush-deploy-entrypoint) as an entrypoint.
 
-The cron container is run using the same image as the Drupal container and should contain everything your normal container does.
+The entrypoint will source and execute all shell scripts in `/deploy` folder.
+
+## Cron jobs
+
+Cron jobs are run inside a separate cron container and use [/usr/local/bin/cron-entrypoint.sh](https://github.com/City-of-Helsinki/drupal-docker-images/blob/main/openshift/drupal/files/usr/local/bin/cron-entrypoint) as an entrypoint.
+
+The entrypoint will source and execute all shell scripts in `/crons` folder.
 
 Any scripts placed in repository's `docker/openshift/crons` folder will be copied automatically to `/crons` folder inside the cron container. The entrypoint executes all scripts in `/crons` directory and will die if any of the scripts fail, so that if any of the scripts fail, the whole container exits with a failure. OpenShift automatically restarts failed cron container.
 
 The scripts are not restarted if they exit gracefully, meaning they must be run inside an infinite loop. You can use `sleep XX` to define how often a certain task should be run.
 
-### Running a custom cron
+### Running a custom cron job
 
 The cron script must contain something like:
 
@@ -38,7 +44,7 @@ do
 done
 ```
 
-The scripts should check any preconditions and exit gracefully if they should not be run in some environments. For example, you can use `is_drupal_module_enabled` function from [`docker/openshift/init.sh`](/docker/openshift/init.sh) and exit if required modules are not enabled.
+The scripts should check any preconditions and exit gracefully if they should not be run in some environments. For example, you can use `is_drupal_module_enabled` function from [docker/openshift/init.sh](/docker/openshift/init.sh) and exit if required modules are not enabled.
 
 ```bash
 #!/bin/bash

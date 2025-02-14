@@ -14,7 +14,7 @@ The tasks:
 4. Run post-deployment hooks. See [Deploy hooks](https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/documentation/deploy-hooks.md).
 5. Maintenance mode is disabled.
 
-See the [20-deploy.sh](/docker/openshift/deploy/20-deploy.sh) entrypoint for more up-to-date information.
+See [20-deploy.sh](/docker/openshift/deploy/20-deploy.sh) entrypoint for more up-to-date information.
 
 ## Handling failures
 

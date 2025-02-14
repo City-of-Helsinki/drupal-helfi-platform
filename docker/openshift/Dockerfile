@@ -5,7 +5,8 @@ COPY / /var/www/html/
 WORKDIR /var/www/html
 RUN composer install --no-progress --profile --prefer-dist --no-interaction --no-dev --optimize-autoloader
 
-# Copy custom entrypoint, deploy and cron entrypoints.
+# Copy custom entrypoints.
+# @see https://github.com/City-of-Helsinki/drupal-docker-images/tree/main/openshift/drupal
 RUN mkdir -p /crons /entrypoints /deploy
 COPY docker/openshift/entrypoints/ /entrypoints
 COPY docker/openshift/crons/ /crons
