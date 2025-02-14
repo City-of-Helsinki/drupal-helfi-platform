@@ -1,20 +1,20 @@
 # Deployment
 
-## Deployment tasks
+The code is built into a read-only Docker image using [docker/openshift/Dockerfile](/docker/openshift/Dockerfile).
 
-The deployment tasks are run when a container is first started. Any subsequent containers will check the value of `$OPENSHIFT_BUILD_NAME` to determine if deployment tasks need to be run.
+The deployment tasks are run in a job pod using the newly built Docker image. Once the deployment tasks are completed, the old Drupal containers will be replaced with new ones.
+
+## Deployment tasks
 
 The tasks:
 
-1. Run pre-deployment hooks. See [Deploy hooks](https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/documentation/deploy-hooks.md).
-2. Site is put into maintenance mode.
+1. Site is put into maintenance mode.
+2. Run pre-deployment hooks. See [Deploy hooks](https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/documentation/deploy-hooks.md).
 3. `drush deploy` is run. See https://www.drush.org/latest/deploycommand/ for documentation about `drush deploy`.
 4. Run post-deployment hooks. See [Deploy hooks](https://github.com/City-of-Helsinki/drupal-module-helfi-api-base/blob/main/documentation/deploy-hooks.md).
 5. Maintenance mode is disabled.
 
-See the [deployment](/docker/openshift/entrypoints/20-deploy.sh) script for more up-to-date information.
-
-_Important note_: Deployment tasks must be completed within 10 minutes.
+See the [20-deploy.sh](/docker/openshift/deploy/20-deploy.sh) entrypoint for more up-to-date information.
 
 ## Handling failures
 
@@ -54,7 +54,7 @@ The pipe (`|`) character can be used as `or` condition. For example `ENV_VAR1|EN
 
 ### Custom preflight checks
 
-Custom preflight checks can be added in generic `docker/openshift/preflight/all.preflight.php` file that is run on all environments, or environment-specific `docker/openshift/{env}.preflight.php` file.
+Custom preflight checks can be added into a generic `docker/openshift/preflight/all.preflight.php` file that is run on all environments, or you can create an environment-specific `docker/openshift/{env}.preflight.php` file.
 
 The `{env}` is determined from `APP_ENV` environment variable. Usually `development`, `testing`, `staging` or `production`, so for example, testing environment checks should be placed in a file called `testing.preflight.php`.
 
