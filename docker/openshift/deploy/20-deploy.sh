@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Skip deployment script if ENV var is true
 if [ "$SKIP_DEPLOY_SCRIPTS" = "true" ]; then
