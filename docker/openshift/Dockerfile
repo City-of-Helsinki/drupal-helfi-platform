@@ -14,6 +14,3 @@ COPY docker/openshift/deploy /deploy
 RUN chmod +x /entrypoints/* /deploy/* /crons/*
 
 COPY docker/openshift/init.sh /
-
-# Copy nginx overrides.
-COPY docker/openshift/custom.locations /etc/nginx/conf.d/custom.locations
