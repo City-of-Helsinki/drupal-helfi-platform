@@ -67,6 +67,10 @@ $candidates = [
   'all.preflight.php',
 ];
 
+if (is_dir('/var/www/html/public/sites/default/files/private')) {
+  preflight_failed('sites/default/files/private folder found.');
+}
+
 // Allow additional custom checks to be added.
 // Create a 'all.preflight.php' file for checks that need to be run
 // on all environments and '{env}.preflight.php' for environment-specific
