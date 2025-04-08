@@ -67,7 +67,11 @@ $candidates = [
   'all.preflight.php',
 ];
 
-if (is_dir('/var/www/html/public/sites/default/files/private')) {
+$private_files_folder = getenv('DRUPAL_FILES_PRIVATE');
+
+// Make sure private files folder is outside webroot unless explicitly
+// configured so.
+if (!$private_files_folder && is_dir('/var/www/html/public/sites/default/files/private')) {
   preflight_failed('sites/default/files/private folder found.');
 }
 
