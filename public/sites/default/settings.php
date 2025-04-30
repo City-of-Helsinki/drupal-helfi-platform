@@ -150,11 +150,6 @@ if ($blob_storage_name = getenv('AZURE_BLOB_STORAGE_NAME')) {
   $settings['flysystem'] = $schemes;
 }
 
-
-if ($navigation_authentication_key = getenv('DRUPAL_NAVIGATION_API_KEY')) {
-  $config['helfi_navigation.api']['key'] = $navigation_authentication_key;
-}
-
 // Make sure project name and app env are defined in GitHub actions too.
 if ($github_repository = getenv('GITHUB_REPOSITORY')) {
   if (!getenv('APP_ENV')) {
