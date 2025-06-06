@@ -52,7 +52,7 @@ services:
       - internal
   db:
     container_name: "${COMPOSE_PROJECT_NAME}-db"
-    image: mysql:8
+    image: mysql:9
     command:
       - --max_allowed_packet=512M
       - --character-set-server=utf8mb4
