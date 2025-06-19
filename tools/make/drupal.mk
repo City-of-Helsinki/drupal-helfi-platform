@@ -84,7 +84,7 @@ drush-unblock: ## Get login link
 PHONY += drush-locale-update
 drush-locale-update: drupal-create-folders ## Update translations.
 	$(call step,Update translations...)
-	$(call drush,state:set locale.translation_last_checked 0)
+	$(call drush,locale:clear-status)
 	$(call drush,locale:check)
 	$(call drush,locale:update)
 	$(call drush,cr)
