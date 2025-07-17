@@ -33,7 +33,7 @@ const staticFiles = [
 // Builder configurations.
 const reactConfig = { reactApps, isDev, outDir };
 const jsConfig = { jsFiles, isDev, outDir };
-const cssConfig   = { styles, isDev, outDir };
+const cssConfig = { styles, isDev, outDir };
 const buildArguments = { outDir, staticFiles, jsConfig, reactConfig, cssConfig };
 
 if (isWatch) {
