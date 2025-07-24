@@ -386,6 +386,46 @@ if (getenv('SENTRY_DSN_PUBLIC')) {
   $config['raven.settings']['javascript_error_handler'] = TRUE;
 }
 
+/**
+ * CSP reporting to Sentry.
+ *
+ * Build Sentry report URI and enable CSP reporting.
+ */
+if (getenv('SENTRY_REPORT_URI')) {
+  $sentry_report_uri = parse_url(getenv('SENTRY_REPORT_URI'));
+  $sentry_report_uri_query = [];
+
+  if (isset($sentry_report_uri['query'])) {
+      parse_str($sentry_report_uri['query'], $sentry_report_uri_query);
+  } else {
+      $sentry_report_uri_query = [];
+  }
+
+  if (getenv('SENTRY_ENVIRONMENT')) {
+    $sentry_report_uri_query['sentry_environment'] = getenv('SENTRY_ENVIRONMENT');
+  }
+
+  if (getenv('SENTRY_RELEASE')) {
+    $sentry_report_uri_query['sentry_release'] = getenv('SENTRY_RELEASE');
+  }
+
+  // We don't want to send anything without proper environment set.
+  if (isset($sentry_report_uri_query['sentry_environment'])) {
+    $sentry_report_uri['query'] = http_build_query($sentry_report_uri_query);
+    $sentry_report_uri_string = sprintf(
+      '%s://%s%s?%s',
+      $sentry_report_uri['scheme'],
+      $sentry_report_uri['host'],
+      $sentry_report_uri['path'],
+      $sentry_report_uri['query'],
+    );
+    $config['csp.settings']['report-only']['reporting']['plugin'] = 'uri';
+    $config['csp.settings']['report-only']['reporting']['options']['uri'] = $sentry_report_uri_string;
+    $config['csp.settings']['enforce']['reporting']['plugin'] = 'uri';
+    $config['csp.settings']['enforce']['reporting']['options']['uri'] = $sentry_report_uri_string;
+  }
+}
+
 // Environment specific overrides.
 if (file_exists(__DIR__ . '/all.settings.php')) {
   // phpcs:ignore
