@@ -117,6 +117,9 @@ if ($reverse_proxy_address = getenv('DRUPAL_REVERSE_PROXY_ADDRESS')) {
   $reverse_proxy_address = explode(',', $reverse_proxy_address);
 
   if (isset($_SERVER['REMOTE_ADDR'])) {
+    // The application sits behind multiple proxies in the OpenShift
+    // environment. The nginx configuration uses ngx_http_realip_module to
+    // set the correct headers for Drupal.
     $reverse_proxy_address[] = $_SERVER['REMOTE_ADDR'];
   }
   $settings['reverse_proxy'] = TRUE;
