@@ -89,7 +89,7 @@ drush-locale-update: drupal-create-folders ## Update translations.
 	$(call drush,locale:update)
 	$(call drush,cr)
 
-DRUPAL_POST_INSTALL_TARGETS := drush-sanitize-database drush-deploy drush-locale-update drush-unblock drush-uli
+DRUPAL_POST_INSTALL_TARGETS := drush-deploy drush-locale-update drush-unblock drush-uli
 
 DRUPAL_FRESH_TARGETS := up drupal-create-folders composer-install drush-import-dump $(DRUPAL_POST_INSTALL_TARGETS)
 PHONY += fresh
@@ -109,10 +109,6 @@ drush-import-dump: dump.sql
 	$(call drush,sql-drop --quiet -y)
 	$(call step,Import local SQL dump...)
 	$(call drush,sql-query --file=/app/dump.sql && echo 'SQL dump imported')
-
-PHONY += drush-sanitize-database
-drush-sanitize-database:
-	$(call drush,sql-query \"UPDATE file_managed SET uri = REPLACE(uri, 'azure://', 'public://');\",Fixed Azure URIs)
 
 PHONY += drush-create-dump
 drush-create-dump: ## Create database dump to dump.sql
