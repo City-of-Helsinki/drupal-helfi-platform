@@ -46,7 +46,7 @@ services:
       - "traefik.docker.network=stonehenge-network"
   redis:
     container_name: "${COMPOSE_PROJECT_NAME}-redis"
-    image: redis:7-alpine
+    image: redis:8-alpine
     command: [sh, -c, "rm -f /data/dump.rdb && redis-server --save ''"]
     networks:
       - internal
