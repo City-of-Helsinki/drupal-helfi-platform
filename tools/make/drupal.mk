@@ -108,11 +108,11 @@ PHONY += drush-import-dump
 drush-import-dump: dump.sql
 	$(call drush,sql-drop --quiet -y)
 	$(call step,Import local SQL dump...)
-	$(call drush,sql-query --file=/app/dump.sql && echo 'SQL dump imported')
+	$(call drush,sql-query --file=/app/dump.sql --extra=--skip-ssl && echo 'SQL dump imported')
 
 PHONY += drush-sanitize-database
 drush-sanitize-database:
-	$(call drush,sql-query \"UPDATE file_managed SET uri = REPLACE(uri, 'azure://', 'public://');\",Fixed Azure URIs)
+	$(call drush,sql-query --extra=--skip-ssl \"UPDATE file_managed SET uri = REPLACE(uri, 'azure://', 'public://');\",Fixed Azure URIs)
 
 PHONY += drush-create-dump
 drush-create-dump: ## Create database dump to dump.sql
