@@ -389,6 +389,12 @@ if (getenv('SENTRY_DSN_PUBLIC')) {
   $config['raven.settings']['javascript_error_handler'] = TRUE;
 }
 
+// Turn sentry drupal cron monitor on if SENTRY_CRON_MONITOR_ID is defined.
+if (getenv('SENTRY_CRON_MONITOR_ID')) {
+  // Preferably the id should be {site-name}-{env-name}-cron-monitor
+  $config['raven.settings']['cron_monitor_id'] = getenv('SENTRY_CRON_MONITOR_ID');
+}
+
 // Environment specific overrides.
 if (file_exists(__DIR__ . '/all.settings.php')) {
   // phpcs:ignore
