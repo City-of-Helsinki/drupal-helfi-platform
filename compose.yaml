@@ -58,11 +58,11 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_swedish_ci
     environment:
+      MYSQL_ROOT_PASSWORD: drupal
       MYSQL_DATABASE: drupal
       MYSQL_USER: drupal
       MYSQL_PASSWORD: drupal
       MYSQL_INITDB_SKIP_TZINFO: 1
-      MYSQL_RANDOM_ROOT_PASSWORD: 1
     volumes:
       - db_volume:/var/lib/mysql
     ports:
