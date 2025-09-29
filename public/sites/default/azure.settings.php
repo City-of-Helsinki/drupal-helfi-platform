@@ -5,6 +5,10 @@
  * Contains azure specific settings.php changes.
  */
 
+$databases['default']['default']['pdo'] = [
+  \PDO::MYSQL_ATTR_SSL_CA => getenv('AZURE_SQL_SSL_CA_PATH'),
+  \PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => TRUE,
+];
 // Azure specific filesystem fixes.
 $settings['php_storage']['twig']['directory'] = '/tmp';
 $settings['php_storage']['twig']['secret'] = $settings['hash_salt'];
