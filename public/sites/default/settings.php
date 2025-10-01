@@ -395,6 +395,14 @@ if (getenv('SENTRY_CRON_MONITOR_ID')) {
   $config['raven.settings']['cron_monitor_id'] = getenv('SENTRY_CRON_MONITOR_ID');
 }
 
+// OpenAI api keys:
+// See: https://helsinkisolutionoffice.atlassian.net/browse/UHF-12237.
+if (getenv('OPENAI_KEY')) {
+  $config['helfi_search.settings']['openai_api_key'] = getenv('OPENAI_KEY');
+  $config['helfi_search.settings']['openai_base_url'] = getenv('OPENAI_BASE_URL');
+  $config['helfi_search.settings']['openai_model'] = getenv('OPENAI_MODEL');
+}
+
 // Environment specific overrides.
 if (file_exists(__DIR__ . '/all.settings.php')) {
   // phpcs:ignore
