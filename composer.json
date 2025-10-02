@@ -9,7 +9,7 @@
     "require": {
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.6.7",
-        "drupal/core-composer-scaffold": "^10",
+        "drupal/core-composer-scaffold": "^11",
         "drupal/hdbt": "^6.0",
         "drupal/hdbt_admin": "^3.0",
         "drupal/helfi_azure_fs": "^2.0",
@@ -21,7 +21,7 @@
         "dg/bypass-finals": "^1.5",
         "donatj/mock-webserver": "^2.4",
         "drupal/coder": "^8.3",
-        "drupal/core-dev": "^10",
+        "drupal/core-dev": "^11",
         "jangregor/phpstan-prophecy": "^1.0",
         "mglaman/phpstan-drupal": "^1.2",
         "phpspec/prophecy-phpunit": "^2",
