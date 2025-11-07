@@ -5,7 +5,7 @@
 
 @import 'breakpoint-sass/stylesheets/breakpoint';
 
-@import "hdbt";
+@import 'hdbt';
 
 // This folder structure is based loosely on ITCSS
 @import '00-functions/_index';
@@ -16,5 +16,5 @@
 @import '03-generic/_index';
 @import '04-elements/_index';
 @import '05-objects/_index';
-@import "06-components/_index";
-@import "07-utilities/_index";
+@import '06-components/_index';
+@import '07-utilities/_index';
