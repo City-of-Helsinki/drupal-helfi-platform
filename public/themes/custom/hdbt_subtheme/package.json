@@ -19,6 +19,8 @@
   "dependencies": {
     "@biomejs/biome": "^2.2.4",
     "@hdbt/theme-builder": "file:../../contrib/hdbt/theme-builder",
+    "breakpoint-sass": "^3.0.0",
+    "glob": "^11.0.0",
     "hds-design-tokens": "^2.0.0",
     "npm-run-all2": "^8.0.4"
   },
