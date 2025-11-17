@@ -16,7 +16,7 @@
 
 ## Usage
 
-[Druidfi tools](https://github.com/druidfi/tools) library provides generic (`make`) commands to ease the development process.
+`Makefile` provides generic (`make`) commands to ease the development process.
 
 You can list available commands by running `make help`. Run `make -n {command}` to see actions behind the given command.
 
@@ -33,11 +33,11 @@ Currently available profiles:
 - `search`: ElasticSearch service
 - `varnish`: Varnish service. Provides `varnish-yourproject.docker.so` address.
 
-### Customizing docker-compose.yml
+### Customizing compose.yaml
 
 The default `compose.yaml` file is intended to be updated automatically from upstream and should have no customizations.
 
-You can create a `docker-compose.override.yml` file to add or override existing features.
+You can create a `compose.override.yml` file to add or override existing features.
 
 See https://docs.docker.com/compose/multiple-compose-files/merge/ for more information.
 
