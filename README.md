@@ -1,11 +1,11 @@
 # City-of-Helsinki/drupal-helfi-platform
 
-This is a skeleton repository which will create a new Drupal 10 project for you and setup Docker based development environment with Stonehenge.
+This is a skeleton repository which will create a new Drupal 11 project for you and setup Docker based development environment with Stonehenge.
 
 ## Includes
 
-- Drupal 10.x
-- Drush 12.x / 13.x
+- Drupal 11.x
+- Drush 13.x
 - Docker setup for development using [Stonehenge](https://github.com/druidfi/stonehenge)
 - `make` commands to ease the development process
 - Web root is `/public`
