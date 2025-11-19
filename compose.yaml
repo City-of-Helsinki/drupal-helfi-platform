@@ -58,6 +58,7 @@ services:
       - --max_allowed_packet=512M
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_swedish_ci
+      - --skip-log-bin
     environment:
       MYSQL_DATABASE: drupal
       MYSQL_USER: drupal
