@@ -2,5 +2,5 @@ services:
   app:
     user: "1001:1001"
     environment:
-      SYMFONY_DEPRECATIONS_HELPER: disabled
+      COMPOSER_MIRROR_PATH_REPOS: 1
       BROWSERTEST_OUTPUT_DIRECTORY: /app/results

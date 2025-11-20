@@ -6,7 +6,8 @@ services:
     volumes:
       - .:/app:delegated
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       WEBROOT: /app/public
       STAGE_FILE_PROXY_ORIGIN: "${STAGE_FILE_PROXY_ORIGIN}"
@@ -57,12 +58,17 @@ services:
       - --max_allowed_packet=512M
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_swedish_ci
+      - --skip-log-bin
     environment:
       MYSQL_DATABASE: drupal
       MYSQL_USER: drupal
       MYSQL_PASSWORD: drupal
       MYSQL_INITDB_SKIP_TZINFO: 1
       MYSQL_RANDOM_ROOT_PASSWORD: 1
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      timeout: 1s
+      retries: 30
     volumes:
       - db_volume:/var/lib/mysql
     ports:
