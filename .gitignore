@@ -23,6 +23,7 @@ public/sites/default/local.services.yml
 
 *.sql
 .env.local
+.secrets.json
 
 # Ignore OSX generated files
 ._*
