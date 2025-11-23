@@ -1,27 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./public/core/tests/bootstrap.php" colors="true"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         bootstrap="./public/core/tests/bootstrap.php"
+         colors="true"
          beStrictAboutTestsThatDoNotTestAnything="true"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutChangesToGlobalState="true"
-         beStrictAboutCoversAnnotation="false"
          failOnRisky="true"
          failOnWarning="true"
-         failOnSkipped="true"
-         verbose="true"
-         printerClass="\Drupal\Tests\Listeners\HtmlOutputPrinter"
-  >
-<php>
-  <!-- Set error reporting to E_ALL. -->
-  <ini name="error_reporting" value="32767"/>
+         displayDetailsOnTestsThatTriggerErrors="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         cacheResult="false"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         cacheDirectory=".phpunit.cache">
+  <php>
+    <!-- Set error reporting to E_ALL. -->
+    <ini name="error_reporting" value="32767"/>
     <!-- Do not limit the amount of memory tests take to run. -->
-  <ini name="memory_limit" value="-1"/>
-  <env name="MINK_DRIVER_ARGS_WEBDRIVER" value='["chrome", {"browserName":"chrome", "goog:chromeOptions":{"w3c": true, "args":["--no-sandbox", "--ignore-certificate-errors", "--allow-insecure-localhost", "--headless", "--dns-prefetch-disable"]}}, "http://chromium:4444"]' />
-  <env name="DTT_MINK_DRIVER_ARGS" value='["chrome", {"browserName":"chrome", "goog:chromeOptions":{"w3c": true, "args":["--no-sandbox","--ignore-certificate-errors", "--allow-insecure-localhost", "--headless", "--dns-prefetch-disable"]}}, "http://chromium:4444"]'/>
-  <env name="DTT_API_OPTIONS" value='{"socketTimeout": 360, "domWaitTimeout": 3600000}' />
-  <env name="DTT_API_URL" value="http://chromium:9222"/>
-  <env name="DTT_BASE_URL" value="https://app"/>
-</php>
-<testsuites>
+    <ini name="memory_limit" value="-1"/>
+    <env name="MINK_DRIVER_ARGS_WEBDRIVER" value='["chrome", {"browserName":"chrome", "goog:chromeOptions":{"w3c": true, "args":["--no-sandbox", "--ignore-certificate-errors", "--allow-insecure-localhost", "--headless", "--dns-prefetch-disable"]}}, "http://chromium:4444"]' />
+    <env name="DTT_MINK_DRIVER_ARGS" value='["chrome", {"browserName":"chrome", "goog:chromeOptions":{"w3c": true, "args":["--no-sandbox","--ignore-certificate-errors", "--allow-insecure-localhost", "--headless", "--dns-prefetch-disable"]}}, "http://chromium:4444"]'/>
+    <env name="DTT_API_OPTIONS" value='{"socketTimeout": 360, "domWaitTimeout": 3600000}' />
+    <env name="DTT_API_URL" value="http://chromium:9222"/>
+    <env name="DTT_BASE_URL" value="https://app"/>
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value=".deprecation-ignore.txt" />
+  </php>
+  <extensions>
+    <!-- Functional tests HTML output logging. -->
+    <bootstrap class="Drupal\TestTools\Extension\HtmlLogging\HtmlOutputLogger">
+      <!-- By default browser tests print the individual links in the test run
+        report. To avoid overcrowding the output in CI environments, you can
+        set the "verbose" parameter or the "BROWSERTEST_OUTPUT_VERBOSE"
+        environment variable to "false". In GitLabCI, the output is saved
+        anyway as an artifact that can be browsed or downloaded from Gitlab.
+      -->
+      <parameter name="verbose" value="true"/>
+    </bootstrap>
+    <bootstrap class="DG\BypassFinals\PHPUnitExtension"/>
+  </extensions><testsuites>
   <testsuite name="unit">
     <directory>./public/modules/custom/*/tests/src/Unit</directory>
     <directory>./public/themes/custom/*/tests/src/Unit</directory>
@@ -53,23 +69,19 @@
     <directory>./public/modules/contrib/*/tests/src/ExistingSiteJavascript</directory>
   </testsuite>
 </testsuites>
-<listeners>
-  <listener class="\Drupal\Tests\Listeners\DrupalListener">
-  </listener>
-</listeners>
-<coverage processUncoveredFiles="true">
-  <include>
-    <directory suffix=".php">./public/modules/custom/*/src</directory>
-    <directory suffix=".php">./public/themes/custom/*/src</directory>
-    <directory suffix=".php">./public/profiles/custom/*/src</directory>
-    <file>./public/modules/custom/*/*.module</file>
-    <file>./public/themes/custom/*/*.theme</file>
-    <file>./public/profiles/custom/*/*.profile</file>
-  </include>
-  <exclude>
-    <directory>./public/modules/custom/*/src/Tests</directory>
-    <directory>./public/themes/custom/*/src/Tests</directory>
-    <directory>./public/profiles/custom/*/src/Tests</directory>
-  </exclude>
-</coverage>
+  <source ignoreSuppressionOfDeprecations="true">
+    <include>
+      <directory suffix=".php">./public/modules/custom/*/src</directory>
+      <directory suffix=".php">./public/themes/custom/*/src</directory>
+      <directory suffix=".php">./public/profiles/custom/*/src</directory>
+      <file>./public/modules/custom/*/*.module</file>
+      <file>./public/themes/custom/*/*.theme</file>
+      <file>./public/profiles/custom/*/*.profile</file>
+    </include>
+    <exclude>
+      <directory>./public/modules/custom/*/src/Tests</directory>
+      <directory>./public/themes/custom/*/src/Tests</directory>
+      <directory>./public/profiles/custom/*/src/Tests</directory>
+    </exclude>
+  </source>
 </phpunit>
