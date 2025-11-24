@@ -61,12 +61,14 @@
   <testsuite name="existing-site">
     <directory>./tests/dtt/src/ExistingSite</directory>
     <directory>./public/modules/custom/*/tests/src/ExistingSite</directory>
-    <directory>./public/modules/contrib/*/tests/src/ExistingSite</directory>
+    <directory>./public/themes/custom/*/tests/src/ExistingSite</directory>
+    <directory>./public/profiles/custom/*/tests/src/ExistingSite</directory>
   </testsuite>
   <testsuite name="existing-site-javascript">
     <directory>./tests/dtt/src/ExistingSiteJavascript</directory>
     <directory>./public/modules/custom/*/tests/src/ExistingSiteJavascript</directory>
-    <directory>./public/modules/contrib/*/tests/src/ExistingSiteJavascript</directory>
+    <directory>./public/themes/custom/*/tests/src/ExistingSiteJavascript</directory>
+    <directory>./public/profiles/custom/*/tests/src/ExistingSiteJavascript</directory>
   </testsuite>
 </testsuites>
   <source ignoreSuppressionOfDeprecations="true">
