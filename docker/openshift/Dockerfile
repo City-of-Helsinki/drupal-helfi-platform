@@ -1,5 +1,5 @@
 ARG DRUPAL_DOCKER_TAG=8.4
-FROM ghcr.io/city-of-helsinki/drupal-docker-base:${DRUPAL_DOCKER_TAG}
+FROM ghcr.io/city-of-helsinki/drupal-docker-base:${DRUPAL_DOCKER_TAG:-8.4}
 
 COPY / /var/www/html/
 WORKDIR /var/www/html
