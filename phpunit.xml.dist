@@ -7,9 +7,10 @@
          beStrictAboutChangesToGlobalState="true"
          failOnRisky="true"
          failOnWarning="true"
+         failOnDeprecation="false"
          displayDetailsOnTestsThatTriggerErrors="true"
          displayDetailsOnTestsThatTriggerWarnings="true"
-         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerDeprecations="false"
          cacheResult="false"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
          cacheDirectory=".phpunit.cache">
@@ -23,7 +24,7 @@
     <env name="DTT_API_OPTIONS" value='{"socketTimeout": 360, "domWaitTimeout": 3600000}' />
     <env name="DTT_API_URL" value="http://chromium:9222"/>
     <env name="DTT_BASE_URL" value="https://app"/>
-    <env name="SYMFONY_DEPRECATIONS_HELPER" value="ignoreFile=../.deprecation-ignore.txt" />
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value="ignoreFile=/app/.deprecation-ignore.txt" />
   </php>
   <extensions>
     <!-- Functional tests HTML output logging. -->
@@ -36,7 +37,6 @@
       -->
       <parameter name="verbose" value="true"/>
     </bootstrap>
-    <bootstrap class="DG\BypassFinals\PHPUnitExtension"/>
   </extensions><testsuites>
   <testsuite name="unit">
     <directory>./public/modules/custom/*/tests/src/Unit</directory>
