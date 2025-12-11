@@ -77,10 +77,13 @@ services:
       - internal
   varnish:
     container_name: "${COMPOSE_PROJECT_NAME}-varnish"
-    image: druidfi/varnish:6-drupal
+    image: wodby/varnish:6.0
     environment:
       VARNISH_BACKEND_HOST: "${COMPOSE_PROJECT_NAME}-app"
+      VARNISH_BACKEND_PORT: 8080
       VARNISH_CACHE_STATIC_FILES: "1"
+      VARNISH_ALLOW_UNRESTRICTED_PURGE: "1"
+      VARNISH_CONFIG_PRESET: "drupal"
     depends_on:
       - app
     networks:
