@@ -2,6 +2,6 @@
 
 while true
 do
-  drush scheduler:cron -q
+  drush scheduler:cron --nomsg --nolog
   sleep 60
 done
