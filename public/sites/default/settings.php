@@ -294,8 +294,6 @@ if ($amq_brokers && $amq_destination) {
   // @see https://github.com/City-of-Helsinki/drupal-helfi-platform/blob/main/documentation/queue.md
 }
 
-$config['filelog.settings']['rotation']['schedule'] = 'never';
-
 if (
   ($redis_host = getenv('REDIS_HOST')) &&
   file_exists('modules/contrib/redis/redis.services.yml') &&
