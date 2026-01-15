@@ -67,6 +67,7 @@ services:
       MYSQL_RANDOM_ROOT_PASSWORD: 1
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      interval: 1s
       timeout: 1s
       retries: 30
     volumes:
