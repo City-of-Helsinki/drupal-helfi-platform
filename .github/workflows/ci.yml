@@ -8,7 +8,7 @@ jobs:
       options: --hostname app --user 1001
     services:
       db:
-        image: mysql:8
+        image: mysql:9
         env:
           MYSQL_USER: drupal
           MYSQL_PASSWORD: drupal
