@@ -1,3 +1,6 @@
 # This file contains patterns to be ignored while testing for use of
 # deprecated code.
 # See https://www.drupal.org/node/3285162 for more details.
+
+# Symfony 7.4
+%Since symfony/validator 7.4: Support for evaluating options in the base Constraint class is deprecated. Initialize properties in the constructor of .* instead.%
