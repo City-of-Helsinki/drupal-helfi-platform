@@ -19,7 +19,6 @@
         "mglaman/composer-drupal-lenient": "*"
     },
     "require-dev": {
-        "dg/bypass-finals": "^1.5",
         "donatj/mock-webserver": "^2.4",
         "drupal/core-dev": "^10 || ^11",
         "jangregor/phpstan-prophecy": "^1.0",
