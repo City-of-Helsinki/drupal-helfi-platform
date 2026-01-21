@@ -8,13 +8,13 @@
     "prefer-stable": true,
     "require": {
         "composer/installers": "^2.0",
-        "cweagans/composer-patches": "^1.6.7",
+        "cweagans/composer-patches": "^2.0",
         "drupal/core-composer-scaffold": "^10 || ^11",
         "drupal/hdbt": "^6.0",
         "drupal/hdbt_admin": "^3.0",
         "drupal/helfi_azure_fs": "^2.0",
         "drupal/helfi_drupal_tools": "dev-main",
-        "drupal/helfi_platform_config": "^4.0 || ^5.0",
+        "drupal/helfi_platform_config": "dev-UHF-X_composer_patches",
         "drush/drush": "^12 || ^13",
         "mglaman/composer-drupal-lenient": "*"
     },
@@ -50,6 +50,9 @@
     },
     "extra": {
         "composer-exit-on-patch-failure": true,
+        "patchLevel": {
+            "drupal/core": "-p2"
+        },
         "drupal-scaffold": {
             "allowed-packages": [
                 "drupal/core"
