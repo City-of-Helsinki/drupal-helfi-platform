@@ -258,42 +258,6 @@ if ($session_suffix = getenv('DRUPAL_SESSION_SUFFIX')) {
   $config['helfi_proxy.settings']['session_suffix'] = $session_suffix;
 }
 
-$amq_destination = drupal_get_env([
-  'PROJECT_NAME',
-]);
-$amq_brokers = getenv('AMQ_BROKERS');
-
-if ($amq_brokers && $amq_destination) {
-  $settings['stomp']['default'] = [
-    'clientId' => getenv('AMQ_CLIENT_ID') ?: 'client_ ' . $amq_destination,
-    'login' => getenv('AMQ_USER') ?: NULL,
-    'passcode' => getenv('AMQ_PASSWORD') ?: NULL,
-    'destination' => sprintf('/queue/%s', $amq_destination),
-    'brokers' => $amq_brokers,
-    'timeout' => ['read' => 12000],
-    'heartbeat' => [
-      'send' => 20000,
-      'receive' => 0,
-      'observers' => [
-        [
-          'class' => '\Stomp\Network\Observer\HeartbeatEmitter',
-        ],
-      ],
-    ],
-  ];
-
-  $queues = [
-    'helfi_navigation_menu_queue',
-    'helfi_api_base_revision',
-  ];
-  foreach ($queues as $queue) {
-    // $settings['queue_service_' . $queue] = 'queue.stomp.default';
-  }
-  // You must configure project specific queues manually in 'all.settings.php'
-  // file.
-  // @see https://github.com/City-of-Helsinki/drupal-helfi-platform/blob/main/documentation/queue.md
-}
-
 if (
   ($redis_host = getenv('REDIS_HOST')) &&
   file_exists('modules/contrib/redis/redis.services.yml') &&
