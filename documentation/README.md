@@ -21,7 +21,6 @@
 - [OpenShift](/documentation/openshift.md)
 - [Syncing databases between environments](/documentation/openshift-db-sync.md)
 - [Building assets](/documentation/build-assets.md)
-- [Queue service](/documentation/queue.md)
 - [Search](/documentation/search.md)
 
 ## Projects

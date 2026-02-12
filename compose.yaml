@@ -161,16 +161,6 @@ services:
       - "traefik.port=9200"
     profiles:
       - search
-  artemis:
-    container_name: "${COMPOSE_PROJECT_NAME}-artemis"
-    image: apache/activemq-artemis
-    depends_on:
-      - app
-    networks:
-      - internal
-      - stonehenge-network
-    profiles:
-      - queue
   chromium:
     image: selenium/standalone-chromium
     environment:
