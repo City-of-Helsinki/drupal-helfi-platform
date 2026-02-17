@@ -108,7 +108,7 @@ PHONY += drush-import-dump
 drush-import-dump: dump.sql
 	$(call drush,sql-drop --quiet -y)
 	$(call step,Import local SQL dump...)
-	$(call drush,sql-query --file=/app/dump.sql --extra=--skip-ssl && echo 'SQL dump imported')
+	$(call drush,sql-query --file=/app/dump.sql --extra-dump=--skip-ssl && echo 'SQL dump imported')
 
 PHONY += drush-sanitize-database
 drush-sanitize-database:
