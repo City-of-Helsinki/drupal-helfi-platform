@@ -365,6 +365,12 @@ if (getenv('OPENAI_KEY')) {
   $config['helfi_search.settings']['openai_model'] = getenv('OPENAI_MODEL');
 }
 
+// Hakuvahti:
+if (getenv('HAKUVAHTI_URL')) {
+  $config['helfi_hakuvahti.settings']['base_url'] = getenv('HAKUVAHTI_URL');
+  $config['helfi_hakuvahti.settings']['api_key'] = getenv('HAKUVAHTI_API_KEY');
+}
+
 // E2E test users. We should never do this in production, so adding a failsafe
 // in case the environment variable would ever end up in production.
 if (getenv('APP_ENV') !== 'production' && $e2e_test_user = getenv('E2E_TEST_USER')) {
