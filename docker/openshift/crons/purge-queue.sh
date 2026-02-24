@@ -1,5 +1,11 @@
 #!/bin/bash
 
+source /init.sh
+
+if ! is_drupal_module_enabled "purge"; then
+  exit 0
+fi
+
 function has_items {
   NUM_ITEMS=$(drush p:queue-stats --format=json | jq .number_of_items)
 
