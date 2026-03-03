@@ -4,7 +4,7 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/city-of-helsinki/drupal-web:8.5
+      image: ghcr.io/city-of-helsinki/drupal-web:8.4
       options: --hostname app --user 1001
     services:
       db:
@@ -28,7 +28,15 @@ jobs:
         run: entrypoint &
 
       - name: Build project
-        run: composer install --no-interaction
+        run: |
+          # We use mglaman/composer-drupal-lenient to patch modules that are not
+          # compatible with the latest core version.
+          # The package must be installed globally because city-of-helsinki/drupal-helfi-platform
+          # has no composer.lock committed the repository.
+          # @see https://github.com/mglaman/composer-drupal-lenient?tab=readme-ov-file#support-when-composerlock-removed
+          composer global require mglaman/composer-drupal-lenient
+          composer global config --no-plugins allow-plugins.mglaman/composer-drupal-lenient true
+          composer install --no-interaction
 
       - name: Scan security updates
         run: composer audit
