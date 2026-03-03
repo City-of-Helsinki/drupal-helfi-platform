@@ -12,6 +12,7 @@ else {
   ini_set('zend.enable_gc', 'Off');
 }
 
+$env = getenv('APP_ENV');
 
 if (!function_exists('drupal_get_env')) {
   /**
@@ -155,7 +156,7 @@ if ($blob_storage_name = getenv('AZURE_BLOB_STORAGE_NAME')) {
 
 // Make sure project name and app env are defined in GitHub actions too.
 if ($github_repository = getenv('GITHUB_REPOSITORY')) {
-  if (!getenv('APP_ENV')) {
+  if (!$env) {
     putenv('APP_ENV=ci');
   }
 
@@ -163,7 +164,7 @@ if ($github_repository = getenv('GITHUB_REPOSITORY')) {
     putenv('PROJECT_NAME=' . $github_repository);
   }
 }
-$config['helfi_api_base.environment_resolver.settings']['environment_name'] = getenv('APP_ENV');
+$config['helfi_api_base.environment_resolver.settings']['environment_name'] = $env;
 $config['helfi_api_base.environment_resolver.settings']['project_name'] = getenv('PROJECT_NAME');
 
 if ($varnish_host = getenv('DRUPAL_VARNISH_HOST')) {
@@ -172,7 +173,7 @@ if ($varnish_host = getenv('DRUPAL_VARNISH_HOST')) {
 
   $varnish_backend = parse_url($drush_options_uri, PHP_URL_HOST);
 
-  if (getenv('APP_ENV') === 'local') {
+  if ($env === 'local') {
     // Varnish backend is something like varnish-helfi-kymp.docker.so on
     // local env.
     $varnish_backend = 'varnish-' . $varnish_backend;
@@ -226,15 +227,6 @@ if ($varnish_host = getenv('DRUPAL_VARNISH_HOST')) {
       ];
     }
   }
-}
-$stage_file_proxy_origin = getenv('STAGE_FILE_PROXY_ORIGIN');
-$stage_file_proxy_dir = getenv('STAGE_FILE_PROXY_ORIGIN_DIR');
-
-if ($stage_file_proxy_origin || $stage_file_proxy_dir) {
-  $config['stage_file_proxy.settings']['origin'] = $stage_file_proxy_origin ?: 'https://stplattaprod.blob.core.windows.net';
-  $config['stage_file_proxy.settings']['origin_dir'] = $stage_file_proxy_dir;
-  $config['stage_file_proxy.settings']['hotlink'] = FALSE;
-  $config['stage_file_proxy.settings']['use_imagecache_root'] = FALSE;
 }
 
 if ($drupal_pubsub_vault = getenv('DRUPAL_PUBSUB_VAULT')) {
@@ -343,7 +335,7 @@ if (getenv('ELASTICSEARCH_ETUSIVU_URL')) {
 }
 
 // Supported values: https://github.com/Seldaek/monolog/blob/main/doc/01-usage.md#log-levels.
-$default_log_level = getenv('APP_ENV') === 'production' ? 'info' : 'debug';
+$default_log_level = $env === 'production' ? 'info' : 'debug';
 $settings['helfi_api_base.log_level'] = getenv('LOG_LEVEL') ?: $default_log_level;
 
 // Turn sentry JS error tracking on if SENTRY_DSN_PUBLIC is defined.
@@ -373,7 +365,7 @@ if (getenv('HAKUVAHTI_URL')) {
 
 // E2E test users. We should never do this in production, so adding a failsafe
 // in case the environment variable would ever end up in production.
-if (getenv('APP_ENV') !== 'production' && $e2e_test_user = getenv('E2E_TEST_USER')) {
+if ($env !== 'production' && $e2e_test_user = getenv('E2E_TEST_USER')) {
   $e2e_test_user = json_decode($e2e_test_user, TRUE);
 
   // Make sure the user exists in Drupal.
@@ -386,13 +378,28 @@ if (getenv('APP_ENV') !== 'production' && $e2e_test_user = getenv('E2E_TEST_USER
   ]);
 }
 
+if ($env !== 'production') {
+  $stage_file_proxy_origin = getenv('STAGE_FILE_PROXY_ORIGIN');
+  $stage_file_proxy_dir = getenv('STAGE_FILE_PROXY_ORIGIN_DIR');
+
+  // Always default to blob storage if configured.
+  if ($blob_storage_container = getenv('AZURE_BLOB_STORAGE_CONTAINER')) {
+    $stage_file_proxy_origin = 'https://stplattaprod.blob.core.windows.net';
+    $stage_file_proxy_dir = $blob_storage_container;
+  }
+  $config['stage_file_proxy.settings']['origin'] = $stage_file_proxy_origin;
+  $config['stage_file_proxy.settings']['origin_dir'] = $stage_file_proxy_dir;
+  $config['stage_file_proxy.settings']['hotlink'] = FALSE;
+  $config['stage_file_proxy.settings']['use_imagecache_root'] = TRUE;
+}
+
 // Environment specific overrides.
 if (file_exists(__DIR__ . '/all.settings.php')) {
   // phpcs:ignore
   include_once __DIR__ . '/all.settings.php'; // NOSONAR
 }
 
-if ($env = getenv('APP_ENV')) {
+if ($env) {
   if (file_exists(__DIR__ . '/' . $env . '.settings.php')) {
     // phpcs:ignore
     include_once __DIR__ . '/' . $env . '.settings.php'; // NOSONAR
