@@ -29,7 +29,8 @@
         "weitzman/drupal-test-traits": "^2.0"
     },
     "conflict": {
-        "drupal/drupal": "*"
+        "drupal/drupal": "*",
+        "drupal/helfi_api_base": "<2.8.10"
     },
     "config": {
         "optimize-autoloader": true,
