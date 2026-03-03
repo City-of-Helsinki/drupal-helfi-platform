@@ -34,8 +34,8 @@ jobs:
           # The package must be installed globally because city-of-helsinki/drupal-helfi-platform
           # has no composer.lock committed the repository.
           # @see https://github.com/mglaman/composer-drupal-lenient?tab=readme-ov-file#support-when-composerlock-removed
-          composer global require mglaman/composer-drupal-lenient
           composer global config --no-plugins allow-plugins.mglaman/composer-drupal-lenient true
+          composer global require mglaman/composer-drupal-lenient
           composer install --no-interaction
 
       - name: Scan security updates
