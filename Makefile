@@ -1,5 +1,6 @@
 PHONY :=
 PROJECT_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
+IS_CONTAINER := $(shell test ${CONTAINER_RUNNING} && echo true || echo false)
 
 # Colors
 NO_COLOR=\033[0m

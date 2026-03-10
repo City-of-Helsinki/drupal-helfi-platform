@@ -385,7 +385,10 @@ if ($env !== 'production') {
   // Always default to blob storage if configured.
   if ($blob_storage_container = getenv('AZURE_BLOB_STORAGE_CONTAINER')) {
     $stage_file_proxy_origin = 'https://stplattaprod.blob.core.windows.net';
-    $stage_file_proxy_dir = $blob_storage_container;
+    // The container name uses the same naming convention across environments.
+    // Make sure the container name also points to production.
+    // For example: 'etusivu64e62test' -> 'etusivu64e62prod'.
+    $stage_file_proxy_dir = str_replace(['test', 'staging'], 'prod', $blob_storage_container);
   }
   $config['stage_file_proxy.settings']['origin'] = $stage_file_proxy_origin;
   $config['stage_file_proxy.settings']['origin_dir'] = $stage_file_proxy_dir;
