@@ -126,6 +126,12 @@ open-db-gui: ## Open database with GUI tool
 	$(eval DB_PASS ?= drupal)
 	@open mysql://$(DB_USER):$(DB_PASS)@$(shell docker compose port $(DB_SERVICE) 3306 | grep -v ::)/$(DB_NAME)
 
+ifeq ($(IS_CONTAINER),false)
 define drush
 	$(call docker_compose_exec,drush $(1),$(2))
 endef
+else
+define drush
+	@drush $(1) $(2)
+endef
+endif
