@@ -12,13 +12,13 @@ See [City-of-Helsinki/drupal-docker-images](https://github.com/City-of-Helsinki/
 
 ## Deployment tasks
 
-Deployment tasks are run inside a separate job pod and uses [/usr/local/bin/drush-deploy-entrypoint](https://github.com/City-of-Helsinki/drupal-docker-images/blob/main/openshift/drupal/files/usr/local/bin/drush-deploy-entrypoint) as an entrypoint.
+Deployment tasks are run inside a separate job pod and uses [/usr/local/bin/drush-deploy-entrypoint](https://github.com/City-of-Helsinki/drupal-docker-images/blob/main/drupal/openshift/files/usr/local/bin/drush-deploy-entrypoint) as an entrypoint.
 
-The entrypoint will source and execute all shell scripts in `/deploy` folder.
+The entrypoint will source and execute all shell scripts in `/hooks/deploy` folder.
 
 ## Cron jobs
 
-Cron jobs are run inside a separate cron container and use [/usr/local/bin/cron-entrypoint.sh](https://github.com/City-of-Helsinki/drupal-docker-images/blob/main/openshift/drupal/files/usr/local/bin/cron-entrypoint) as an entrypoint.
+Cron jobs are run inside a separate cron container and use [/usr/local/bin/cron-entrypoint](https://github.com/City-of-Helsinki/drupal-docker-images/blob/main/drupal/openshift/files/usr/local/bin/cron-entrypoint) as an entrypoint.
 
 The entrypoint will source and execute all shell scripts in `/crons` folder.
 
@@ -57,3 +57,9 @@ fi
 
 ...
 ```
+
+## Prelight checks
+
+Preflight checks can be used to run assertions before deployment tasks are run. If any preflight assertion fails, the deployment will be stopped and marked as failed.
+
+See [Deployment](https://github.com/City-of-Helsinki/drupal-helfi-platform/blob/main/documentation/deployment.md#deployment-preflight-checks) for more documentation.
