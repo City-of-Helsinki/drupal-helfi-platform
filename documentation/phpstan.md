@@ -14,6 +14,7 @@ includes:
 
 - Scan `public/modules/custom` and `public/themes/custom` folders: `vendor/bin/phpstan analyze`
 - Scan a `helfi_*` contrib module: `vendor/bin/phpstan analyze -c public/modules/contrib/helfi_some_module public/modules/contrib/helfi_some_module`
+- Update PHPStan baseline errors (issues that are allowed to fail): `vendor/bin/phpstan analyze --generate-baseline phpstan-baseline.neon`
 
 ## Scan code in GitHub Actions
 
