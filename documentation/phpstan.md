@@ -2,7 +2,13 @@
 
 ## Configuration
 
-Copy `phpstan.neon` from the Drupal platform repository: https://github.com/City-of-Helsinki/drupal-helfi-platform/blob/main/phpstan.neon
+- Copy `phpstan.neon` from the Drupal platform repository: https://github.com/City-of-Helsinki/drupal-helfi-platform/blob/main/phpstan.neon
+- Generate a baseline `phpstan analyze --generate-baseline phpstan-baseline.neon`
+- Add this to your `phpstan.neon` (root level):
+```
+includes:
+	- phpstan-baseline.neon
+```
 
 ## Usage
 
@@ -62,3 +68,9 @@ parameters:
 or with `// @phpstan-ignore-next-line` annotation.
 
 See https://phpstan.org/user-guide/ignoring-errors for more information.
+
+### Ignore "type has no value type specified in iterable type array" errors
+
+Easiest way to ignore these is to add an `array<mixed>` type hint. You should only do this for arrays without a specific shape.
+
+See https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type

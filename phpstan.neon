@@ -9,6 +9,6 @@ parameters:
     - ./public/themes/custom
   excludePaths:
     - vendor
-  level: 3
+  level: 7
   checkMissingIterableValueType: false
   treatPhpDocTypesAsCertain: false
