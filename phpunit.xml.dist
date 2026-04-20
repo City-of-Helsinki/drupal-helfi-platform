@@ -1,30 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         bootstrap="./public/core/tests/bootstrap.php"
-         colors="true"
-         beStrictAboutTestsThatDoNotTestAnything="true"
-         beStrictAboutOutputDuringTests="true"
-         beStrictAboutChangesToGlobalState="true"
-         failOnRisky="true"
-         failOnWarning="true"
-         failOnDeprecation="false"
-         displayDetailsOnTestsThatTriggerErrors="true"
-         displayDetailsOnTestsThatTriggerWarnings="true"
-         displayDetailsOnTestsThatTriggerDeprecations="false"
-         cacheResult="false"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
-         cacheDirectory=".phpunit.cache">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./public/core/tests/bootstrap.php" colors="true" beStrictAboutTestsThatDoNotTestAnything="true" beStrictAboutOutputDuringTests="true" beStrictAboutChangesToGlobalState="true" failOnRisky="true" failOnWarning="true" failOnDeprecation="false" displayDetailsOnTestsThatTriggerErrors="true" displayDetailsOnTestsThatTriggerWarnings="true" displayDetailsOnTestsThatTriggerDeprecations="false" cacheResult="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.5/phpunit.xsd" cacheDirectory=".phpunit.cache">
   <php>
     <!-- Set error reporting to E_ALL. -->
     <ini name="error_reporting" value="32767"/>
     <!-- Do not limit the amount of memory tests take to run. -->
     <ini name="memory_limit" value="-1"/>
-    <env name="MINK_DRIVER_ARGS_WEBDRIVER" value='["chrome", {"browserName":"chrome", "goog:chromeOptions":{"w3c": true, "args":["--no-sandbox", "--ignore-certificate-errors", "--allow-insecure-localhost", "--headless", "--dns-prefetch-disable"]}}, "http://chromium:4444"]' />
-    <env name="DTT_MINK_DRIVER_ARGS" value='["chrome", {"browserName":"chrome", "goog:chromeOptions":{"w3c": true, "args":["--no-sandbox","--ignore-certificate-errors", "--allow-insecure-localhost", "--headless", "--dns-prefetch-disable"]}}, "http://chromium:4444"]'/>
-    <env name="DTT_API_OPTIONS" value='{"socketTimeout": 360, "domWaitTimeout": 3600000}' />
+    <env name="MINK_DRIVER_ARGS_WEBDRIVER" value="[&quot;chrome&quot;, {&quot;browserName&quot;:&quot;chrome&quot;, &quot;goog:chromeOptions&quot;:{&quot;w3c&quot;: true, &quot;args&quot;:[&quot;--no-sandbox&quot;, &quot;--ignore-certificate-errors&quot;, &quot;--allow-insecure-localhost&quot;, &quot;--headless&quot;, &quot;--dns-prefetch-disable&quot;]}}, &quot;http://chromium:4444&quot;]"/>
+    <env name="DTT_MINK_DRIVER_ARGS" value="[&quot;chrome&quot;, {&quot;browserName&quot;:&quot;chrome&quot;, &quot;goog:chromeOptions&quot;:{&quot;w3c&quot;: true, &quot;args&quot;:[&quot;--no-sandbox&quot;,&quot;--ignore-certificate-errors&quot;, &quot;--allow-insecure-localhost&quot;, &quot;--headless&quot;, &quot;--dns-prefetch-disable&quot;]}}, &quot;http://chromium:4444&quot;]"/>
+    <env name="DTT_API_OPTIONS" value="{&quot;socketTimeout&quot;: 360, &quot;domWaitTimeout&quot;: 3600000}"/>
     <env name="DTT_API_URL" value="http://chromium:9222"/>
     <env name="DTT_BASE_URL" value="https://app"/>
-    <env name="SYMFONY_DEPRECATIONS_HELPER" value="ignoreFile=/app/.deprecation-ignore.txt" />
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value="ignoreFile=/app/.deprecation-ignore.txt"/>
   </php>
   <extensions>
     <!-- Functional tests HTML output logging. -->
@@ -37,40 +23,41 @@
       -->
       <parameter name="verbose" value="true"/>
     </bootstrap>
-  </extensions><testsuites>
-  <testsuite name="unit">
-    <directory>./public/modules/custom/*/tests/src/Unit</directory>
-    <directory>./public/themes/custom/*/tests/src/Unit</directory>
-    <directory>./public/profiles/custom/*/tests/src/Unit</directory>
-  </testsuite>
-  <testsuite name="kernel">
-    <directory>./public/modules/custom/*/tests/src/Kernel</directory>
-    <directory>./public/themes/custom/*/tests/src/Kernel</directory>
-    <directory>./public/profiles/custom/*/tests/src/Kernel</directory>
-  </testsuite>
-  <testsuite name="functional">
-    <directory>./public/modules/custom/*/tests/src/Functional</directory>
-    <directory>./public/themes/custom/*/tests/src/Functional</directory>
-    <directory>./public/profiles/custom/*/tests/src/Functional</directory>
-  </testsuite>
-  <testsuite name="functional-javascript">
-    <directory>./public/modules/custom/*/tests/src/FunctionalJavascript</directory>
-    <directory>./public/themes/custom/*/tests/src/FunctionalJavascript</directory>
-    <directory>./public/profiles/custom/*/tests/src/FunctionalJavascript</directory>
-  </testsuite>
-  <testsuite name="existing-site">
-    <directory>./tests/dtt/src/ExistingSite</directory>
-    <directory>./public/modules/custom/*/tests/src/ExistingSite</directory>
-    <directory>./public/themes/custom/*/tests/src/ExistingSite</directory>
-    <directory>./public/profiles/custom/*/tests/src/ExistingSite</directory>
-  </testsuite>
-  <testsuite name="existing-site-javascript">
-    <directory>./tests/dtt/src/ExistingSiteJavascript</directory>
-    <directory>./public/modules/custom/*/tests/src/ExistingSiteJavascript</directory>
-    <directory>./public/themes/custom/*/tests/src/ExistingSiteJavascript</directory>
-    <directory>./public/profiles/custom/*/tests/src/ExistingSiteJavascript</directory>
-  </testsuite>
-</testsuites>
+  </extensions>
+  <testsuites>
+    <testsuite name="unit">
+      <directory>./public/modules/custom/*/tests/src/Unit</directory>
+      <directory>./public/themes/custom/*/tests/src/Unit</directory>
+      <directory>./public/profiles/custom/*/tests/src/Unit</directory>
+    </testsuite>
+    <testsuite name="kernel">
+      <directory>./public/modules/custom/*/tests/src/Kernel</directory>
+      <directory>./public/themes/custom/*/tests/src/Kernel</directory>
+      <directory>./public/profiles/custom/*/tests/src/Kernel</directory>
+    </testsuite>
+    <testsuite name="functional">
+      <directory>./public/modules/custom/*/tests/src/Functional</directory>
+      <directory>./public/themes/custom/*/tests/src/Functional</directory>
+      <directory>./public/profiles/custom/*/tests/src/Functional</directory>
+    </testsuite>
+    <testsuite name="functional-javascript">
+      <directory>./public/modules/custom/*/tests/src/FunctionalJavascript</directory>
+      <directory>./public/themes/custom/*/tests/src/FunctionalJavascript</directory>
+      <directory>./public/profiles/custom/*/tests/src/FunctionalJavascript</directory>
+    </testsuite>
+    <testsuite name="existing-site">
+      <directory>./tests/dtt/src/ExistingSite</directory>
+      <directory>./public/modules/custom/*/tests/src/ExistingSite</directory>
+      <directory>./public/themes/custom/*/tests/src/ExistingSite</directory>
+      <directory>./public/profiles/custom/*/tests/src/ExistingSite</directory>
+    </testsuite>
+    <testsuite name="existing-site-javascript">
+      <directory>./tests/dtt/src/ExistingSiteJavascript</directory>
+      <directory>./public/modules/custom/*/tests/src/ExistingSiteJavascript</directory>
+      <directory>./public/themes/custom/*/tests/src/ExistingSiteJavascript</directory>
+      <directory>./public/profiles/custom/*/tests/src/ExistingSiteJavascript</directory>
+    </testsuite>
+  </testsuites>
   <source ignoreSuppressionOfDeprecations="true">
     <include>
       <directory suffix=".php">./public/modules/custom/*/src</directory>
