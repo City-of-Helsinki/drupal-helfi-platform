@@ -5,15 +5,9 @@ on:
 name: Automatic release PR
 jobs:
   release-pr:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Create pull request
-        run: |
-          gh pr create \
-            --base main \
-            --head dev \
-            --title "Dev to main" \
-            --body "Dev to main" || true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    uses: city-of-helsinki/drupal-gh-actions/.github/workflows/auto-release-pr.yml@main
+    permissions:
+      contents: read
+      pull-requests: write
+    secrets:
+      gh_token: ${{ secrets.GITHUB_TOKEN }}
