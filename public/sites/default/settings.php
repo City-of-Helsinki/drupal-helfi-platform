@@ -357,6 +357,21 @@ if (getenv('OPENAI_KEY')) {
   $config['helfi_search.settings']['openai_model'] = getenv('OPENAI_MODEL');
 }
 
+// Azure OpenAI for Drupal AI module (ai_provider_azure).
+// API key is managed by the Key module entity 'helfi_azure_openai' which reads
+// AZURE_OPENAI_API_KEY from the environment directly.
+// See: https://helsinkisolutionoffice.atlassian.net/browse/UHF-13110.
+if (getenv('AZURE_OPENAI_ENDPOINT') && getenv('AZURE_OPENAI_DEPLOYMENT_NAME')) {
+  $deployment = getenv('AZURE_OPENAI_DEPLOYMENT_NAME');
+  $config['ai.settings']['default_providers']['chat']['model_id'] = $deployment;
+  $config['ai.settings']['default_providers']['embeddings']['model_id'] = $deployment;
+  $config['ai.settings']['models']['azure']['chat'][$deployment] = [
+    'endpoint' => getenv('AZURE_OPENAI_ENDPOINT'),
+    'api_key' => 'helfi_azure_openai',
+    'connect_header' => 'api-key',
+  ];
+}
+
 // Hakuvahti:
 if (getenv('HAKUVAHTI_URL')) {
   $config['helfi_hakuvahti.settings']['base_url'] = getenv('HAKUVAHTI_URL');
