@@ -378,6 +378,11 @@ if ($env !== 'production' && $e2e_test_user = getenv('E2E_TEST_USER')) {
   ]);
 }
 
+// Content Security Policy reporting URI.
+if ($csp_reporting_uri = getenv('CSP_REPORTING_URI')) {
+  $config['csp.settings']['enforce']['reporting']['options']['uri'] = $csp_reporting_uri;
+}
+
 if ($env !== 'production') {
   $stage_file_proxy_origin = getenv('STAGE_FILE_PROXY_ORIGIN');
   $stage_file_proxy_dir = getenv('STAGE_FILE_PROXY_ORIGIN_DIR');
