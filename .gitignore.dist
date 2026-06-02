@@ -29,6 +29,7 @@ public/sites/default/local.settings.php
 public/sites/default/local.services.yml
 
 *.sql
+*.sql.gz
 *.env.local
 .secrets.json
 *.private.env.json
