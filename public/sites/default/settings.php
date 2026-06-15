@@ -408,8 +408,6 @@ $auditLogConfig = [
         'class' => 'Drupal\helfi_api_base\AuditLog\Sources\HelfiAuditLogSource'
       ]
   ],
-  'environment' => getenv('APP_ENV') ?: 'production',
-  'origin' => getenv('PROJECT_NAME'),
   'store_old_entries_days' => 30,
   'batch_limit' => 5000,
   'chunk_size' => 500,
