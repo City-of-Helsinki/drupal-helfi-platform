@@ -405,7 +405,7 @@ if ($env !== 'production') {
 $auditLogConfig = [
   'sources' => [
       [
-        'class' => 'Drupal\helfi_api_base\AuditLog\Sources\HelfiAuditLogSource'
+        'class' => 'Drupal\helfi_api_base\AuditLog\Sources\AuditLogSource'
       ]
   ],
   'store_old_entries_days' => 30,
