@@ -286,6 +286,13 @@ if (
   // Register redis services to make sure we don't get a non-existent service
   // error while trying to enable the module.
   $settings['container_yamls'][] = 'modules/contrib/redis/redis.services.yml';
+
+  // Support igbinary. We override redis services, so this *must* be loaded
+  // after redis.services.yml.
+  // @todo Remove this once Redis supports the new ObjectAwareSerializationInterface.
+  if (file_exists('modules/contrib/helfi_api_base/redis.services.yml')) {
+    $settings['container_yamls'][] = 'modules/contrib/helfi_api_base/redis.services.yml';
+  }
 }
 
 $settings['is_azure'] = FALSE;
