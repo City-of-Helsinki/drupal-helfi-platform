@@ -87,6 +87,7 @@ drush-locale-update: drupal-create-folders ## Update translations.
 	$(call drush,locale:clear-status)
 	$(call drush,locale:check)
 	$(call drush,locale:update)
+	$(call drush,helfi:locale-import helfi_platform_config)
 	$(call drush,cr)
 
 DRUPAL_POST_INSTALL_TARGETS := drush-sanitize-database drush-deploy drush-locale-update drush-unblock drush-uli
