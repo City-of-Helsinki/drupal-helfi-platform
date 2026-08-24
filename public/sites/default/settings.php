@@ -423,21 +423,20 @@ if ($env !== 'production') {
   $config['stage_file_proxy.settings']['use_imagecache_root'] = TRUE;
 }
 
-// Resilient logger (audit log) configuration
-$auditLogConfig = [
-  'sources' => [
+if ($auditLogUrl = getenv('AUDIT_LOG_ES_URL')) {
+  // Resilient logger (audit log) configuration
+  $auditLogConfig = [
+    'sources' => [
       [
         'class' => 'Drupal\helfi_api_base\AuditLog\Sources\AuditLogSource'
       ]
-  ],
-  'store_old_entries_days' => 30,
-  'batch_limit' => 5000,
-  'chunk_size' => 500,
-  'schedule_submit_unsent_entries' => '+15min',
-  'schedule_clear_sent_entries' => 'first day of next month midnight',
-];
-
-if ($auditLogUrl = getenv('AUDIT_LOG_ES_URL')) {
+    ],
+    'store_old_entries_days' => 30,
+    'batch_limit' => 5000,
+    'chunk_size' => 500,
+    'schedule_submit_unsent_entries' => '+15min',
+    'schedule_clear_sent_entries' => 'first day of next month midnight',
+  ];
   $auditLogConfig['targets'][] = [
     'class' => 'ResilientLogger\Targets\ElasticsearchLogTarget',
     'es_url' => $auditLogUrl,
@@ -445,9 +444,8 @@ if ($auditLogUrl = getenv('AUDIT_LOG_ES_URL')) {
     'es_password' => getenv('AUDIT_LOG_ES_PASSWORD') ?: '',
     'es_index' => getenv('AUDIT_LOG_ES_INDEX') ?: '',
   ];
+  $settings['resilient_logger'] = $auditLogConfig;
 }
-
-$settings['resilient_logger'] = $auditLogConfig;
 
 // Environment specific overrides.
 if (file_exists(__DIR__ . '/all.settings.php')) {
