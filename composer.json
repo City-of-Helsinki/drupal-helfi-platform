@@ -22,9 +22,10 @@
         "dg/bypass-finals": "^1.5",
         "donatj/mock-webserver": "^2.4",
         "drupal/core-dev": "^11.3",
-        "jangregor/phpstan-prophecy": "^1.0",
+        "jangregor/phpstan-prophecy": "^2",
         "phpstan/extension-installer": "^1.3",
-        "phpstan/phpstan-deprecation-rules": "^1.1",
+        "phpstan/phpstan": "^2.2",
+        "phpstan/phpstan-deprecation-rules": "^2",
         "symfony/phpunit-bridge": ">=6.4 <7.4",
         "weitzman/drupal-test-traits": "^2.0"
     },
