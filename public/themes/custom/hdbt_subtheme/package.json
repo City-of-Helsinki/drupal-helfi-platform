@@ -8,7 +8,6 @@
   "scripts": {
     "dev": "node theme-builder.mjs --watch --dev",
     "build": "npm run format:js && npm run lint && node theme-builder.mjs",
-    "preinstall": "npx update-browserslist-db@latest",
     "postinstall": "npm --prefix ../../contrib/hdbt install --no-audit --progress=false",
     "lint:scss": "npx --prefix ../../contrib/hdbt/theme-builder postcss \"$INIT_CWD/src/scss/**/*.scss\" --syntax postcss-scss --use css-declaration-sorter --replace --no-map && npm run lint:stylelint",
     "lint:stylelint": "npx --prefix ../../contrib/hdbt/theme-builder stylelint \"$INIT_CWD/src/scss/**/*.scss\" --config ../../contrib/hdbt/theme-builder/.stylelintrc.yaml --fix",
@@ -24,9 +23,7 @@
     "hds-design-tokens": "^2.0.0",
     "npm-run-all2": "^8.0.4"
   },
-  "browserslist": [
-    "last 3 major versions",
-    "> 1%",
-    "not dead"
-  ]
+  "allowScripts": {
+    "@parcel/watcher": false
+  }
 }
