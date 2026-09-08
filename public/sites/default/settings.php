@@ -447,6 +447,9 @@ if ($auditLogUrl = getenv('AUDIT_LOG_ES_URL')) {
   $settings['resilient_logger'] = $auditLogConfig;
 }
 
+// Disable audit logging for cli commands.
+$settings['auditlog_entity_hooks_disable'] = PHP_SAPI === 'cli';
+
 // Environment specific overrides.
 if (file_exists(__DIR__ . '/all.settings.php')) {
   // phpcs:ignore
