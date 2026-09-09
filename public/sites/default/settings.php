@@ -151,6 +151,7 @@ if ($blob_storage_name = getenv('AZURE_BLOB_STORAGE_NAME')) {
     ],
   ];
   $config['helfi_azure_fs.settings']['use_blob_storage'] = TRUE;
+  $settings['file_additional_public_schemes'] = ['azure'];
   $settings['flysystem'] = $schemes;
 }
 
