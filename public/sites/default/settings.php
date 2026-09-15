@@ -424,7 +424,7 @@ if ($env !== 'production') {
   $config['stage_file_proxy.settings']['use_imagecache_root'] = TRUE;
 }
 
-if ($auditLogUrl = getenv('AUDIT_LOG_ES_URL')) {
+if ($auditLogIndex = getenv('AUDIT_LOG_ES_INDEX')) {
   // Resilient logger (audit log) configuration
   $auditLogConfig = [
     'sources' => [
@@ -440,10 +440,10 @@ if ($auditLogUrl = getenv('AUDIT_LOG_ES_URL')) {
   ];
   $auditLogConfig['targets'][] = [
     'class' => 'ResilientLogger\Targets\ElasticsearchLogTarget',
-    'es_url' => $auditLogUrl,
+    'es_url' => getenv('AUDIT_LOG_ES_URL') ?: '',
     'es_username' => getenv('AUDIT_LOG_ES_USERNAME') ?: '',
     'es_password' => getenv('AUDIT_LOG_ES_PASSWORD') ?: '',
-    'es_index' => getenv('AUDIT_LOG_ES_INDEX') ?: '',
+    'es_index' => $auditLogIndex ?: '',
   ];
   $settings['resilient_logger'] = $auditLogConfig;
 }
