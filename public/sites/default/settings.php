@@ -343,7 +343,7 @@ if (getenv('ELASTICSEARCH_ETUSIVU_URL')) {
 }
 
 // Supported values: https://github.com/Seldaek/monolog/blob/main/doc/01-usage.md#log-levels.
-$default_log_level = $env === 'production' ? 'info' : 'debug';
+$default_log_level = $env === 'local' ? 'debug' : 'info';
 $settings['helfi_api_base.log_level'] = getenv('LOG_LEVEL') ?: $default_log_level;
 
 // Turn sentry JS error tracking on if SENTRY_DSN_PUBLIC is defined.
