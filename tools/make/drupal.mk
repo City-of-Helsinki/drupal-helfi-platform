@@ -90,7 +90,7 @@ drush-locale-update: drupal-create-folders ## Update translations.
 	$(call drush,helfi:locale-import helfi_platform_config)
 	$(call drush,cr)
 
-DRUPAL_POST_INSTALL_TARGETS := drush-sanitize-database drush-deploy drush-locale-update drush-unblock drush-uli
+DRUPAL_POST_INSTALL_TARGETS := drush-sanitize-database drush-deploy drush-unblock drush-uli
 
 DRUPAL_FRESH_TARGETS := up drupal-create-folders composer-install drush-import-dump $(DRUPAL_POST_INSTALL_TARGETS)
 PHONY += fresh
