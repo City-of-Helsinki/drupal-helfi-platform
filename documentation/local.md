@@ -51,7 +51,7 @@ The database dump is created by your project's database pipeline and stored in A
 
 Make sure you have no `dump.sql` in your Git root and run `make fresh`. The command runs Azure CLI in a Docker container and downloads the dump to `dump.sql`.
 
-If you are not logged in, you will be prompted to log in using a device code. You can also log in beforehand with `make azure-login` and log out with `make azure-logout`. Azure CLI credentials are stored in `~/.azure-helfi` and shared between projects, so you only need to log in once.
+If you are not logged in, you will be prompted to log in using a device code. If you are asked to select a tenant or subscription after logging in, select any hel.fi tenant. You can also log in beforehand with `make azure-login` and log out with `make azure-logout`. Azure CLI credentials are stored in `~/.azure-helfi` and shared between projects, so you only need to log in once.
 
 If the command reports that the blob does not exist, run the database pipeline for your project to create it and try again.
 
