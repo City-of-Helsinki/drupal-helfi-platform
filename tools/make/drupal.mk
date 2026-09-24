@@ -104,7 +104,6 @@ new: $(DRUPAL_NEW_TARGETS) ## Create a new empty Drupal installation from config
 # so you only need to log in once. Override in .env.local if needed.
 AZURE_CLI_CONFIG_DIR ?= $(HOME)/.azure-helfi
 AZURE_CLI_IMAGE ?= mcr.microsoft.com/azure-cli:latest
-AZURE_TENANT_ID ?= 5050c890-3cab-451b-b763-ad55ff3688de
 # Storage account, container and blob holding the database dump. The
 # container is project specific and must be set in .env.
 AZURE_DUMP_STORAGE_ACCOUNT ?= stplattaopsdevtest
@@ -122,7 +121,7 @@ define azure_cli
 		$(AZURE_CLI_IMAGE) sh -c "$(1)"
 endef
 
-AZURE_LOGIN_CMD := az login --use-device-code --tenant $(AZURE_TENANT_ID)
+AZURE_LOGIN_CMD := az login --use-device-code
 
 PHONY += azure-login
 azure-login: ## Log in to Azure (credentials are shared between projects)

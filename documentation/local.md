@@ -65,7 +65,6 @@ The following variables can be overridden in `.env` (or `.env.local`) if needed:
 | `AZURE_DUMP_AUTH_MODE`       | `login`                                | Azure CLI `--auth-mode`                      |
 | `AZURE_CLI_CONFIG_DIR`       | `$HOME/.azure-helfi`                   | Where Azure CLI credentials are stored       |
 | `AZURE_CLI_IMAGE`            | `mcr.microsoft.com/azure-cli:latest`   | Azure CLI Docker image                       |
-| `AZURE_TENANT_ID`            | City of Helsinki tenant                | Tenant used by `az login`                    |
 
 ### Using production database
 
