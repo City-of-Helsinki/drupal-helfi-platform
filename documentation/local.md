@@ -12,7 +12,7 @@
 - Go to Git root
 - Start the project by running `make up`
 - Run `make new` to install site from scratch using existing configuration
-- Run `make fresh` to install site from existing `dump.sql` file or sync database from testing environment
+- Run `make fresh` to install site from existing `dump.sql` file or download the database dump from Azure Blob storage
 
 ## Usage
 
@@ -43,19 +43,35 @@ See https://docs.docker.com/compose/multiple-compose-files/merge/ for more infor
 
 ## Installing site from existing database dump
 
-By default, `make fresh` attempts to install site using `dump.sql` file in your Git root. If the `dump.sql` does not exist, the Database will be synced from your project's testing environment.
+By default, `make fresh` attempts to install site using `dump.sql` file in your Git root. If the `dump.sql` does not exist, the database dump is downloaded from Azure Blob storage.
 
-### Syncing database from testing environment
+### Downloading database dump from Azure Blob storage
 
-Add/modify `OC_PROJECT_NAME` environment variable in your project's `.env` file. The value should be the same as the name shown in OpenShift project list, for example `hki-kanslia-random-project`.
+The database dump is created by your project's database pipeline and stored in Azure Blob storage. Set `AZURE_DUMP_CONTAINER` environment variable in your project's `.env` file to point to your project's blob container, for example `hki-database-blob-helfi-etusivu-test`.
 
-Make sure you have no `dump.sql` in your Git root and run `make fresh`. The command will sync database dump from your testing environment.
+Make sure you have no `dump.sql` in your Git root and run `make fresh`. The command runs Azure CLI in a Docker container and downloads the dump to `dump.sql`.
 
-### Syncing database from production environment
+If you are not logged in, you will be prompted to log in using a device code. You can also log in beforehand with `make azure-login` and log out with `make azure-logout`. Azure CLI credentials are stored in `~/.azure-helfi` and shared between projects, so you only need to log in once.
+
+If the command reports that the blob does not exist, run the database pipeline for your project to create it and try again.
+
+The following variables can be overridden in `.env` (or `.env.local`) if needed:
+
+| Variable                     | Default                                | Description                                  |
+|------------------------------|----------------------------------------|----------------------------------------------|
+| `AZURE_DUMP_CONTAINER`       | _(empty, required)_                    | Blob container holding the database dump     |
+| `AZURE_DUMP_STORAGE_ACCOUNT` | `stplattaopsdevtest`                   | Storage account name                         |
+| `AZURE_DUMP_BLOB`            | `testing.sql`                          | Name of the database dump blob               |
+| `AZURE_DUMP_AUTH_MODE`       | `login`                                | Azure CLI `--auth-mode`                      |
+| `AZURE_CLI_CONFIG_DIR`       | `$HOME/.azure-helfi`                   | Where Azure CLI credentials are stored       |
+| `AZURE_CLI_IMAGE`            | `mcr.microsoft.com/azure-cli:latest`   | Azure CLI Docker image                       |
+| `AZURE_TENANT_ID`            | City of Helsinki tenant                | Tenant used by `az login`                    |
+
+### Using production database
 
 The production environment can only be accessed through a VPN connection, meaning it's not possible to easily sync the database from production environment.
 
-If you need a production database, you can sync the database from production to testing environment and re-run `make fresh`. See
+If you need a production database, you can sync the database from production to testing environment, re-run the database pipeline and re-run `make fresh`. See
 [Syncing databases between OpenShift environments](/documentation/openshift-db-sync.md) for more information.
 
 The other option is to sync it using VPN and running the `oc` tool on your local machine. See:
