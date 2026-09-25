@@ -2,7 +2,7 @@
 
 Create a modified `xdebug.ini` to your project's root:
 ```ini
-zend_extension=/usr/lib/php83/modules/xdebug.so
+zend_extension=/usr/lib/php84/modules/xdebug.so
 xdebug.mode=profile
 xdebug.output_dir=/app/xdebug
 xdebug.profiler_enable=1
@@ -15,9 +15,7 @@ Create a `Dockerfile.profile` file in your project's root:
 ARG DRUPAL_IMAGE
 FROM ${DRUPAL_IMAGE}
 
-COPY xdebug.ini /etc/php83/conf.d/50_xdebug.ini
-
-RUN mkdir -p /app/xdebug
+COPY xdebug.ini /etc/php84/conf.d/xdebug.ini
 ```
 
 Modify your `compose.yaml` file:
@@ -31,13 +29,12 @@ index 99f55b27..27580975 100644
  services:
    app:
      container_name: "${COMPOSE_PROJECT_NAME}-app"
--    image: "${DRUPAL_IMAGE}"
-+    # image: "${DRUPAL_IMAGE}"
+-    #image: "${DRUPAL_IMAGE:-ghcr.io/city-of-helsinki/drupal-web:8.4}"
 +    build:
 +      context: .
 +      dockerfile: Dockerfile.profile
 +      args:
-+        DRUPAL_IMAGE: "${DRUPAL_IMAGE}"
++        DRUPAL_IMAGE: "${DRUPAL_IMAGE:-ghcr.io/city-of-helsinki/drupal-web:8.4}"
      hostname: "${COMPOSE_PROJECT_NAME}"
      volumes:
        - .:/app:delegated
