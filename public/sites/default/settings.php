@@ -339,6 +339,12 @@ if (getenv('ELASTICSEARCH_ETUSIVU_URL')) {
     $config['search_api.server.etusivu']['backend_config']['connector'] = 'helfi_connector';
     $config['search_api.server.etusivu']['backend_config']['connector_config']['username'] = getenv('ELASTICSEARCH_ETUSIVU_WRITER_USER');
     $config['search_api.server.etusivu']['backend_config']['connector_config']['password'] = getenv('ELASTICSEARCH_ETUSIVU_WRITER_PASSWORD');
+
+    $config['helfi_api_base.api_accounts']['vault'][] = [
+      'id' => 'etusivu_elastic',
+      'plugin' => 'authorization_token',
+      'data' => base64_encode(getenv('ELASTICSEARCH_ETUSIVU_WRITER_USER') . ':' . getenv('ELASTICSEARCH_ETUSIVU_WRITER_PASSWORD')),
+    ];
   }
 }
 
