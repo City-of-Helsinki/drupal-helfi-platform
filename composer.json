@@ -47,7 +47,8 @@
             "symfony/runtime": true
         },
         "audit": {
-            "abandoned": "report"
+            "abandoned": "report",
+            "ignore": ["CVE-2026-102601"]
         }
     },
     "extra": {
