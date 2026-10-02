@@ -19,7 +19,7 @@ is_true "${CI:-}" && exit 0
 is_true "${CONTAINER_RUNNING:-}" && exit 0
 
 # Created by Docker and Podman in the running containers.
-if [ -f /.dockerenv ] || [ -f /run/.containerenv ]; then
+if [[ -f /.dockerenv || -f /run/.containerenv ]]; then
   exit 0
 fi
 
