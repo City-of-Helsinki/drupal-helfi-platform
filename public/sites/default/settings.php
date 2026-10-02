@@ -130,9 +130,13 @@ if ($reverse_proxy_address = getenv('DRUPAL_REVERSE_PROXY_ADDRESS')) {
 }
 
 if ($blob_storage_name = getenv('AZURE_BLOB_STORAGE_NAME')) {
+  $blob_storage_container = getenv('AZURE_BLOB_STORAGE_CONTAINER');
+
   $schemes = [
     'azure' => [
       'driver' => 'helfi_azure',
+      // Required by Flysystem 3 to generate file URLs.
+      'public_url_base' => sprintf('https://%s.blob.core.windows.net/%s', $blob_storage_name, $blob_storage_container),
       'config' => [
         'name' => $blob_storage_name,
         'key' => drupal_get_env([
@@ -143,11 +147,10 @@ if ($blob_storage_name = getenv('AZURE_BLOB_STORAGE_NAME')) {
           'AZURE_BLOB_STORAGE_SAS_TOKEN',
           'BLOBSTORAGE_SAS_TOKEN',
         ]),
-        'container' => getenv('AZURE_BLOB_STORAGE_CONTAINER'),
+        'container' => $blob_storage_container,
         'endpointSuffix' => 'core.windows.net',
         'protocol' => 'https',
       ],
-      'cache' => TRUE,
     ],
   ];
   $config['helfi_azure_fs.settings']['use_blob_storage'] = TRUE;
