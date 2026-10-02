@@ -4,3 +4,4 @@ init-project:
 	@rm -rf documentation/
 	@mv README.project.md README.md
 	@composer config --unset scripts.post-create-project-cmd
+	@git init
