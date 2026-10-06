@@ -1,5 +1,3 @@
-#!/bin/sh
-
 #!/bin/bash
 
 source /init.sh
