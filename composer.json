@@ -118,6 +118,7 @@
         }
     ],
     "scripts": {
+        "pre-command-run": "bash tools/composer/require-container.sh",
         "test": [
           "@lint-php",
           "@test-php"

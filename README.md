@@ -20,15 +20,39 @@ See [documentation](/documentation).
 
 #### Requirements
 
-- PHP and Composer
+- Docker and bash
+- Make
+- [Stonehenge](https://github.com/druidfi/stonehenge) up and running
 
-#### Create a new project using composer
+#### Create a new project
 
 ```console
-$ composer create-project City-of-Helsinki/drupal-helfi-platform:dev-main yoursite --no-interaction --repository https://repository.drupal.hel.ninja/
+$ docker run --rm -v "$PWD":/app -w /app -u "$(id -u):$(id -g)" --entrypoint composer ghcr.io/city-of-helsinki/drupal-web:8.5 \
+    create-project City-of-Helsinki/drupal-helfi-platform:dev-main yoursite --no-interaction --repository https://repository.drupal.hel.ninja/
+$ cd yoursite
+$ git init
 ```
 
-#### Starting the development environment
+#### Start the environment and install the site
+
+```console
+$ make up
+$ make new
+```
+
+#### Run commands inside the container
+
+Composer and Drush are run inside the `app` container:
+
+```console
+$ make shell
+$ composer require drupal/some_module
+$ drush cr
+```
+
+Composer refuses to run outside of the container.
+
+#### Next steps
 
 See [Development environment](/documentation/local.md) documentation.
 
