@@ -119,16 +119,16 @@ if ($reverse_proxy_address = getenv('DRUPAL_REVERSE_PROXY_ADDRESS')) {
   $reverse_proxy_address = explode(',', $reverse_proxy_address);
   $reverse_proxy_trusted_headers = Request::HEADER_X_FORWARDED_HOST | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO;
 
-  if (isset($_SERVER['REMOTE_ADDR'])) {
+  if ($remote_address = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP)) {
     // The application sits behind multiple proxies in the OpenShift
     // environment. The nginx configuration uses ngx_http_realip_module to
     // set the correct headers for Drupal.
-    $reverse_proxy_address[] = $_SERVER['REMOTE_ADDR'];
+    $reverse_proxy_address[] = $remote_address;
 
     // Without an internal proxy, like Varnish, in front of nginx, the remote
     // address is already the client's IP and the rest of X-Forwarded-For
     // comes from the client, so it can't be trusted.
-    if (IpUtils::checkIp($_SERVER['REMOTE_ADDR'], IpUtils::PRIVATE_SUBNETS)) {
+    if (IpUtils::checkIp($remote_address, IpUtils::PRIVATE_SUBNETS)) {
       $reverse_proxy_trusted_headers |= Request::HEADER_X_FORWARDED_FOR;
     }
   }
