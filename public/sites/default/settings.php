@@ -150,6 +150,7 @@ if ($blob_storage_name = getenv('AZURE_BLOB_STORAGE_NAME')) {
         'endpointSuffix' => 'core.windows.net',
         'protocol' => 'https',
       ],
+      'cache' => TRUE,
     ],
   ];
   $config['helfi_azure_fs.settings']['use_blob_storage'] = TRUE;
