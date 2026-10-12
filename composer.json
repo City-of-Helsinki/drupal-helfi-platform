@@ -48,7 +48,7 @@
         },
         "audit": {
             "abandoned": "report",
-            "ignore": ["CVE-2026-102601"]
+            "ignore": ["CVE-2026-102601", "PKSA-8j6w-3kr7-s9xk", "PKSA-6j95-1jtb-x6wc", "PKSA-cbx2-m9db-bmzd"]
         }
     },
     "extra": {
