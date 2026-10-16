@@ -1,5 +1,5 @@
-import path from 'path';
-import { globSync } from 'fs';
+import path from 'node:path';
+import { globSync } from 'node:fs';
 import { buildAll, watchAndBuild } from '@hdbt/theme-builder/builder';
 
 const __dirname = path.resolve();
