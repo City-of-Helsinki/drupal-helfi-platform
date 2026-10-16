@@ -27,7 +27,7 @@ Requirements for developing:
 | Command       | Make command               | Description                                                                       |
 |---------------|----------------------------|-----------------------------------------------------------------------------------|
 | nvm use       | N/A                        | Uses correct Node version chosen for the subtheme compiler                        |
-| npm i         | make install-hdbt-subtheme | Install dependencies and link local packages.                                     |
+| npm i         | make install-hdbt-subtheme | Install dependencies and the theme builder from hdbt.                             |
 | npm ci        | N/A                        | Install a project with a clean slate. Use especially in travis like environments. |
 | npm run dev   | make watch-hdbt-subtheme   | Compile styles for development environment and watch file changes.                |
 | npm run build | make build-hdbt-subtheme   | Build packages for production. Minify CSS/JS. Create icon sprite.                 |
@@ -40,16 +40,17 @@ project directory of your instance. For more information, see
 Set up the developing environment with `nvm` by running
 
     nvm use
+    npm install --global npm@12
     npm i
 
 Explanations for commands.
 - `nvm use` : Install and use the correct version of Node.
-- `npm i` : As stated above; Install dependencies and link local packages.
+- `npm install --global npm@12` : Install npm 12 once per Node version. Node 24 ships npm 11.
+- `npm i` : Install dependencies. The `preinstall` script refreshes the theme builder from hdbt.
 
 Related files.
 - `.nvmrc` : Defines the node version used to compile the theme.
 - `package.json and package-lock.json` : Defines the node modules for compiling the theme.
-- `theme-builder/` : The theme builder tools.
 - `theme-builder.mjs` : Configuration file for the theme builder tool that is used to build the theme.
 
 Start SCSS/JS watcher by running
@@ -59,6 +60,9 @@ Start SCSS/JS watcher by running
 Build the minified versions of CSS/JS into dist with
 
     npm run build
+
+For updating and overriding the packages, see
+[theme-dependencies.md](https://github.com/City-of-Helsinki/drupal-helfi-platform/blob/main/documentation/theme-dependencies.md).
 
 ## Structure for files and folders
 
