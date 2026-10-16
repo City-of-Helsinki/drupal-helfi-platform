@@ -21,6 +21,7 @@
 - [OpenShift](/documentation/openshift.md)
 - [Syncing databases between environments](/documentation/openshift-db-sync.md)
 - [Building assets](/documentation/build-assets.md)
+- [HDBT subtheme dependencies](/documentation/theme-dependencies.md)
 - [Search](/documentation/search.md)
 
 ## Projects

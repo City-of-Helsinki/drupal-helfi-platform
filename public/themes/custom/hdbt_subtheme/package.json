@@ -6,27 +6,33 @@
   "license": "MIT",
   "repository": "github:City-of-Helsinki/drupal-hel-platform",
   "@comment scripts": [
-    "Every build, lint and format script below runs inside a disposable Node container via the hdbt sandbox script."
+    "Every build, lint and format script below runs inside a disposable Node container via the sandbox command."
   ],
   "scripts": {
-    "dev": "../../contrib/hdbt/tools/sandbox.sh node theme-builder.mjs --watch --dev",
-    "build": "../../contrib/hdbt/tools/sandbox.sh sh -c 'npm run format:js && npm run lint && node theme-builder.mjs'",
-    "postinstall": "npm --prefix ../../contrib/hdbt install --no-audit --progress=false",
-    "lint:scss": "../../contrib/hdbt/tools/sandbox.sh sh -c 'postcss \"src/scss/**/*.scss\" --syntax postcss-scss --use css-declaration-sorter --replace --no-map && npm run lint:stylelint'",
-    "lint:stylelint": "../../contrib/hdbt/tools/sandbox.sh stylelint \"src/scss/**/*.scss\" --config ../../contrib/hdbt/theme-builder/.stylelintrc.yaml --fix",
-    "lint:js": "../../contrib/hdbt/tools/sandbox.sh biome lint src/js/",
-    "format:js": "../../contrib/hdbt/tools/sandbox.sh biome format --write src/js/",
-    "lint": "../../contrib/hdbt/tools/sandbox.sh npm-run-all --parallel lint:scss lint:js -s"
+    "preinstall": "rm -rf node_modules/@hdbt/theme-builder && npm install ../../contrib/hdbt/theme-builder --loglevel=silent",
+    "dev": "sandbox node theme-builder.mjs --watch --dev",
+    "build": "sandbox sh -c 'npm run format:js --loglevel=silent && npm run lint --loglevel=silent && node theme-builder.mjs'",
+    "lint:scss": "sandbox stylelint \"src/scss/**/*.scss\" --config node_modules/@hdbt/theme-builder/.stylelintrc.yaml --formatter string --fix",
+    "lint:js": "sandbox biome lint --no-errors-on-unmatched src/js/",
+    "format:js": "sandbox biome format --write --no-errors-on-unmatched src/js/",
+    "lint": "sandbox npm-run-all --parallel lint:scss lint:js -s"
+  },
+  "@comment dependencies": [
+    {
+      "svg-sprite > glob": "^13.0.0, dependency of @hdbt/theme-builder; drops deprecated glob@7 and inflight"
+    }
+  ],
+  "overrides": {
+    "svg-sprite": {
+      "glob": "^13.0.0"
+    }
   },
   "dependencies": {
-    "@biomejs/biome": "^2.2.4",
     "@hdbt/theme-builder": "file:../../contrib/hdbt/theme-builder",
-    "breakpoint-sass": "^3.0.0",
-    "glob": "^11.0.0",
-    "hds-design-tokens": "^2.0.0",
     "npm-run-all2": "^8.0.4"
   },
   "allowScripts": {
+    "esbuild": false,
     "@parcel/watcher": false
   },
   "engines": {
