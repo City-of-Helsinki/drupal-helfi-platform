@@ -48,7 +48,7 @@ services:
   redis:
     container_name: "${COMPOSE_PROJECT_NAME}-redis"
     image: redis:7-alpine
-    command: [sh, -c, "rm -f /data/dump.rdb && redis-server --save ''"]
+    command: [sh, -c, "rm -f /data/dump.rdb && redis-server --save '' --maxmemory 256mb --maxmemory-policy allkeys-lru"]
     networks:
       - internal
   db:
