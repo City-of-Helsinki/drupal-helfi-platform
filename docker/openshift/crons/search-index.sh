@@ -12,7 +12,7 @@ WORKERS=${SEARCH_INDEX_WORKERS:-8}
 while true
 do
   for i in $(seq 1 "$WORKERS"); do
-    drush search-api:index --batch-size=50 &
+    drush search-api:index &
   done
   wait
   # Sleep for 5 minutes.
