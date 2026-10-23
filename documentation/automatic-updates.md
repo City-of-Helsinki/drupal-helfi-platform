@@ -5,6 +5,7 @@ The automatic update bot can be used to:
 - Automatically update config changes, like feature changes from `helfi_drupal_platform` module
 - Update changed `drupal-helfi-platform` files using ([helfi_drupal_tools](https://github.com/City-of-Helsinki/drupal-tools)).
 - Update `drupal/helfi_*` and `drupal/hdbt*` packages using Composer.
+- Rebuild the `hdbt_subtheme` and commit `package-lock.json` and `dist/`. See [HDBT subtheme dependencies](/documentation/theme-dependencies.md).
 
 ## The problem this is trying to solve
 
