@@ -7,7 +7,7 @@ if ! is_drupal_module_enabled "search_api"; then
 fi
 
 # The parallel tracker lets each worker claim its own items.
-WORKERS=${SEARCH_INDEX_WORKERS:-8}
+WORKERS=${SEARCH_INDEX_WORKERS:-4}
 
 while true
 do
