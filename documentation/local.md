@@ -13,6 +13,7 @@
 - Start the project by running `make up`
 - Run `make new` to install site from scratch using existing configuration
 - Run `make fresh` to install site from existing `dump.sql` file or download the database dump from Azure Blob storage
+- Optionally, run `make sync-local-settings` to download the project's shared `local.settings.php` from Azure Key Vault
 
 ## Usage
 
@@ -51,7 +52,7 @@ The database dump is created by your project's database pipeline and stored in A
 
 Make sure you have no `dump.sql` in your Git root and run `make fresh`. The command runs Azure CLI in a Docker container and downloads the dump to `dump.sql`.
 
-If you are not logged in, you will be prompted to log in using a device code. If you are asked to select a tenant or subscription after logging in, select any hel.fi tenant. You can also log in beforehand with `make azure-login` and log out with `make azure-logout`. Azure CLI credentials are stored in `~/.azure-helfi` and shared between projects, so you only need to log in once.
+If you are not logged in, or your login has expired, you will be prompted to log in using a device code. If you are asked to select a tenant or subscription after logging in, select any hel.fi tenant. You can also log in beforehand with `make azure-login` and log out with `make azure-logout`. Azure CLI credentials are stored in `~/.azure-helfi` and shared between projects, so you only need to log in once.
 
 If the command reports that the blob does not exist, run the database pipeline for your project to create it and try again.
 
@@ -75,6 +76,27 @@ If you need a production database, you can sync the database from production to 
 
 The other option is to sync it using VPN and running the `oc` tool on your local machine. See:
 - [VPN instructions](https://helsinkisolutionoffice.atlassian.net/wiki/spaces/HELFI/pages/7535886371/Maintenance+VPN+Huoltoyhteys)
+
+## Syncing local settings from Azure Key Vault
+
+Credentials and other settings needed for local development, such as API keys, can be shared through Azure Key Vault instead of copying them by hand. Each project's `public/sites/default/local.settings.php` is stored as a secret called `${PROJECT_NAME}-localsettingsphp` in the `hki-kanslia-drupaldev-kv` Key Vault. `PROJECT_NAME` is set in your project's `.env` file.
+
+Run `make sync-local-settings` to download the file. If your `local.settings.php` has changes that are not in the secret, you will be asked before it's overwritten.
+
+Run `make upload-local-settings` to save your current `local.settings.php` to the secret, for example after adding a new API key. Everyone who syncs the file gets the uploaded version, so you will be asked before an existing secret is replaced. Don't upload anything that only applies to your own environment.
+
+The Key Vault policy requires secrets to expire within 90 days, so each upload sets the secret to expire after 90 days. An expired secret can still be downloaded. If the secret is up to date, `make upload-local-settings` asks whether you want to renew it for another 90 days.
+
+Both commands use the same Azure CLI login as the database dump download, see [Downloading database dump from Azure Blob storage](#downloading-database-dump-from-azure-blob-storage). The file content is never printed.
+
+The following variables can be overridden in `.env` (or `.env.local`) if needed:
+
+| Variable                    | Default                                   | Description                           |
+|-----------------------------|-------------------------------------------|---------------------------------------|
+| `AZURE_KEY_VAULT`           | `hki-kanslia-drupaldev-kv`                | Key Vault holding the local settings  |
+| `LOCAL_SETTINGS_SECRET`     | `${PROJECT_NAME}-localsettingsphp`        | Name of the secret                    |
+| `LOCAL_SETTINGS_FILE`       | `public/sites/default/local.settings.php` | File to download to and upload from   |
+| `LOCAL_SETTINGS_VALID_DAYS` | `90`                                      | Days until an uploaded secret expires |
 
 ## Testing production setup on local
 
