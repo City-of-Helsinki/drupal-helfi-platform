@@ -110,6 +110,12 @@ AZURE_DUMP_STORAGE_ACCOUNT ?= stplattaopsdevtest
 AZURE_DUMP_CONTAINER ?=
 AZURE_DUMP_BLOB ?= testing.sql
 AZURE_DUMP_AUTH_MODE ?= login
+# Key Vault and secret holding the project's local.settings.php.
+AZURE_KEY_VAULT ?= hki-kanslia-drupaldev-kv
+LOCAL_SETTINGS_SECRET ?= $(PROJECT_NAME)-localsettingsphp
+LOCAL_SETTINGS_FILE ?= public/sites/default/local.settings.php
+# The Key Vault policy requires secrets to expire within 90 days.
+LOCAL_SETTINGS_VALID_DAYS ?= 90
 
 define azure_cli
 	@mkdir -p $(AZURE_CLI_CONFIG_DIR)
@@ -123,6 +129,10 @@ endef
 
 AZURE_LOGIN_CMD := az login --use-device-code
 
+# Logs in unless a token for the given resource can be fetched. 'az account
+# show' only reads the cached account, so it doesn't notice an expired MFA.
+azure_login_for = az account get-access-token --resource $(1) > /dev/null 2>&1 || $(AZURE_LOGIN_CMD)
+
 PHONY += azure-login
 azure-login: ## Log in to Azure (credentials are shared between projects)
 	$(call step,Log in to Azure...\n)
@@ -132,15 +142,32 @@ PHONY += azure-logout
 azure-logout: ## Log out from Azure
 	$(call azure_cli,az logout)
 
+PHONY += sync-local-settings
+sync-local-settings: ## Download local.settings.php from Azure Key Vault
+	$(if $(PROJECT_NAME),,$(error PROJECT_NAME is not set))
+	$(call step,Download $(LOCAL_SETTINGS_SECRET) from $(AZURE_KEY_VAULT)...\n)
+	$(call azure_cli,$(call azure_login_for,https://vault.azure.net) && \
+		sh tools/make/sync-local-settings.sh download $(AZURE_KEY_VAULT) $(LOCAL_SETTINGS_SECRET) $(LOCAL_SETTINGS_FILE))
+
+PHONY += upload-local-settings
+upload-local-settings: ## Upload local.settings.php to Azure Key Vault
+	$(if $(PROJECT_NAME),,$(error PROJECT_NAME is not set))
+	$(call step,Upload $(LOCAL_SETTINGS_FILE) to $(LOCAL_SETTINGS_SECRET) in $(AZURE_KEY_VAULT)...\n)
+	$(call azure_cli,$(call azure_login_for,https://vault.azure.net) && \
+		sh tools/make/sync-local-settings.sh upload $(AZURE_KEY_VAULT) $(LOCAL_SETTINGS_SECRET) $(LOCAL_SETTINGS_FILE) $(LOCAL_SETTINGS_VALID_DAYS))
+
 AZURE_DUMP_BLOB_ARGS := --auth-mode $(AZURE_DUMP_AUTH_MODE) \
 	--account-name $(AZURE_DUMP_STORAGE_ACCOUNT) \
 	--container-name $(AZURE_DUMP_CONTAINER) \
 	--name $(AZURE_DUMP_BLOB)
+# The login auth mode uses a storage token, the key mode fetches the account
+# key with a management token.
+AZURE_DUMP_TOKEN_RESOURCE := $(if $(filter login,$(AZURE_DUMP_AUTH_MODE)),https://storage.azure.com,https://management.azure.com)
 
 dump.sql:
 	$(if $(AZURE_DUMP_CONTAINER),,$(error AZURE_DUMP_CONTAINER is not set))
 	$(call step,Download $(AZURE_DUMP_BLOB) from Azure Blob storage...\n)
-	$(call azure_cli,az account show > /dev/null 2>&1 || $(AZURE_LOGIN_CMD) && \
+	$(call azure_cli,$(call azure_login_for,$(AZURE_DUMP_TOKEN_RESOURCE)) && \
 		exists=\$$(az storage blob exists $(AZURE_DUMP_BLOB_ARGS) --query exists -o tsv) || exit 1; \
 		if [ \"\$$exists\" != true ]; then \
 			echo 'Blob $(AZURE_DUMP_BLOB) does not exist in container $(AZURE_DUMP_CONTAINER).' >&2; \
