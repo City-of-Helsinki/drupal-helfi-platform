@@ -294,11 +294,15 @@ if (
 
   // REDIS_INSTANCE environment variable is used to support Redis sentinel.
   // REDIS_HOST value should contain host and port, like 'sentinel:5000'
-  // when using Sentinel.
+  // when using Sentinel. Multiple sentinels can be given as a comma-separated
+  // list.
   if ($redis_instance = getenv('REDIS_INSTANCE')) {
     $settings['redis.connection']['instance'] = $redis_instance;
     // Sentinel expects redis host to be an array.
     $redis_host = explode(',', $redis_host);
+    // Sentinels are tried in order until one of them returns the master, so
+    // shuffle them to not slow down every request when the first one is down.
+    shuffle($redis_host);
   }
   $settings['redis.connection']['host'] = $redis_host;
 
