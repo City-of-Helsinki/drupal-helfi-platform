@@ -19,12 +19,12 @@
   },
   "@comment dependencies": [
     {
-      "svg-sprite > glob": "^13.0.0, dependency of @hdbt/theme-builder; drops deprecated glob@7 and inflight"
+      "svg-sprite > glob": "^14.0.0, dependency of @hdbt/theme-builder; drops deprecated glob@7 and inflight"
     }
   ],
   "overrides": {
     "svg-sprite": {
-      "glob": "^13.0.0"
+      "glob": "^14.0.0"
     }
   },
   "dependencies": {
