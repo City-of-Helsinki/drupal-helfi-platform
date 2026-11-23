@@ -452,8 +452,6 @@ if ($auditLogIndex = getenv('AUDIT_LOG_ES_INDEX')) {
     'store_old_entries_days' => 30,
     'batch_limit' => 5000,
     'chunk_size' => 500,
-    'schedule_submit_unsent_entries' => '+15min',
-    'schedule_clear_sent_entries' => 'first day of next month midnight',
   ];
   $auditLogConfig['targets'][] = [
     'class' => 'ResilientLogger\Targets\ElasticsearchLogTarget',
