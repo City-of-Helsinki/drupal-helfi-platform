@@ -17,16 +17,6 @@
     "format:js": "sandbox biome format --write --no-errors-on-unmatched src/js/",
     "lint": "sandbox npm-run-all --parallel lint:scss lint:js -s"
   },
-  "@comment dependencies": [
-    {
-      "svg-sprite > glob": "^13.0.0, dependency of @hdbt/theme-builder; drops deprecated glob@7 and inflight"
-    }
-  ],
-  "overrides": {
-    "svg-sprite": {
-      "glob": "^13.0.0"
-    }
-  },
   "dependencies": {
     "@hdbt/theme-builder": "file:../../contrib/hdbt/theme-builder",
     "npm-run-all2": "^8.0.4"
