@@ -59,6 +59,15 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_swedish_ci
       - --skip-log-bin
+      # Performance Schema collects query and server statistics for
+      # monitoring tools. It uses around 250 MB of memory, so it's disabled
+      # locally. Remove this line if you need it, for example to profile
+      # slow queries.
+      - --performance-schema=OFF
+      # Smaller caches to reduce memory usage.
+      - --innodb-log-buffer-size=16M
+      - --table-open-cache=400
+      - --table-definition-cache=1000
     environment:
       MYSQL_DATABASE: drupal
       MYSQL_USER: drupal
