@@ -59,6 +59,15 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_swedish_ci
       - --skip-log-bin
+      # Performance Schema collects query and server statistics for
+      # monitoring tools. It uses around 250 MB of memory, so it's disabled
+      # locally. Remove this line if you need it, for example to profile
+      # slow queries.
+      - --performance-schema=OFF
+      # Smaller caches to reduce memory usage.
+      - --innodb-log-buffer-size=16M
+      - --table-open-cache=400
+      - --table-definition-cache=1000
     environment:
       MYSQL_DATABASE: drupal
       MYSQL_USER: drupal
@@ -135,17 +144,17 @@ services:
       - discovery.seed_hosts=elastic
       - cluster.name=es-docker-cluster
       - cluster.initial_master_nodes="${COMPOSE_PROJECT_NAME}-elastic"
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - bootstrap.memory_lock=false
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
       - "http.cors.allow-origin=\"*\""
       - "http.cors.enabled=true"
       - "http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization"
       - "http.cors.allow-credentials=true"
       - xpack.security.enabled=false
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
+      # Disable features that aren't needed locally to reduce memory usage.
+      - xpack.ml.enabled=false
+      - xpack.watcher.enabled=false
+      - ingest.geoip.downloader.enabled=false
     ports:
       - 9200-9220:9200
     networks:
