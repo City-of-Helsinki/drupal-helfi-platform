@@ -273,13 +273,13 @@ if ($session_suffix = getenv('DRUPAL_SESSION_SUFFIX')) {
 
 if (
   ($redis_host = getenv('REDIS_HOST')) &&
-  file_exists('modules/contrib/redis/redis.services.yml') &&
+  file_exists($app_root . '/modules/contrib/redis/redis.services.yml') &&
   extension_loaded('redis')
 ) {
   // Redis namespace is not available until redis module is enabled, so
   // we have to manually register it in order to enable the module and have
   // this configuration when the module is installed, but not yet enabled.
-  $class_loader->addPsr4('Drupal\\redis\\', 'modules/contrib/redis/src');
+  $class_loader->addPsr4('Drupal\\redis\\', $app_root . '/modules/contrib/redis/src');
   $redis_port = getenv('REDIS_PORT') ?: 6379;
 
   if ($redis_prefix = getenv('REDIS_PREFIX')) {
@@ -303,16 +303,16 @@ if (
   $settings['redis.connection']['host'] = $redis_host;
 
   $settings['cache']['default'] = 'cache.backend.redis';
-  $settings['container_yamls'][] = 'modules/contrib/redis/example.services.yml';
+  $settings['container_yamls'][] = $app_root . '/modules/contrib/redis/example.services.yml';
   // Register redis services to make sure we don't get a non-existent service
   // error while trying to enable the module.
-  $settings['container_yamls'][] = 'modules/contrib/redis/redis.services.yml';
+  $settings['container_yamls'][] = $app_root . '/modules/contrib/redis/redis.services.yml';
 
   // Support igbinary. We override redis services, so this *must* be loaded
   // after redis.services.yml.
   // @todo Remove this once Redis supports the new ObjectAwareSerializationInterface.
-  if (file_exists('modules/contrib/helfi_api_base/redis.services.yml')) {
-    $settings['container_yamls'][] = 'modules/contrib/helfi_api_base/redis.services.yml';
+  if (file_exists($app_root . '/modules/contrib/helfi_api_base/redis.services.yml')) {
+    $settings['container_yamls'][] = $app_root . '/modules/contrib/helfi_api_base/redis.services.yml';
   }
 }
 
