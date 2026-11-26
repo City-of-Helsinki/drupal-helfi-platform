@@ -14,7 +14,7 @@ The `hdbt_subtheme` in every Drupal instance is built with the theme builder in 
 | `hdbt_subtheme/theme-builder.mjs`, `src/` | Instance | The instance developers |
 | `hdbt_subtheme/package-lock.json`, `dist/` | Instance | The `Update config` action or the instance developers |
 
-The subtheme `package.json` declares only `@hdbt/theme-builder`, `npm-run-all2` and the overrides. The builder is installed from `../../contrib/hdbt/theme-builder` with `install-links=true`, so npm copies it into `node_modules` and installs its dependencies there. The `preinstall` script reinstalls the builder on every `npm i`, so the copy follows hdbt.
+The subtheme `package.json` declares only `@hdbt/theme-builder`, `npm-run-all2` and the overrides. The builder is installed from `../../contrib/hdbt/theme-builder` with `install-links=true`, so npm copies it into `node_modules` and installs its dependencies there. `npm ci` copies the current builder files but does not compare the builder `package.json` with the lockfile, so the `preinstall` script checks that the lockfile matches the builder dependencies. The `Update config` action updates the lockfile after every hdbt release.
 
 ### The `Update config` action
 
@@ -43,13 +43,14 @@ The subtheme requires npm 12. Node 24 ships npm 11, so run `npm install --global
 
 ```bash
 cd public/themes/custom/hdbt_subtheme
-npm i
+npm ci
 npm run dev
 ```
 
 | Command | Does |
 |---------|------|
-| `npm i` | Installs the dependencies and picks up the builder changes from hdbt |
+| `npm ci` | Installs the dependencies exactly as locked |
+| `npm run update-theme-builder` | Updates `package-lock.json` after the builder dependencies changed in hdbt |
 | `npm run dev` | Builds a development build and rebuilds on changes |
 | `npm run build` | Formats, lints and builds a production build |
 | `npm run lint` | Lints the SCSS and JavaScript |
@@ -62,15 +63,16 @@ Run `npm run build` and commit `package-lock.json` and `dist/` before pushing.
 
 | Script | Command | Does |
 |--------|---------|------|
-| `preinstall` | `rm -rf node_modules/@hdbt/theme-builder && npm install ../../contrib/hdbt/theme-builder` | Replaces the builder copy and updates its dependencies from hdbt |
-| `postinstall` | `npm --prefix ../../contrib/hdbt install` | Installs the hdbt dependencies. Only subthemes with React apps keep it |
+| `preinstall` | `node ../../contrib/hdbt/theme-builder/tools/check-lock.mjs ../../contrib/hdbt/theme-builder` | Fails when `package-lock.json` does not match the builder dependencies |
+| `preinstall`, React apps | `node ../../contrib/hdbt/theme-builder/tools/check-lock.mjs ../../contrib/hdbt/theme-builder && npm --prefix ../../contrib/hdbt ci --ignore-scripts --no-audit --no-fund` | Also installs the hdbt dependencies exactly as locked in hdbt |
+| `update-theme-builder` | `rm -rf node_modules/@hdbt/theme-builder && npm install ../../contrib/hdbt/theme-builder --ignore-scripts` | Replaces the builder copy and updates its dependencies in `package-lock.json` |
 
-* `npm i` and `npm ci` run `preinstall` before they install anything. Without it, `npm i` keeps the old builder copy in `node_modules` after an hdbt update.
-* The `preinstall` removes the copy first. npm keeps a copy with the same version even when its files changed.
-* The `preinstall` does not loop. npm runs the install scripts only for an `npm install` without arguments.
-* React apps import `react`, `hds-react` and `lodash-es` from the hdbt `node_modules`, so subthemes with a `tsconfig.json` keep the `postinstall`.
+* `npm i` and `npm ci` run `preinstall` before they install anything. Installs never resolve new builder dependencies, so every install gets the reviewed lockfile.
+* When the check fails, run `npm run update-theme-builder`, review the `package-lock.json` diff and commit it. The update does not run `preinstall`, since npm runs the install scripts only for an `npm install` without arguments.
+* `update-theme-builder` removes the copy first. npm keeps a copy with the same version even when its files changed.
+* React apps import `react`, `hds-react` and `lodash-es` from the hdbt `node_modules`, so subthemes with a `tsconfig.json` install the hdbt dependencies. It has to happen in `preinstall`, since npm reads the `file:` dependencies into the hdbt `node_modules` before `postinstall` runs. `--ignore-scripts` keeps the install scripts of the hdbt dependencies from running on the host.
 * The `Update config` action installs with `--ignore-scripts` and installs the builder by path itself.
-* hdbt, hdbt_admin, `helfi_platform_config` and `helfi_calculator` have the same `preinstall` with their own path to the builder.
+* hdbt has the same check with its own path to the builder. hdbt_admin, `helfi_platform_config` and `helfi_calculator` still reinstall the builder in `preinstall`.
 
 ## Update a package in all instances
 
@@ -137,7 +139,7 @@ Change the major in the range, for example `"stylelint": "^16.0.0"` to `"styleli
 
 1. Push the hdbt branch.
 2. Run `composer require drupal/hdbt:dev-<branch>` in the instance.
-3. Run `npm i` and `npm run build` in the subtheme.
+3. Run `npm run update-theme-builder` and `npm run build` in the subtheme.
 4. Revert `composer.json` and `composer.lock` after testing.
 
 ## Override a package
@@ -195,4 +197,4 @@ Build with `npm run build` and commit `package-lock.json`, `dist/` and the chang
 * Critical advisories with a fix within the range are updated by the next `Update config` run. Run the action manually for an urgent fix.
 * Fixes outside the range need a builder update or an override.
 * Lower severities are not updated automatically. Fix them with a builder update when needed.
-* `min-release-age` in `.npmrc` skips versions published in the last day.
+* `min-release-age` in `.npmrc` skips versions published in the last 3 days.
