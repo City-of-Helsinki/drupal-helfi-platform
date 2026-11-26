@@ -101,6 +101,15 @@ if (isset($preflight_checks['environmentVariables'])) {
   }
 
 }
+
+// Make sure the hash salt is not missing or weak.
+// OpenShift should always use secure hash_salt.
+$hash_salt = (string) ($settings['hash_salt'] ?? '');
+
+if (strlen($hash_salt) < 32) {
+  preflight_failed('Hash salt is missing or weak. Set DRUPAL_HASH_SALT to a random string of at least 32 characters.');
+}
+
 // Fail deployment if any preflight check has failed.
 if ($messages = preflight_messages()) {
   echo implode(PHP_EOL, $messages);
