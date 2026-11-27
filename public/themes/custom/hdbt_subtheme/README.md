@@ -27,8 +27,9 @@ Requirements for developing:
 | Command       | Make command               | Description                                                                       |
 |---------------|----------------------------|-----------------------------------------------------------------------------------|
 | nvm use       | N/A                        | Uses correct Node version chosen for the subtheme compiler                        |
-| npm i         | make install-hdbt-subtheme | Install dependencies and the theme builder from hdbt.                             |
-| npm ci        | N/A                        | Install a project with a clean slate. Use especially in travis like environments. |
+| npm ci        | make install-hdbt-subtheme | Install dependencies exactly as locked, including the theme builder from hdbt.    |
+| npm run update-theme-builder | N/A         | Update `package-lock.json` after the theme builder dependencies changed in hdbt.  |
+| npm i         | N/A                        | Install dependencies and update `package-lock.json` when `package.json` changed.  |
 | npm run dev   | make watch-hdbt-subtheme   | Compile styles for development environment and watch file changes.                |
 | npm run build | make build-hdbt-subtheme   | Build packages for production. Minify CSS/JS. Create icon sprite.                 |
 
@@ -41,12 +42,13 @@ Set up the developing environment with `nvm` by running
 
     nvm use
     npm install --global npm@12
-    npm i
+    npm ci
 
 Explanations for commands.
 - `nvm use` : Install and use the correct version of Node.
 - `npm install --global npm@12` : Install npm 12 once per Node version. Node 24 ships npm 11.
-- `npm i` : Install dependencies. The `preinstall` script refreshes the theme builder from hdbt.
+- `npm ci` : Install dependencies exactly as locked. The `preinstall` script checks that `package-lock.json` matches the
+  theme builder from hdbt. When it does not, run `npm run update-theme-builder` and commit `package-lock.json`.
 
 Related files.
 - `.nvmrc` : Defines the node version used to compile the theme.

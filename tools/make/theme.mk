@@ -10,7 +10,7 @@ NPM_12 = npm install --global npm@12 --no-audit --no-fund --loglevel=error
 
 PHONY += install-hdbt-subtheme
 install-hdbt-subtheme: ## Installs dependencies for HDBT subtheme
-	$(call node,/public/themes/custom/hdbt_subtheme,"sh -c '$(NPM_12) && npm install'")
+	$(call node,/public/themes/custom/hdbt_subtheme,"sh -c '$(NPM_12) && npm ci'")
 
 PHONY += build-hdbt-subtheme
 build-hdbt-subtheme: ## Builds SCSS/JS assets for HDBT subtheme
@@ -22,7 +22,7 @@ watch-hdbt-subtheme: ## Starts SCSS/JS watcher for HDBT subtheme
 
 PHONY += install-hdbt
 install-hdbt: ## Installs dependencies for HDBT theme
-	$(call node,/public/themes/contrib/hdbt,"sh -c '$(NPM_12) && npm install'")
+	$(call node,/public/themes/contrib/hdbt,"sh -c '$(NPM_12) && npm ci'")
 
 PHONY += build-hdbt
 build-hdbt: ## Builds SCSS/JS assets for HDBT theme

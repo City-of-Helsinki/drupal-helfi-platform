@@ -6,10 +6,13 @@
   "license": "MIT",
   "repository": "github:City-of-Helsinki/drupal-hel-platform",
   "@comment scripts": [
-    "Every build, lint and format script below runs inside a disposable Node container via the sandbox command."
+    "Every build, lint and format script below runs inside a disposable Node container via the sandbox command.",
+    "preinstall checks that package-lock.json matches the theme builder from hdbt, since npm ci does not. Run update-theme-builder when it fails.",
+    "If the theme bundles hdbt source, for example React components through @/react/common/*, or adds file: dependencies into ../../contrib/hdbt/node_modules, append ' && npm --prefix ../../contrib/hdbt ci --ignore-scripts --no-audit --no-fund' to preinstall."
   ],
   "scripts": {
-    "preinstall": "rm -rf node_modules/@hdbt/theme-builder && npm install ../../contrib/hdbt/theme-builder --loglevel=silent",
+    "preinstall": "node ../../contrib/hdbt/theme-builder/tools/check-lock.mjs ../../contrib/hdbt/theme-builder",
+    "update-theme-builder": "rm -rf node_modules/@hdbt/theme-builder && npm install ../../contrib/hdbt/theme-builder --ignore-scripts",
     "dev": "sandbox node theme-builder.mjs --watch --dev",
     "build": "sandbox sh -c 'npm run format:js --loglevel=silent && npm run lint --loglevel=silent && node theme-builder.mjs'",
     "lint:scss": "sandbox stylelint \"src/scss/**/*.scss\" --config node_modules/@hdbt/theme-builder/.stylelintrc.yaml --formatter string --fix",
